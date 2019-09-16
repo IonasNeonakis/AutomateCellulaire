@@ -15,9 +15,9 @@ obj/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) -o $@ -c $< 
 
 memoire : obj/automate.o
-	make && valgrind --leak-check=full ./automates
+	make && cd bin && valgrind --leak-check=full ./automates
 
 # options de compilation
 clean:
-	rm obj/*.o automates 
+	rm obj/*.o bin/automates 
 
