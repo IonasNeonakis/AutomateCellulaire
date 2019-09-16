@@ -8,7 +8,7 @@ SRC=$(PWD)/src
 # règle de compilation --- exécutables
 all : bin/automates
 
-bin/automates: obj/cellule.o obj/automate.o obj/main.o
+bin/automates: obj/cellule.o obj/automate.o obj/main.o obj/utils.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 obj/%.o: $(SRC)/%.c
