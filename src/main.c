@@ -2,12 +2,14 @@
 #include <stdlib.h>
 
 #include "../include/automate.h"
+#include "../include/cellule.h"
+
 
 int main(int argc, char* argv[]){
 
-    automate a = creer_automate(32, 16, 2);
-    
-    supprimer_automate(a);
+    cel a = creer_cellule();
+
+    supprimer_cellule(&a);
     
     return EXIT_SUCCESS;
 }
