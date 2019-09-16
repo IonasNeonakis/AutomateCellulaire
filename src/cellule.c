@@ -67,7 +67,13 @@ int etat_suivant(cel cellule,char * regle_binaire){
 }
 
 void afficher_cellule(cel cellule){
-    printf("%d\n",cellule->etat);
+    char car ;
+    if (cellule->etat==0)
+        car=' ';
+    else
+        car='X';
+    
+    printf("%c",car);
 }
 
 
