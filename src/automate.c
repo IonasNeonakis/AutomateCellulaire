@@ -3,6 +3,7 @@
 #include "../include/automate.h"
 #include "../include/utils.h"
 
+
 struct automate {
     unsigned int temps ; // le temps t actuelle, commence à 0
     cel** configuration_actuelle ; //chauqe char est un etat
@@ -39,6 +40,25 @@ void supprimer_automate(automate automate_cellulaire){
     automate_cellulaire->configuration_actuelle = NULL;
     free(automate_cellulaire);
     automate_cellulaire = NULL;
+}
+void afficher_automate(automate automate_cellulaire){
+    printf("Règle : %u\n",automate_cellulaire->regle);
+    printf("Règle binaire : %s\n",conversion_decimal_binaire((unsigned int)automate_cellulaire->regle));
+    printf("Itérations : %u\n",automate_cellulaire->nb_iterations_max);
+    printf("Dimensions Max. : %u\n\n", automate_cellulaire->dimension_max);
+
+    for (unsigned int i=0 ; i <= automate_cellulaire->nb_iterations_max;i++){
+        printf("|%d |",i);
+        afficher_ligne(automate_cellulaire->configuration_actuelle[(int)i],automate_cellulaire->dimension_max);
+        printf("\n");
+    }
+}
+
+void afficher_ligne(cel* ligne,unsigned int dimensions_max){
+    for(unsigned int i=0;i< dimensions_max;i++){
+        cel x = ligne[i];
+        afficher_cellule(x);
+    }
 }
 
 void set_regle(automate automate_cellulaire, int regle){
