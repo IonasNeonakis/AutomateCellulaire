@@ -1,12 +1,12 @@
 #include "../include/cellule.h"
-
+#include "../include/utils.h"
 struct cellule {
     int etat;
     struct cellule* voisin_g;
     struct cellule* voisin_d;
 };
 
-cel creer_celule(int etat){
+cel creer_cellule(int etat){
 
 }
 
@@ -23,4 +23,6 @@ void set_voisin_gauche(cel actuelle,cel gauche){
 void set_etat(cel cellule,int etat){
     cellule->etat=etat;
 }
+
+
 
