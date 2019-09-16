@@ -28,6 +28,9 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
 
 void supprimer_automate(automate automate_cellulaire){
     for(unsigned int i = 0; i < automate_cellulaire->nb_iterations_max; i++){
+        for(unsigned int j = 0; j < automate_cellulaire->nb_iterations_max; j++){
+            //supprimer_cellule(&automate_cellulaire->configuration_actuelle[i][j]);
+        }
         free(automate_cellulaire->configuration_actuelle[i]);
         automate_cellulaire->configuration_actuelle[i] = NULL;
     }
