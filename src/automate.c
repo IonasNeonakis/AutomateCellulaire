@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "../include/automate.h"
+#include "../include/utils.h"
 
 struct automate {
     unsigned int temps ; // le temps t actuelle, commence à 0
@@ -29,7 +30,7 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
 void supprimer_automate(automate automate_cellulaire){
     for(unsigned int i = 0; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->nb_iterations_max; j++){
-            //supprimer_cellule(&automate_cellulaire->configuration_actuelle[i][j]);
+            supprimer_cellule(&automate_cellulaire->configuration_actuelle[i][j]);
         }
         free(automate_cellulaire->configuration_actuelle[i]);
         automate_cellulaire->configuration_actuelle[i] = NULL;
@@ -38,6 +39,40 @@ void supprimer_automate(automate automate_cellulaire){
     automate_cellulaire->configuration_actuelle = NULL;
     free(automate_cellulaire);
     automate_cellulaire = NULL;
+}
+
+void set_regle(automate automate_cellulaire, int regle){
+    automate_cellulaire->regle = regle;
+}
+
+void set_nb_iterations_max(automate automate_cellulaire, int n){
+    automate_cellulaire->nb_iterations_max = n;
+}
+
+void set_dimension_max(automate automate_cellulaire, int n){
+    automate_cellulaire->dimension_max = n;
+}
+
+void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
+    for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){
+        automate_cellulaire->configuration_actuelle[0][i] = creer_cellule();
+        set_etat(automate_cellulaire->configuration_actuelle[0][i], configuration_initiale[i] == '0' ? 0 : 1);
+    }
+}
+
+void set_voisins(automate automate_cellulaire){
+    set_voisin_gauche(automate_cellulaire->configuration_actuelle[0][0], NULL);
+    set_voisin_droite(automate_cellulaire->configuration_actuelle[0][automate_cellulaire->dimension_max - 1], NULL);
+    for(unsigned int i = 1; i < automate_cellulaire->dimension_max - 1; i++){
+        set_voisin_gauche(automate_cellulaire->configuration_actuelle[0][i], automate_cellulaire->configuration_actuelle[0][i - 1]);
+    }
+}
+
+cel** generer_automate(automate automate_cellulaire, unsigned int dimension_max, unsigned int regle, char* configuration_initiale){
+    set_dimension_max(automate_cellulaire, dimension_max);
+    set_regle(automate_cellulaire, regle);
+    set_configuration_initiale(automate_cellulaire, configuration_initiale);
+    return automate_cellulaire->configuration_actuelle;
 }
 
 //configuration_actuelle[15]

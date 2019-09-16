@@ -7,10 +7,9 @@
 int main(int argc, char* argv[]){
 
     automate a = creer_automate(32, 16, 2);
-    
-    char* nombre_binaire = conversion_decimal_binaire(256);
 
-    free(nombre_binaire);
+    generer_automate(a, 32, 30, "00000000000000000000000000000001\0");
+
     supprimer_automate(a);
 
     return EXIT_SUCCESS;
