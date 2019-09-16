@@ -8,7 +8,6 @@
 #include "../include/utils.h"
 
 
-
 struct cellule;
 
 typedef struct cellule* cel;
@@ -23,7 +22,15 @@ void set_voisin_gauche(cel, cel);
 
 void set_etat(cel, int );
 
+cel get_voisin_droite(cel);
+
+cel get_voisin_gauche(cel);
+
+int get_etat(cel);
+
 int etat_suivant(cel, char*);
+
+void afficher_cellule(cel);
 
 
 #endif

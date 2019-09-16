@@ -33,13 +33,41 @@ void set_etat(cel cellule,int etat){
     cellule->etat=etat;
 }
 
+cel get_voisin_droite(cel c){
+    return c->voisin_d;
+}
+
+cel get_voisin_gauche(cel c){
+    return c->voisin_g;
+}
+
+int get_etat(cel c){
+    if (c==NULL)
+        return 0;
+    return c->etat;
+}
+
 
 int etat_suivant(cel cellule,char * regle_binaire){
-    int gauche = cellule->voisin_g->etat;
-    int etat = cellule->etat;
-    int droit = cellule->voisin_d->etat;
-    int x = conversion_binaire_decimal(gauche,etat,droit);
-    return strlen(regle_binaire-1-x);
+    int etat_gauche, etat_droite, etat_milieu;
+    if (cellule->voisin_g==NULL)
+        etat_gauche=0;
+    else
+        etat_gauche=cellule->voisin_g->etat;
+    
+
+    if (cellule->voisin_d==NULL)
+        etat_droite=0;
+    else
+        etat_droite=cellule->voisin_d->etat;
+
+    etat_milieu=cellule->etat;
+    int x = conversion_binaire_decimal(etat_gauche,etat_milieu,etat_droite);
+    return regle_binaire[strlen(regle_binaire)-1-x]-48;
+}
+
+void afficher_cellule(cel cellule){
+    printf("%d\n",cellule->etat);
 }
 
 

@@ -7,9 +7,8 @@
 
 int main(int argc, char* argv[]){
 
-    cel a = creer_cellule();
 
-    supprimer_cellule(&a);
+
     
     return EXIT_SUCCESS;
 }
