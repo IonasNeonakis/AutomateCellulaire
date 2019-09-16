@@ -10,6 +10,8 @@ int main(int argc, char* argv[]){
 
     generer_automate(a, 32, 30, "00000000000000000000000000000001\0");
 
+    //afficher_automate(a);
+
     supprimer_automate(a);
 
     return EXIT_SUCCESS;
