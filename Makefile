@@ -6,9 +6,9 @@ CFLAGS := -std=c99 -Wall -Wextra -pedantic -ggdb -Wno-unused-but-set-parameter -
 SRC=$(PWD)/src
 
 # règle de compilation --- exécutables
-all : automates
+all : bin/automates
 
-automates: obj/cellule.o obj/automate.o obj/main.o
+bin/automates: obj/cellule.o obj/automate.o obj/main.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 obj/%.o: $(SRC)/%.c
