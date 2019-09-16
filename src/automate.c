@@ -1,12 +1,5 @@
-
-
-struct cellule {
-    int etat;
-    struct cellule* voisin_g;
-    struct cellule* voisin_d;
-};
-
-typedef struct cellule* cel;
+#include "../include/automate.h"
+#include "../include/cellule.h"
 
 struct automate {
     int temps ; // le temps t actuelle, commence à 0
