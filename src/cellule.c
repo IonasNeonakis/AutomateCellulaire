@@ -48,6 +48,8 @@ int get_etat(cel c){
 }
 
 
+
+
 int etat_suivant(cel cellule,char * regle_binaire){
     int etat_gauche, etat_droite, etat_milieu;
     etat_gauche=cellule->voisin_g->etat;
