@@ -28,7 +28,8 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
     return automate_cellulaire;
 }
 
-void supprimer_automate(automate automate_cellulaire){
+void supprimer_automate(automate* automate_cellulaire_ptr){
+    automate automate_cellulaire = *automate_cellulaire_ptr;
     for(unsigned int i = 0; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             supprimer_cellule(&automate_cellulaire->configuration_actuelle[i][j]);
@@ -42,17 +43,21 @@ void supprimer_automate(automate automate_cellulaire){
     automate_cellulaire = NULL;
 }
 void afficher_automate(automate automate_cellulaire){
+    char* regle_binaire = conversion_decimal_binaire((unsigned int)automate_cellulaire->regle);
+    
     printf("Règle           : %u\n",automate_cellulaire->regle);
-    printf("Règle binaire   : %s\n",conversion_decimal_binaire((unsigned int)automate_cellulaire->regle));
+    printf("Règle binaire   : %s\n", regle_binaire);
     printf("Itérations      : %u\n",automate_cellulaire->nb_iterations_max);
     printf("Dimensions Max. : %u\n\n", automate_cellulaire->dimension_max);
+    
+    free(regle_binaire);
 
-    for (unsigned int i = 0 ; i < automate_cellulaire->nb_iterations_max; i++){
-        if (i<10)
+    for(unsigned int i = 0 ; i < automate_cellulaire->nb_iterations_max; i++){
+        if (i < 10)
             printf("|%u | ", i);
         else
             printf("|%u| ", i);
-        afficher_ligne(automate_cellulaire->configuration_actuelle[(int)i],automate_cellulaire->dimension_max);
+        afficher_ligne(automate_cellulaire->configuration_actuelle[(int)i], automate_cellulaire->dimension_max);
         printf("\n");
     }
 }
@@ -95,13 +100,15 @@ cel** generer_automate(automate automate_cellulaire, unsigned int dimension_max,
     set_regle(automate_cellulaire, regle);
     set_configuration_initiale(automate_cellulaire, configuration_initiale);
     set_voisins(automate_cellulaire, 0);
+    char* regle_binaire = conversion_decimal_binaire(regle);
     for(unsigned int i = 1; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             cel cellule = creer_cellule();
-            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], conversion_decimal_binaire(regle)));
+            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], regle_binaire));
             automate_cellulaire->configuration_actuelle[i][j] = cellule;
         }
         set_voisins(automate_cellulaire, i);
     }
+    free(regle_binaire);
     return automate_cellulaire->configuration_actuelle;
 }
