@@ -25,5 +25,7 @@ char* conversion_decimal_binaire(int n){
     remplir[(int)strlen(remplir)] = '\0';
     strcat(remplir, nombre_binaire);
     nombre_binaire[taille + 1] = '\0';
+    free(nombre_binaire);
+    nombre_binaire = NULL;
     return remplir;
 }

@@ -18,7 +18,7 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
     automate automate_cellulaire = (automate) malloc (sizeof(struct automate));
     automate_cellulaire->temps = 0;
     automate_cellulaire->configuration_actuelle = (cel**) malloc (sizeof(cel*) * dimension_max);
-    for(unsigned int i = 0; i < nb_iterations_max; i++){
+    for(unsigned int i = 0; i < dimension_max   ; i++){
         automate_cellulaire->configuration_actuelle[i] = (cel*) malloc (sizeof(cel) * dimension_max);
     }
     automate_cellulaire->nb_iterations_max = nb_iterations_max;
@@ -29,8 +29,8 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
 }
 
 void supprimer_automate(automate automate_cellulaire){
-    for(unsigned int i = 0; i < automate_cellulaire->nb_iterations_max; i++){
-        for(unsigned int j = 0; j < automate_cellulaire->nb_iterations_max; j++){
+    for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){
+        for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             supprimer_cellule(&automate_cellulaire->configuration_actuelle[i][j]);
         }
         free(automate_cellulaire->configuration_actuelle[i]);
@@ -47,15 +47,14 @@ void afficher_automate(automate automate_cellulaire){
     printf("Itérations : %u\n",automate_cellulaire->nb_iterations_max);
     printf("Dimensions Max. : %u\n\n", automate_cellulaire->dimension_max);
 
-    for (unsigned int i=0 ; i <= automate_cellulaire->nb_iterations_max;i++){
-        printf("|%d |",i);
+    for (unsigned int i = 0 ; i < automate_cellulaire->nb_iterations_max; i++){
         afficher_ligne(automate_cellulaire->configuration_actuelle[(int)i],automate_cellulaire->dimension_max);
         printf("\n");
     }
 }
 
 void afficher_ligne(cel* ligne,unsigned int dimensions_max){
-    for(unsigned int i=0;i< dimensions_max;i++){
+    for(unsigned int i = 0; i < dimensions_max; i++){
         cel x = ligne[i];
         afficher_cellule(x);
     }
@@ -92,6 +91,7 @@ cel** generer_automate(automate automate_cellulaire, unsigned int dimension_max,
     set_dimension_max(automate_cellulaire, dimension_max);
     set_regle(automate_cellulaire, regle);
     set_configuration_initiale(automate_cellulaire, configuration_initiale);
+    //set_voisins(automate_cellulaire);
     return automate_cellulaire->configuration_actuelle;
 }
 

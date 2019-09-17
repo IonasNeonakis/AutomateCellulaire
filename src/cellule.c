@@ -8,9 +8,9 @@ struct cellule {
 
 cel creer_cellule(){
     cel nouvelle_cel =  (cel) malloc (sizeof(struct cellule));
-    nouvelle_cel->etat =0;
-    nouvelle_cel->voisin_d=NULL;
-    nouvelle_cel->voisin_g= NULL;
+    nouvelle_cel->etat = 0;
+    nouvelle_cel->voisin_d = NULL;
+    nouvelle_cel->voisin_g = NULL;
     return nouvelle_cel ;
 }
 
