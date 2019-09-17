@@ -49,9 +49,9 @@ void afficher_automate(automate automate_cellulaire){
 
     for (unsigned int i = 0 ; i < automate_cellulaire->nb_iterations_max; i++){
         if (i<10)
-            printf("|%u |", i);
+            printf("|%u | ", i);
         else
-            printf("|%u|", i);
+            printf("|%u| ", i);
         afficher_ligne(automate_cellulaire->configuration_actuelle[(int)i],automate_cellulaire->dimension_max);
         printf("\n");
     }
