@@ -97,8 +97,8 @@ cel** generer_automate(automate automate_cellulaire, unsigned int dimension_max,
             cel cellule = creer_cellule();
             set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], conversion_decimal_binaire(regle)));
             automate_cellulaire->configuration_actuelle[i][j] = cellule;
-            //set_voisins(automate_cellulaire, i);
         }
+        set_voisins(automate_cellulaire, i);
     }
     return automate_cellulaire->configuration_actuelle;
 }
