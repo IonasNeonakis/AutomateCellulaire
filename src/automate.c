@@ -17,8 +17,8 @@ struct automate {
 automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_max, unsigned int nb_etats){
     automate automate_cellulaire = (automate) malloc (sizeof(struct automate));
     automate_cellulaire->temps = 0;
-    automate_cellulaire->configuration_actuelle = (cel**) malloc (sizeof(cel*) * dimension_max);
-    for(unsigned int i = 0; i < dimension_max   ; i++){
+    automate_cellulaire->configuration_actuelle = (cel**) malloc (sizeof(cel*) * nb_iterations_max);
+    for(unsigned int i = 0; i < nb_iterations_max; i++){
         automate_cellulaire->configuration_actuelle[i] = (cel*) malloc (sizeof(cel) * dimension_max);
     }
     automate_cellulaire->nb_iterations_max = nb_iterations_max;
@@ -29,7 +29,7 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
 }
 
 void supprimer_automate(automate automate_cellulaire){
-    for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){
+    for(unsigned int i = 0; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             supprimer_cellule(&automate_cellulaire->configuration_actuelle[i][j]);
         }
@@ -79,19 +79,27 @@ void set_configuration_initiale(automate automate_cellulaire, char* configuratio
     }
 }
 
-void set_voisins(automate automate_cellulaire){
-    set_voisin_gauche(automate_cellulaire->configuration_actuelle[0][0], NULL);
-    set_voisin_droite(automate_cellulaire->configuration_actuelle[0][automate_cellulaire->dimension_max - 1], NULL);
+void set_voisins(automate automate_cellulaire, unsigned int k){
     for(unsigned int i = 1; i < automate_cellulaire->dimension_max - 1; i++){
-        set_voisin_gauche(automate_cellulaire->configuration_actuelle[0][i], automate_cellulaire->configuration_actuelle[0][i - 1]);
+        set_voisin_gauche(automate_cellulaire->configuration_actuelle[k][i], automate_cellulaire->configuration_actuelle[k][i - 1]);
     }
+    set_voisin_gauche(automate_cellulaire->configuration_actuelle[k][0], automate_cellulaire->configuration_actuelle[k][automate_cellulaire->dimension_max - 1]);
+    set_voisin_droite(automate_cellulaire->configuration_actuelle[k][automate_cellulaire->dimension_max - 1],  automate_cellulaire->configuration_actuelle[k][0]);
 }
 
 cel** generer_automate(automate automate_cellulaire, unsigned int dimension_max, unsigned int regle, char* configuration_initiale){
     set_dimension_max(automate_cellulaire, dimension_max);
     set_regle(automate_cellulaire, regle);
     set_configuration_initiale(automate_cellulaire, configuration_initiale);
-    //set_voisins(automate_cellulaire);
+    set_voisins(automate_cellulaire, 0);
+    for(unsigned int i = 1; i < automate_cellulaire->nb_iterations_max; i++){
+        for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
+            cel cellule = creer_cellule();
+            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], conversion_decimal_binaire(regle)));
+            automate_cellulaire->configuration_actuelle[i][j] = cellule;
+            //set_voisins(automate_cellulaire, i);
+        }
+    }
     return automate_cellulaire->configuration_actuelle;
 }
 

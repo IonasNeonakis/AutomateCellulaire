@@ -22,7 +22,7 @@ void set_dimension_max(automate, int);
 
 void set_configuration_initiale(automate, char*);
 
-void set_voisins(automate);
+void set_voisins(automate, unsigned int);
 
 void afficher_automate(automate);
 
