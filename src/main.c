@@ -53,7 +53,7 @@ void creer_image_automate(cel** cellules){
     fprintf(image, "%d\n", 1);
     for(unsigned int i = 0; i < 16; i++){
         for(unsigned int j = 0; j < 31; j++){
-            fprintf(image, "%c", get_etat(cellules[i][j]));
+            fprintf(image, "%d", get_etat(cellules[i][j]));
         }
         fprintf(image, "\n");
     }
