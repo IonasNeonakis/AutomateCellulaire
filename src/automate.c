@@ -45,7 +45,7 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     free(automate_cellulaire);
     automate_cellulaire = NULL;
 }
-void afficher_automate(automate automate_cellulaire){
+void afficher_automate(automate automate_cellulaire,void (*affichage_cellule) (int)){
     printf("Règle           : %s\n",automate_cellulaire->regle);
     printf("Règle binaire   : %s\n", automate_cellulaire->regle);
     printf("Itérations      : %u\n",automate_cellulaire->nb_iterations_max);
@@ -56,15 +56,15 @@ void afficher_automate(automate automate_cellulaire){
             printf("|%u | ", i);
         else
             printf("|%u| ", i);
-        afficher_ligne(automate_cellulaire->configuration_actuelle[(int)i], automate_cellulaire->dimension_max);
+        afficher_ligne(automate_cellulaire->configuration_actuelle[(int)i], automate_cellulaire->dimension_max, affichage_cellule);
         printf("\n");
     }
 }
 
-void afficher_ligne(cel* ligne,unsigned int dimensions_max){
+void afficher_ligne(cel* ligne,unsigned int dimensions_max, void (*affichage_cellule) (int)){
     for(unsigned int i = 0; i < dimensions_max; i++){
         cel x = ligne[i];
-        afficher_cellule(x);
+        afficher_cellule(x,affichage_cellule);
     }
 }
 

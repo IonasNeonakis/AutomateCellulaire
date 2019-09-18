@@ -30,7 +30,7 @@ int get_etat(cel);
 
 int etat_suivant(cel cellule,char * regle, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int));
 
-void afficher_cellule(cel);
+void afficher_cellule(cel,void (*affichage_cellule) (int));
 
 
 #endif
