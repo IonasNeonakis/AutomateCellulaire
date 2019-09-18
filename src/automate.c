@@ -9,7 +9,8 @@ struct automate {
     cel** configuration_actuelle ; //chauqe char est un etat
     unsigned int dimension_max; // en gros la taille du tableau
     unsigned int nb_iterations_max; //
-    unsigned int regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme 
+    char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme 
+    int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
     unsigned int nb_etats; //pas sûr wolfran =2(0,1) ; somme = 4(0,1,2,3)
     //comment définir le types de transition a effectuer ? somme || configuration des voisins ?
 };
@@ -21,6 +22,8 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
     for(unsigned int i = 0; i < nb_iterations_max; i++){
         automate_cellulaire->configuration_actuelle[i] = (cel*) malloc (sizeof(cel) * dimension_max);
     }
+    automate_cellulaire->regle = NULL;
+    automate_cellulaire->type_regle = NULL;
     automate_cellulaire->nb_iterations_max = nb_iterations_max;
     automate_cellulaire->dimension_max = dimension_max;
     automate_cellulaire->nb_etats = nb_etats;
@@ -95,16 +98,17 @@ void set_voisins(automate automate_cellulaire, unsigned int k){
     set_voisin_gauche(automate_cellulaire->configuration_actuelle[k][0], automate_cellulaire->configuration_actuelle[k][automate_cellulaire->dimension_max - 1]);
 }
 
-cel** generer_automate(automate automate_cellulaire, unsigned int dimension_max, unsigned int regle, char* configuration_initiale){
-    set_dimension_max(automate_cellulaire, dimension_max);
+cel** generer_automate(automate automate_cellulaire, char* regle, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int), char* configuration_initiale){
+    set_dimension_max(automate_cellulaire, automate_cellulaire->dimension_max);
     set_regle(automate_cellulaire, regle);
     set_configuration_initiale(automate_cellulaire, configuration_initiale);
     set_voisins(automate_cellulaire, 0);
+    automate_cellulaire->type_regle = type_regle;
     char* regle_binaire = conversion_decimal_binaire(regle);
     for(unsigned int i = 1; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             cel cellule = creer_cellule();
-            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], regle_binaire));
+            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], regle, type_regle));
             automate_cellulaire->configuration_actuelle[i][j] = cellule;
         }
         set_voisins(automate_cellulaire, i);

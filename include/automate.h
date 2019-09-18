@@ -10,7 +10,7 @@ typedef struct automate* automate;
 
 automate creer_automate(unsigned int, unsigned int, unsigned int);
 
-cel** generer_automate(automate, unsigned int, unsigned int, char*);
+cel** generer_automate(automate, char*, int * (unsigned int, unsigned int, unsigned int), char*);
 
 void supprimer_automate(automate*);
 
