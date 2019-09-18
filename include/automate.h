@@ -28,4 +28,6 @@ void set_voisins(automate, unsigned int);
 
 cel** generer_automate(automate, char*, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int), char*);
 
+automate lire_fichier_automate();
+
 #endif

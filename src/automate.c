@@ -112,3 +112,22 @@ cel** generer_automate(automate automate_cellulaire, char* regle, int (*type_reg
     //free(regle_binaire);
     return automate_cellulaire->configuration_actuelle;
 }
+
+automate lire_fichier_automate(){
+    unsigned int nb_iterations ;
+    unsigned int dimension ;
+    unsigned int nb_etats ;
+    char* regle ;
+    //mettre des sets dans le main 
+    FILE* fp;
+    char chaine[200];
+
+    fp=fopen("../cfg/test1.config","r");
+    if (fp==NULL){
+        fprintf(stderr,"Erreur lors de l'ouverture du fichier en lecture");
+    }
+    while(fgets(chaine,200,fp)!=NULL){
+
+    }
+}
+
