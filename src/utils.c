@@ -29,3 +29,11 @@ char* conversion_decimal_binaire(int n){
     nombre_binaire = NULL;
     return remplir;
 }
+
+int conversion_char_int(char * s){
+    int total =0 ;
+    for (int i =0;i<(int) strlen(s);i++){
+        total=total*10+s[i]-48;
+    }
+    return total;
+}
