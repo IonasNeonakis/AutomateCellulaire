@@ -50,7 +50,7 @@ int get_etat(cel c){
 
 
 
-int etat_suivant(cel cellule,char * regle, int *(type_regle) (char*, unsigned int, unsigned int, unsigned int)){
+int etat_suivant(cel cellule,char * regle, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int)){
     int etat_gauche, etat_droite, etat_milieu;
     etat_gauche=cellule->voisin_g->etat;
     etat_droite=cellule->voisin_d->etat;
