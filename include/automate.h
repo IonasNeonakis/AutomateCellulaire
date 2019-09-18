@@ -10,11 +10,11 @@ typedef struct automate* automate;
 
 automate creer_automate(unsigned int, unsigned int, unsigned int);
 
-cel** generer_automate(automate, char*, int * (unsigned int, unsigned int, unsigned int), char*);
+cel** generer_automate(automate, char*, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int), char*);
 
 void supprimer_automate(automate*);
 
-void set_regle(automate, int);
+void set_regle(automate, char*);
 
 void set_nb_iterations_max(automate, int);
 

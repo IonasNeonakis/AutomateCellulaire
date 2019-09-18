@@ -46,14 +46,10 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     automate_cellulaire = NULL;
 }
 void afficher_automate(automate automate_cellulaire){
-    char* regle_binaire = conversion_decimal_binaire((unsigned int)automate_cellulaire->regle);
-    
-    printf("Règle           : %u\n",automate_cellulaire->regle);
-    printf("Règle binaire   : %s\n", regle_binaire);
+    printf("Règle           : %s\n",automate_cellulaire->regle);
+    printf("Règle binaire   : %s\n", automate_cellulaire->regle);
     printf("Itérations      : %u\n",automate_cellulaire->nb_iterations_max);
     printf("Dimensions Max. : %u\n\n", automate_cellulaire->dimension_max);
-    
-    free(regle_binaire);
 
     for(unsigned int i = 0 ; i < automate_cellulaire->nb_iterations_max; i++){
         if (i < 10)
@@ -72,7 +68,7 @@ void afficher_ligne(cel* ligne,unsigned int dimensions_max){
     }
 }
 
-void set_regle(automate automate_cellulaire, int regle){
+void set_regle(automate automate_cellulaire, char* regle){
     automate_cellulaire->regle = regle;
 }
 
@@ -104,7 +100,7 @@ cel** generer_automate(automate automate_cellulaire, char* regle, int (*type_reg
     set_configuration_initiale(automate_cellulaire, configuration_initiale);
     set_voisins(automate_cellulaire, 0);
     automate_cellulaire->type_regle = type_regle;
-    char* regle_binaire = conversion_decimal_binaire(regle);
+    //char* regle_binaire = conversion_decimal_binaire(regle);
     for(unsigned int i = 1; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             cel cellule = creer_cellule();
@@ -113,6 +109,6 @@ cel** generer_automate(automate automate_cellulaire, char* regle, int (*type_reg
         }
         set_voisins(automate_cellulaire, i);
     }
-    free(regle_binaire);
+    //free(regle_binaire);
     return automate_cellulaire->configuration_actuelle;
 }
