@@ -46,13 +46,29 @@ void afficher_cellule_somme(int etat){
     printf("%c", car);
 }
 
+void creer_image_automate(cel** cellules){
+    FILE* image = fopen("out/automate.pgm", "w");
+    fprintf(image, "P5\n");
+    fprintf(image, "255 255\n");
+    fprintf(image, "%d\n", 1);
+    for(unsigned int i = 0; i < 16; i++){
+        for(unsigned int j = 0; j < 31; j++){
+            fprintf(image, "%c", get_etat(cellules[i][j]));
+        }
+        fprintf(image, "\n");
+    }
+    fclose(image);
+}
+
 int main(int argc, char* argv[]){
 
     automate a = creer_automate(31, 16, 2);
 
     //somme = 0013100132
     //binaire = 00011110
-    generer_automate(a, "00011110", &regle_binaire, "0000000000000001000000000000000\0");
+    cel** tableau = generer_automate(a, "00011110", &regle_binaire, "0000000000000001000000000000000\0");
+
+    creer_image_automate(tableau);
 
     afficher_automate(a, &afficher_cellule_binaire);
 
