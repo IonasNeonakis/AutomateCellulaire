@@ -15,37 +15,35 @@ int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned in
 }
 
 void afficher_cellule_binaire(int etat){
-  char car ;
-    if (etat==0)
-      car=' ';
-    else
-      car='X';  
-    printf("%c",car);
+    char car;
+    if(etat == 0){
+        car = ' ';
+    }else{
+        car = 'X';  
+    }
+    printf("%c", car);
 }
 
 void afficher_cellule_somme(int etat){
-  char car;
-  switch (etat)
-  {
-  case 0:
-    car=' ';
-    break;
-  
-  case 1:
-    car='1';
-    break;
-  case 2:
-    car='2';
-    break;
-  case 3:
-    car='3';
-    break;
-  default:
-    car='Y';
-    break;
-  }
-  printf("%c",car);
-
+    char car;
+    switch (etat){
+        case 0:
+            car = ' ';
+            break;
+        case 1:
+            car = '1';
+            break;
+        case 2:
+            car = '2';
+            break;
+        case 3:
+            car = '3';
+            break;
+        default:
+            car = 'Y';
+            break;
+    }
+    printf("%c", car);
 }
 
 int main(int argc, char* argv[]){
@@ -54,9 +52,9 @@ int main(int argc, char* argv[]){
 
     //somme = 0013100132
     //binaire = 00011110
-    generer_automate(a, "0013100132", &regle_somme, "0000000000000001000000000000000\0");
+    generer_automate(a, "00011110", &regle_binaire, "0000000000000001000000000000000\0");
 
-    afficher_automate(a,&afficher_cellule_somme);
+    afficher_automate(a, &afficher_cellule_binaire);
 
     supprimer_automate(&a);
 
