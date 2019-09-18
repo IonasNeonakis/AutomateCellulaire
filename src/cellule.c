@@ -50,13 +50,13 @@ int get_etat(cel c){
 
 
 
-int etat_suivant(cel cellule,char * regle_binaire){
+int etat_suivant(cel cellule,char * regle, int *(type_regle) (char, unsigned int, unsigned int, unsigned int)){
     int etat_gauche, etat_droite, etat_milieu;
     etat_gauche=cellule->voisin_g->etat;
     etat_droite=cellule->voisin_d->etat;
     etat_milieu=cellule->etat;
-    int x = conversion_binaire_decimal(etat_gauche,etat_milieu,etat_droite);
-    return regle_binaire[strlen(regle_binaire)-1-x]-48;
+    int x = type_regle(regle,etat_gauche,etat_milieu,etat_droite);
+    return regle[strlen(regle)-1-x]-48;
 }
 
 void afficher_cellule(cel cellule){
