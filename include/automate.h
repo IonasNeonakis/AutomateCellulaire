@@ -24,8 +24,8 @@ void set_configuration_initiale(automate, char*);
 
 void set_voisins(automate, unsigned int);
 
-void afficher_automate(automate);
+void afficher_automate(automate, void (*affichage_cellule) (int));
 
-void afficher_ligne(cel*, unsigned int);
+void afficher_ligne(cel*, unsigned int, void (*affichage_cellule) (int));
 
 #endif

@@ -59,14 +59,8 @@ int etat_suivant(cel cellule,char * regle, int *(type_regle) (char*, unsigned in
     return x;
 }
 
-void afficher_cellule(cel cellule){
-    char car ;
-    if (cellule->etat==0)
-        car=' ';
-    else
-        car='X';
-    
-    printf("%c",car);
+void afficher_cellule(cel cellule, void (*affichage_cellule) (int) ){
+    affichage_cellule(cellule->etat);
 }
 
 
