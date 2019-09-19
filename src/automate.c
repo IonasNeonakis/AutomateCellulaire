@@ -9,7 +9,7 @@ struct automate {
     cel** configuration_actuelle ; //chauqe char est un etat
     unsigned int dimension_max; // en gros la taille du tableau
     unsigned int nb_iterations_max; //
-    char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme 
+    char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme
     int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
     unsigned int nb_etats; //pas sûr wolfran =2(0,1) ; somme = 4(0,1,2,3)
     //comment définir le types de transition a effectuer ? somme || configuration des voisins ?
@@ -118,16 +118,17 @@ automate lire_fichier_automate(){
     unsigned int dimension ;
     unsigned int nb_etats ;
     char* regle ;
-    //mettre des sets dans le main 
+    //mettre des sets dans le main
     FILE* fp;
     char chaine[200];
 
-    fp=fopen("../cfg/test1.config","r");
+    fp=fopen("cfg/test1.config","r");
     if (fp==NULL){
         fprintf(stderr,"Erreur lors de l'ouverture du fichier en lecture");
     }
     while(fgets(chaine,200,fp)!=NULL){
+      printf("%s",chaine);
 
     }
+    return NULL;
 }
-
