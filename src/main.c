@@ -77,7 +77,6 @@ void creer_image_automate(cel** cellules){
                     break;
                 } 
             }
-            //fprintf(image, "%d ", get_etat(cellules[i][j]) == 1 ? 255 : 0);
         }
         fprintf(image, "\n");
     }
