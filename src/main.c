@@ -50,10 +50,10 @@ void creer_image_automate(cel** cellules){
     FILE* image = fopen("out/automate.pgm", "w");
     fprintf(image, "P2\n");
     fprintf(image, "31 16\n");
-    fprintf(image, "%d\n", 15);
+    fprintf(image, "%d\n", 255);
     for(unsigned int i = 0; i < 16; i++){
         for(unsigned int j = 0; j < 31; j++){
-            fprintf(image, "%d ", get_etat(cellules[i][j]) == 1 ? 15 : 0);
+            fprintf(image, "%d ", get_etat(cellules[i][j]) == 1 ? 255 : 0);
         }
         fprintf(image, "\n");
     }
