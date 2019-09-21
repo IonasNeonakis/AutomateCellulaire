@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
     
     //lire_fichier_automate();
 
-    afficher_automate(a, &afficher_automate_console);
+    afficher_automate(a, &afficher_automate_pgm);
 
     supprimer_automate(&a);
 
