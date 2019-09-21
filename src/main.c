@@ -11,7 +11,7 @@ int regle_somme(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int 
 
 int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
     int x = conversion_binaire_decimal(e_cg, e_cm, e_cd);
-    return regle[strlen(regle) - 1 - x] - 48;
+    return regle[x] - 48;
 }
 
 void afficher_cellule_binaire(int etat){
@@ -43,23 +43,24 @@ void afficher_cellule_somme(int etat){
     printf("%c", car);
 }
 
-void creer_image_automate(cel** cellules){
+void creer_image_automate(cel** cellules, unsigned int dimension_max, unsigned int nb_iterations){
     FILE* image = fopen("out/automate.ppm", "w");
     fprintf(image, "P3\n");
-    fprintf(image, "240 240\n");
+    fprintf(image, "%d ", dimension_max);
+    fprintf(image, "%d\n", nb_iterations);
     fprintf(image, "%d\n", 255);
-    for(unsigned int i = 0; i < 240; i++){
-        for(unsigned int j = 0; j < 240; j++){
+    for(unsigned int i = 0; i < nb_iterations; i++){
+        for(unsigned int j = 0; j < dimension_max; j++){
             int etat = get_etat(cellules[i][j]);
             switch(etat){
                  case 0: {
-                    fprintf(image, "%d ", 0);
-                    fprintf(image, "%d ", 0);
-                    fprintf(image, "%d ", 0);
+                    fprintf(image, "%d ", 255);
+                    fprintf(image, "%d ", 255);
+                    fprintf(image, "%d ", 255);
                     break;
                 } 
                 case 1: {
-                    fprintf(image, "%d ", 255);
+                    fprintf(image, "%d ", 0);
                     fprintf(image, "%d ", 0);
                     fprintf(image, "%d ", 0);
                     break;
@@ -85,13 +86,17 @@ void creer_image_automate(cel** cellules){
 
 int main(int argc, char* argv[]){
 
-    automate a = creer_automate(240, 240, 3);
+    unsigned int dimension_max = 240;
+    unsigned int nb_iterations = 1000;
+
+    automate a = creer_automate(dimension_max, nb_iterations, 3);
 
     //somme = 0013100132 
     //binaire = 00011110
-    cel** tableau = generer_automate(a, "0123000001", &regle_somme, "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\0");
 
-    creer_image_automate(tableau);
+    cel** tableau = generer_automate(a, "0123000001", &regle_somme, "000000000000000000000000000000000000000000000000000000000000111100000011100000000001100000000110000000000000000000010000000000000000000000000000000000000000001111000000000000000000001110000000000000000000000010000011000000000000000000000000\0");
+
+    creer_image_automate(tableau, dimension_max, nb_iterations);
     //lire_fichier_automate();
     afficher_automate(a, &afficher_cellule_somme);
 
