@@ -8,14 +8,14 @@ SRC=$(PWD)/src
 # règle de compilation --- exécutables
 all : bin/automates
 
-bin/automates: obj/cellule.o obj/automate.o obj/main.o obj/utils.o
+bin/automates: obj/cellule.o obj/automate.o obj/main.o obj/utils.o obj/regles.o obj/affichage.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 obj/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) -o $@ -c $< 
 
 memoire : obj/automate.o
-	make && cd bin && valgrind --leak-check=full ./automates
+	make && valgrind --leak-check=full ./bin/automates 
 
 # options de compilation
 clean:
