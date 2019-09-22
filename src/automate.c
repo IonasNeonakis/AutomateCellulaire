@@ -101,20 +101,23 @@ cel** generer_automate(automate automate_cellulaire, char* regle, int (*type_reg
 }
 
 automate lire_fichier_automate(){
-    unsigned int nb_iterations ;
-    unsigned int dimension ;
-    unsigned int nb_etats ;
-    char* regle ;
+    unsigned int nb_iterations =0 ;
+    unsigned int dimension =0;
+    unsigned int nb_etats =0;
+    char* regle =NULL;
+    char* config_init=NULL;
     
     //mettre des sets dans le main
     FILE* fp;
     char chaine[200];
 
-    regex_t regex;
-    int result ; 
-    result = regcomp(&regex ,"\"(nb_iteration|dimension|config_init|nb_etats|regle)\"=[0123456789]*;$", REG_EXTENDED | REG_NEWLINE); 
+    regex_t preg;
+    int err ; 
+    const char *str_regex = "\"(nb_iteration|dimension|config_init|nb_etats|regle)\"=([0123456789]*);$" ;
 
-    if (result){
+    err = regcomp(&preg ,str_regex, REG_EXTENDED | REG_NEWLINE); 
+
+    if (err==1){
         printf("erreur compliation regex");
         exit(1);
     }
@@ -123,17 +126,123 @@ automate lire_fichier_automate(){
     if (fp==NULL){
         fprintf(stderr,"Erreur lors de l'ouverture du fichier en lecture");
     }
+
+    int match;
+    size_t nmatch=0;
+    regmatch_t *pmatch = NULL;
+
+    nmatch=preg.re_nsub;
+
+
+
+    char *type ;
+    int start_type ;
+    int end_type ;
+    size_t size_type ;
+
+    char *valeur;
+    int start_valeur;
+    int end_valeur;
+    size_t size_valeur;
+
+
     while(fgets(chaine,200,fp)!=NULL){
         printf("%s",chaine);
-        result=regexec(&regex,chaine,0,NULL,0);
-        if (!result){
+
+        pmatch = realloc (pmatch,sizeof (*pmatch)*nmatch);
+
+        if (pmatch){
+            match= regexec(&preg,chaine,nmatch,pmatch,0);
+            //regfree (&preg);
+        }            
+
+        if (match==0){
             printf("motif correct\n");
+
+            type = NULL;
+            valeur = NULL;
+            start_type = pmatch[1].rm_so;
+            end_type = pmatch[1].rm_eo;
+            size_type = end_type - start_type;
+
+
+
+            start_valeur = pmatch[1].rm_eo+2;
+            end_valeur = pmatch[0].rm_eo-1;
+            size_valeur = end_valeur - start_valeur;
+
+
+               
+            type = realloc (type,sizeof (*type) * (size_type + 1));
+            valeur=realloc(valeur,sizeof(*valeur)*(size_valeur+1));
+            if (type)
+            {
+               strncpy (type, &chaine[start_type], size_type);
+               type[size_type] = '\0';
+               printf ("type ici : %s\n", type);
+            }
+            if(valeur){
+                strncpy (valeur, &chaine[start_valeur], size_valeur);
+                valeur[size_valeur] = '\0';
+                printf ("val ici : %s\n", valeur);
+            }
+
+            if(strcmp(type,"nb_iteration")){
+                if(nb_iterations!=0){
+                    printf("duplication du type \"nb_iteration\". Arrêt du programme\n");
+                    exit(1);
+                }else
+                    nb_iterations=(unsigned int)conversion_char_int(valeur);
+
+            }else if(strcmp(type,"dimension")){
+                if(dimension!=0){
+                    printf("duplication du type \"dimension\". Arrêt du programme\n");
+                    exit(1);
+                }else
+                    dimension=(unsigned int) conversion_char_int(valeur);
+
+            }else if(strcmp(type,"regle")){
+                if (regle!=NULL){
+                    printf("duplication du type \"regle\". Arrêt du programme\n");
+                    exit(1);
+                }else
+                    regle=valeur;
+
+                
+            }else if(strcmp(type,"config_init")){
+               if (config_init!=NULL){
+                    printf("duplication du type \"config_init\". Arrêt du programme\n");
+                    exit(1);
+                }else
+                config_init=valeur;
+                
+            }else if(strcmp(type,"nb_etats")){
+                if(nb_etats!=0){
+                    printf("duplication du type \"nb_etats\". Arrêt du programme\n");
+                    exit(1);
+                }else
+                nb_etats=(unsigned int) conversion_char_int(valeur);
+            }
+            free (type);
+            free (valeur);
+
+
         }else{
-            printf("motif incorrect\n");
+            printf("Fichier corrompu\n");
+            exit(1);
         }
 
     }
-    regfree(&regex);
+    if(dimension == 0 || regle == NULL || nb_etats == 0 || config_init == NULL || nb_iterations == 0){
+        printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
+        exit(1);
+    }
+    automate a= creer_automate(dimension,nb_iterations,nb_etats);
+    a->regle =regle;
+    a->configuration_actuelle=config_init;
+
+    free(pmatch);
+    regfree(&preg);
 
     fclose(fp);
     return NULL;
