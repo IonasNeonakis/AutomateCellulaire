@@ -32,10 +32,6 @@ void afficher_cellule_somme(int etat){
     printf("%c", car);
 }
 
-char afficher_cellule_image(int etat){
-
-}
-
 void afficher_ligne(cel* ligne,unsigned int dimensions_max, void (*affichage_cellule) (int)){
     for(unsigned int i = 0; i < dimensions_max; i++){
         cel x = ligne[i];
@@ -48,7 +44,7 @@ void afficher_automate_console(automate automate_cellulaire){
     unsigned int nb_iterations_max = get_nb_iterations_max(automate_cellulaire);
     unsigned int dimension_max = get_dimension_max(automate_cellulaire);
     cel** configuration_actuelle = get_configuration_actuelle(automate_cellulaire);
-    void* affichage_regle = get_affichage_regle(automate_cellulaire);
+    void (*affichage_regle)(int) = get_affichage_regle(automate_cellulaire);
 
     printf("Règle           : %s\n", regle);
     printf("Règle binaire   : %s\n", regle);
