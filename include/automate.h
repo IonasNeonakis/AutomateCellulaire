@@ -1,8 +1,8 @@
 #ifndef AUTOMATE_H
 #define AUTOMATE_H
 
-#include <regex.h>
 #include <stdlib.h>
+#include <regex.h>
 
 
 #include "../include/cellule.h"

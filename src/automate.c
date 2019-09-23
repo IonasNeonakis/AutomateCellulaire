@@ -69,8 +69,10 @@ void set_regle(automate a, char* regle_binaire){
 void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
     for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){
         automate_cellulaire->configuration_actuelle[0][i] = creer_cellule();
+        //printf("%d ", configuration_initiale[i] == '0');
         set_etat(automate_cellulaire->configuration_actuelle[0][i], configuration_initiale[i] == '0' ? 0 : 1);
     }
+    automate_cellulaire->configuration_initiale = configuration_initiale;
 }
 
 void set_voisins(automate automate_cellulaire, unsigned int k){
@@ -105,8 +107,9 @@ cel** generer_automate(automate automate_cellulaire){
     //automate_cellulaire->regle = regle;
     //automate_cellulaire->type_regle = type_regle;
     //automate_cellulaire->affichage_regle = affichage_regle;
-    printf("je suis là oh\n");
-
+    for(int i = 0; i < automate_cellulaire->dimension_max; i++){
+        printf("%d", get_etat(automate_cellulaire->configuration_actuelle[0][i]));
+    }
     set_voisins(automate_cellulaire, 0);
     //char* regle_binaire = conversion_decimal_binaire(regle);
     for(unsigned int i = 1; i < automate_cellulaire->nb_iterations_max; i++){
