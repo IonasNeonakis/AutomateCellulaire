@@ -8,7 +8,6 @@
 #include "../include/cellule.h"
 #include "../include/utils.h"
 #include "../include/regles.h"
-#include "../include/affichage.h"
 
 struct automate;
 
@@ -24,7 +23,9 @@ void set_affichage_regle(automate,void (*afficher_cellule)(int));
 
 void set_affichage(automate,void (*afficher_automate_console)(automate));
 
-void set_regle(automate,int (*regle)(char*, unsigned int, unsigned int, unsigned int));
+void set_type_regle(automate,int (*regle)(char*, unsigned int, unsigned int, unsigned int));
+
+void set_regle(automate, char*);
 
 void set_configuration_initiale(automate, char*);
 

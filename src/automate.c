@@ -1,4 +1,5 @@
 #include "../include/automate.h"
+#include "../include/affichage.h"
 
 struct automate {
     unsigned int temps ; // le temps t actuelle, commence à 0
@@ -50,17 +51,20 @@ void afficher_automate(automate automate_cellulaire){
 }
 
 void set_affichage_regle(automate a,void (*afficher_cellule)(int)){
-    a->affichage_regle=afficher_cellule;
+    a->affichage_regle = afficher_cellule;
 }
 
 void set_affichage(automate a ,void (*afficher_automate)(automate)){
-    a->affichage=afficher_automate;
+    a->affichage = afficher_automate;
 }
 
-void set_regle(automate a ,int (*regle)(char*, unsigned int, unsigned int, unsigned int)){
-    a->type_regle=regle;
+void set_type_regle(automate a ,int (*regle)(char*, unsigned int, unsigned int, unsigned int)){
+    a->type_regle = regle;
 }
 
+void set_regle(automate a, char* regle_binaire){
+    a->regle = regle_binaire;
+}
 
 void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
     for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){
@@ -97,11 +101,11 @@ void (*get_affichage_regle(automate automate_cellulaire))(int){
 }
 
 cel** generer_automate(automate automate_cellulaire){
-    set_configuration_initiale(automate_cellulaire, automate_cellulaire->configuration_initiale);
+    //set_configuration_initiale(automate_cellulaire, automate_cellulaire->configuration_initiale);
     //automate_cellulaire->regle = regle;
     //automate_cellulaire->type_regle = type_regle;
     //automate_cellulaire->affichage_regle = affichage_regle;
-    printf("je suis là\n");
+    printf("je suis là oh\n");
 
     set_voisins(automate_cellulaire, 0);
     //char* regle_binaire = conversion_decimal_binaire(regle);
