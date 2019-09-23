@@ -10,6 +10,7 @@ struct automate {
     void (*affichage_regle) (int);
     unsigned int nb_etats; //pas sûr wolfran =2(0,1) ; somme = 4(0,1,2,3)
     void (*affichage) (automate);
+    char *configuration_initiale ; 
     //comment définir le types de transition a effectuer ? somme || configuration des voisins ?
 };
 
@@ -48,6 +49,19 @@ void afficher_automate(automate automate_cellulaire){
     automate_cellulaire->affichage(automate_cellulaire);
 }
 
+void set_affichage_regle(automate a,void (*afficher_cellule)(int)){
+    a->affichage_regle=afficher_cellule;
+}
+
+void set_affichage(automate a ,void (*afficher_automate)(automate)){
+    a->affichage=afficher_automate;
+}
+
+void set_regle(automate a ,int (*regle)(char*, unsigned int, unsigned int, unsigned int)){
+    a->type_regle=regle;
+}
+
+
 void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
     for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){
         automate_cellulaire->configuration_actuelle[0][i] = creer_cellule();
@@ -82,17 +96,19 @@ void (*get_affichage_regle(automate automate_cellulaire))(int){
     return automate_cellulaire->affichage_regle;
 }
 
-cel** generer_automate(automate automate_cellulaire, char* regle, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int), char* configuration_initiale, void (*affichage_regle) (int)){
-    set_configuration_initiale(automate_cellulaire, configuration_initiale);
-    automate_cellulaire->regle = regle;
-    automate_cellulaire->type_regle = type_regle;
-    automate_cellulaire->affichage_regle = affichage_regle;
+cel** generer_automate(automate automate_cellulaire){
+    set_configuration_initiale(automate_cellulaire, automate_cellulaire->configuration_initiale);
+    //automate_cellulaire->regle = regle;
+    //automate_cellulaire->type_regle = type_regle;
+    //automate_cellulaire->affichage_regle = affichage_regle;
+    printf("je suis là\n");
+
     set_voisins(automate_cellulaire, 0);
     //char* regle_binaire = conversion_decimal_binaire(regle);
     for(unsigned int i = 1; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             cel cellule = creer_cellule();
-            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], regle, type_regle));
+            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], automate_cellulaire->regle, automate_cellulaire->type_regle));
             automate_cellulaire->configuration_actuelle[i][j] = cellule;
         }
         set_voisins(automate_cellulaire, i);
@@ -228,7 +244,7 @@ automate lire_fichier_automate(){
                     exit(1);
                 }else
                 nb_etats=(unsigned int) conversion_char_int(valeur);
-            }else if(strcmp(type,"type_regle")){
+            }else if(!strcmp(type,"type_regle")){
                 if(type_regle!=NULL){
                     printf("duplication du type \"type_regle\". Arrêt du programme\n");
                     exit(1);
@@ -269,6 +285,7 @@ automate lire_fichier_automate(){
 
             }else{
                 printf("\n\nerreur type inconnu\n\n");
+                exit(1);
             }
             free (type);
             free (valeur);
@@ -282,17 +299,19 @@ automate lire_fichier_automate(){
     }
     if(dimension == 0 || regle == NULL || nb_etats == 0 || config_init == NULL || nb_iterations == 0 ||type_affichage==NULL ||type_regle==NULL){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
-        printf("%s",type_affichage);
         exit(1);
     }
     automate a= creer_automate(dimension,nb_iterations,nb_etats);
     a->regle =regle;
-    a->configuration_actuelle=config_init;
-    generer_automate(a,regle,type_regle,config_init,type_affichage);
+    a->configuration_initiale=config_init;
+    a->type_regle=type_regle;
+    a->affichage_regle=affichage_cellule;
+    a->affichage=type_affichage;
+    generer_automate(a);
 
     free(pmatch);
     regfree(&preg);
 
     fclose(fp);
-    return NULL;
+    return a;
 }
