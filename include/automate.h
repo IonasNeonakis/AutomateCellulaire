@@ -7,6 +7,8 @@
 
 #include "../include/cellule.h"
 #include "../include/utils.h"
+#include "../include/regles.h"
+#include "../include/affichage.h"
 
 struct automate;
 
@@ -16,21 +18,29 @@ automate creer_automate(unsigned int, unsigned int, unsigned int);
 
 void supprimer_automate(automate*);
 
-void afficher_automate(automate, void (*affichage_cellule) (int));
+void afficher_automate(automate);
 
-void afficher_ligne(cel*, unsigned int, void (*affichage_cellule) (int));
+void set_affichage_regle(automate,void (*afficher_cellule)(int));
 
-void set_regle(automate, char*);
+void set_affichage(automate,void (*afficher_automate_console)(automate));
 
-void set_nb_iterations_max(automate, int);
-
-void set_dimension_max(automate, int);
+void set_regle(automate,int (*regle)(char*, unsigned int, unsigned int, unsigned int));
 
 void set_configuration_initiale(automate, char*);
 
 void set_voisins(automate, unsigned int);
 
-cel** generer_automate(automate, char*, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int), char*);
+cel** get_configuration_actuelle(automate);
+
+unsigned int get_nb_iterations_max();
+
+unsigned int get_dimension_max(automate);
+
+char* get_regle(automate);
+
+void (*get_affichage_regle(automate))(int);
+
+cel** generer_automate(automate);
 
 automate lire_fichier_automate();
 
