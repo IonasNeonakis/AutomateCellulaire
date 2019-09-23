@@ -7,6 +7,8 @@
 
 #include "../include/cellule.h"
 #include "../include/utils.h"
+#include "../include/regles.h"
+#include "../include/affichage.h"
 
 struct automate;
 
@@ -16,7 +18,7 @@ automate creer_automate(unsigned int, unsigned int, unsigned int);
 
 void supprimer_automate(automate*);
 
-void afficher_automate(automate , void (*) (automate));
+void afficher_automate(automate);
 
 void set_configuration_initiale(automate, char*);
 

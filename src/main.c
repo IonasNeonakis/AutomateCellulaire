@@ -18,15 +18,16 @@ int main(int argc, char* argv[]){
     
     //binaire = 00011110
 
-    cel** tableau = generer_automate(a, "0123000001", &regle_somme, config_initiale, &afficher_cellule_somme);
+    //cel** tableau = generer_automate(a, "0123000001", &regle_somme, config_initiale, &afficher_cellule_somme);
 
     //affichage_automate_pgm(tableau, dimension_max, nb_iterations);
     
-    //lire_fichier_automate();
+    lire_fichier_automate();
 
-    afficher_automate(a, &afficher_automate_pgm);
+    //afficher_automate(a, &afficher_automate_console);
+    //afficher_automate(a);
 
-    supprimer_automate(&a);
+    //supprimer_automate(&a);
 
     return EXIT_SUCCESS;
 }

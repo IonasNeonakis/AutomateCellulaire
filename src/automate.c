@@ -9,6 +9,7 @@ struct automate {
     int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
     void (*affichage_regle) (int);
     unsigned int nb_etats; //pas sûr wolfran =2(0,1) ; somme = 4(0,1,2,3)
+    void (*affichage) (automate);
     //comment définir le types de transition a effectuer ? somme || configuration des voisins ?
 };
 
@@ -43,8 +44,8 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     free(automate_cellulaire);
     automate_cellulaire = NULL;
 }
-void afficher_automate(automate automate_cellulaire, void (*affichage) (automate)){
-    affichage(automate_cellulaire);
+void afficher_automate(automate automate_cellulaire){
+    automate_cellulaire->affichage(automate_cellulaire);
 }
 
 void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
@@ -106,6 +107,10 @@ automate lire_fichier_automate(){
     unsigned int nb_etats =0;
     char* regle =NULL;
     char* config_init=NULL;
+    int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = NULL;
+    void (*type_affichage)(automate) =NULL;
+    void (*affichage_cellule)(int)=NULL;
+
     
     //mettre des sets dans le main
     FILE* fp;
@@ -113,7 +118,7 @@ automate lire_fichier_automate(){
 
     regex_t preg;
     int err ; 
-    const char *str_regex = "\"(nb_iteration|dimension|config_init|nb_etats|regle)\"=([0123456789]*);$" ;
+    const char *str_regex = "\"(type_affichage|type_regle|nb_iteration|dimension|config_init|nb_etats|regle)\"=([0123456789]*);$" ;
 
     err = regcomp(&preg ,str_regex, REG_EXTENDED | REG_NEWLINE); 
 
@@ -187,21 +192,22 @@ automate lire_fichier_automate(){
                 printf ("val ici : %s\n", valeur);
             }
 
-            if(strcmp(type,"nb_iteration")){
+            if(!strcmp(type,"nb_iteration")){
+                printf("je suis là %s \n\n",type);
                 if(nb_iterations!=0){
                     printf("duplication du type \"nb_iteration\". Arrêt du programme\n");
                     exit(1);
                 }else
                     nb_iterations=(unsigned int)conversion_char_int(valeur);
 
-            }else if(strcmp(type,"dimension")){
+            }else if(!strcmp(type,"dimension")){
                 if(dimension!=0){
                     printf("duplication du type \"dimension\". Arrêt du programme\n");
                     exit(1);
                 }else
                     dimension=(unsigned int) conversion_char_int(valeur);
 
-            }else if(strcmp(type,"regle")){
+            }else if(!strcmp(type,"regle")){
                 if (regle!=NULL){
                     printf("duplication du type \"regle\". Arrêt du programme\n");
                     exit(1);
@@ -209,19 +215,60 @@ automate lire_fichier_automate(){
                     regle=valeur;
 
                 
-            }else if(strcmp(type,"config_init")){
+            }else if(!strcmp(type,"config_init")){
                if (config_init!=NULL){
                     printf("duplication du type \"config_init\". Arrêt du programme\n");
                     exit(1);
                 }else
                 config_init=valeur;
                 
-            }else if(strcmp(type,"nb_etats")){
+            }else if(!strcmp(type,"nb_etats")){
                 if(nb_etats!=0){
                     printf("duplication du type \"nb_etats\". Arrêt du programme\n");
                     exit(1);
                 }else
                 nb_etats=(unsigned int) conversion_char_int(valeur);
+            }else if(strcmp(type,"type_regle")){
+                if(type_regle!=NULL){
+                    printf("duplication du type \"type_regle\". Arrêt du programme\n");
+                    exit(1);
+                }else{
+                    switch (conversion_char_int(valeur)){
+                    case 0:
+                        type_regle=&regle_binaire;
+                        affichage_cellule=&afficher_cellule_binaire;
+                        break;
+                    case 1:
+                        type_regle=&regle_somme;
+                        affichage_cellule=&afficher_cellule_somme;
+                        break;
+                    default:
+                        printf("Erreur de la regle, arrêt du programme.");
+                        exit(1);
+                        break;
+                    }
+                }
+            }else if(!strcmp(type,"type_affichage")){
+                if(type_affichage!=NULL){
+                    printf("duplication du type \"type_affichage\". Arrêt du programme\n");
+                    exit(1);
+                }else{
+                    switch (conversion_char_int(valeur)){
+                    case 0:
+                        type_affichage=&afficher_automate_console;
+                        break;
+                    case 1:
+                        type_affichage=&afficher_automate_pgm;
+                        break;
+                    default:
+                        printf("Erreur de l'affichage, arrêt du programme.");
+                        exit(1);
+                        break;
+                    }
+                }
+
+            }else{
+                printf("\n\nerreur type inconnu\n\n");
             }
             free (type);
             free (valeur);
@@ -233,13 +280,15 @@ automate lire_fichier_automate(){
         }
 
     }
-    if(dimension == 0 || regle == NULL || nb_etats == 0 || config_init == NULL || nb_iterations == 0){
+    if(dimension == 0 || regle == NULL || nb_etats == 0 || config_init == NULL || nb_iterations == 0 ||type_affichage==NULL ||type_regle==NULL){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
+        printf("%s",type_affichage);
         exit(1);
     }
     automate a= creer_automate(dimension,nb_iterations,nb_etats);
     a->regle =regle;
     a->configuration_actuelle=config_init;
+    generer_automate(a,regle,type_regle,config_init,type_affichage);
 
     free(pmatch);
     regfree(&preg);
