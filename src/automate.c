@@ -6,9 +6,9 @@ struct automate {
     cel** configuration_actuelle ; //chauqe char est un etat
     unsigned int dimension_max; // en gros la taille du tableau
     unsigned int nb_iterations_max; //
-    char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme
-    int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
-    void (*affichage_regle) (int);
+    // char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme
+    // int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
+    // void (*affichage_regle) (int);
     unsigned int nb_etats; //pas sûr wolfran =2(0,1) ; somme = 4(0,1,2,3)
     void (*affichage) (automate);
     char *configuration_initiale ; 
