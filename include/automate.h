@@ -41,4 +41,6 @@ cel** generer_automate(automate);
 
 automate lire_fichier_automate();
 
+automate lecture_runtime_automate();
+
 #endif
