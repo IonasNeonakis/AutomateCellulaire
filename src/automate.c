@@ -105,7 +105,7 @@ cel** generer_automate(automate automate_cellulaire){
     return automate_cellulaire->configuration_actuelle;
 }
 
-automate lire_fichier_automate(){
+automate lire_fichier_automate(char* nom_fichier){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     char* regle_string = NULL;
@@ -128,8 +128,12 @@ automate lire_fichier_automate(){
         printf("Erreur à la compilation du regex !");
         exit(1);
     }
+    char cfg[5]="cfg/\0";
+    char* fichier_a_ouvrir =(char*) malloc(sizeof(char)*strlen(nom_fichier)+1+strlen(cfg));
+    strcpy(fichier_a_ouvrir,cfg);
+    strcat(fichier_a_ouvrir,nom_fichier);
 
-    fp = fopen("cfg/test2.config","r");
+    fp = fopen(fichier_a_ouvrir,"r");
     
     if (fp == NULL){
         fprintf(stderr,"Erreur lors de l'ouverture du fichier en lecture !");
@@ -195,12 +199,18 @@ automate lire_fichier_automate(){
                 if(dimension != 0){
                     printf("Duplication du type : \"dimension\". Arrêt du programme !\n");
                     exit(1);
+                }else if(config_init!=NULL && !est_de_longueur(config_init,conversion_char_int(valeur))){
+                    printf("La configuration initiale doit etre de la même longuer que la dimension. Arrêt du programme !\n");
+                    exit(1);
                 }else{
                     dimension=(unsigned int) conversion_char_int(valeur);
                 }
             }else if(!strcmp(type, "regle")){
                 if (regle_string != NULL){
                     printf("Duplication du type : \"regle\". Arrêt du programme !\n");
+                    exit(1);
+                }else if(type_regle!=NULL && ((type_regle==regle_binaire && (!est_de_longueur(valeur,8) || !est_regle_binaire(valeur)))|| (type_regle==regle_somme && (!est_de_longueur(valeur,10)|| est_regle_somme(valeur))))){
+                    printf("La regle n'est pas de la bonne longueur pour ce type d'automates ou le type d'etats est faux. Arrêt du programme !");
                     exit(1);
                 }else{
                     regle_string = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
@@ -210,6 +220,9 @@ automate lire_fichier_automate(){
                if (config_init != NULL){
                     printf("Duplication du type : \"config_init\". Arrêt du programme !\n");
                     exit(1);
+                }else if(dimension!=0 && !est_de_longueur(valeur,dimension)){
+                    printf("La dimension doit etre de la même longuer que la configuration initiale. Arrêt du programme !\n");
+                    exit(1);
                 }else{
                     config_init = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
                     config_init = strcpy(config_init, valeur);
@@ -218,7 +231,11 @@ automate lire_fichier_automate(){
                 if(type_regle != NULL){
                     printf("duplication du type : \"type_regle\". Arrêt du programme !\n");
                     exit(1);
+                }else if(regle_string!=NULL && ((conversion_char_int(valeur)==0 && ( !est_regle_binaire(regle_string)  || !est_de_longueur(regle_string,8))) || (conversion_char_int(valeur)==1 && (!est_regle_somme(regle_string) || !est_de_longueur(regle_string,10))))){
+                        printf("La regle n'est pas de la bonne longueur pour ce type d'automates ou le type d'etats est faux. Arrêt du programme !");
+                        exit(1);    
                 }else{
+
                     switch (conversion_char_int(valeur)){
                         case 0: {
                             type_regle = &regle_binaire;
@@ -272,6 +289,7 @@ automate lire_fichier_automate(){
         }
     }
     if(dimension == 0 || regle_string == NULL || config_init == NULL || nb_iterations == 0 ||type_affichage== NULL || type_regle == NULL){
+        printf("\n%s \n",regle_string);
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme !\n");
         exit(1);
     }
@@ -290,6 +308,7 @@ automate lire_fichier_automate(){
 
     generer_automate(a);
 
+    free(fichier_a_ouvrir);
     free(pmatch);
     free(regle_string);
     free(config_init);
@@ -297,4 +316,98 @@ automate lire_fichier_automate(){
 
     fclose(fp);
     return a;
+}
+
+automate process_args(int argc, char* argv[]){
+    unsigned int nb_iterations = 0;
+    unsigned int dimension = 0;
+    char* regle_string = NULL;
+    
+    char* config_init = NULL;
+    int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = NULL;
+    void (*type_affichage)(automate) = NULL;
+    void (*affichage_cellule)(int) = NULL;
+
+    if(strcmp(argv[6],"0") && strcmp(argv[6],"1")){
+        printf("Erreur de l'argument type_regle : Arrêt du programme ! \n");
+        exit(1);
+    }else{
+        if (!strcmp(argv[6],"0")){
+        type_regle = &regle_binaire;
+        affichage_cellule = &afficher_cellule_binaire;
+        }else if(!strcmp(argv[6],"1")) {
+            type_regle = &regle_somme;
+            affichage_cellule = &afficher_cellule_somme;
+        }
+    }
+
+
+    if (!est_un_int(argv[2])){
+        printf("Erreur de l'argument nb_iteration : Arrêt du programme ! \n");
+        exit(1);
+    }else{
+        nb_iterations=conversion_char_int(argv[2]);
+    }
+
+
+    if (!est_un_int(argv[3])){
+        printf("Erreur de l'argument dimension : Arrêt du programme ! \n");
+        exit(1);
+    }else{
+        dimension=conversion_char_int(argv[3]);
+    }
+
+
+    if(!est_de_longueur(argv[4],dimension)){
+        printf("Erreur de l'argument dimension ou configuration : Arrêt du programme ! \n");
+        exit(1);
+    }else{
+        if(( !strcmp(argv[6],"0")  && !est_regle_binaire(argv[4])) || ( !strcmp(argv[6],"1")  && !est_regle_somme(argv[4])) ){
+            printf("Erreur de l'argument configuration : Arrêt du programme ! \n");
+            exit(1);
+        }else {
+        config_init=argv[4];
+        }
+    }
+
+    if(( !strcmp(argv[6],"0")  && (!est_regle_binaire(argv[5]) || !est_de_longueur(argv[5],8))) || ( !strcmp(argv[6],"1")  && (!est_regle_somme(argv[5]) || !est_de_longueur(argv[5],10)))){
+        //printf("%s | %s\n",argv[6] , argv[5]);
+
+        printf("Erreur de l'argument regle : Arrêt du programme ! \n");
+        exit(1);
+    }else{
+        regle_string = argv[5];
+    }
+
+
+    if(!est_un_int(argv[7]) || (strcmp(argv[7],"0") && strcmp(argv[7],"1")) ){
+        printf("Erreur de l'argument type_affichage : Arrêt du programme ! \n");
+        exit(1);
+    }else{
+        if (!strcmp(argv[7],"0")){
+            type_affichage=&afficher_automate_console;
+        }else{
+            type_affichage=&afficher_automate_pgm;
+        }
+    }
+    automate a ;
+    a = creer_automate(dimension,nb_iterations);
+    
+    regle r = creer_regle();
+    set_regle(r, regle_string);
+    set_type_regle(r, type_regle);
+    set_affichage_regle(r, affichage_cellule);
+
+    set_regle_automate(a, r);
+
+    set_configuration_initiale(a, config_init);
+    set_affichage(a,type_affichage);
+
+    generer_automate(a);
+
+    return a;
+    
+    
+
+
 }

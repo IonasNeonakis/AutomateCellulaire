@@ -39,6 +39,8 @@ void (*get_affichage_regle_automate(automate))(int);
 
 cel** generer_automate(automate);
 
-automate lire_fichier_automate();
+automate lire_fichier_automate(char *);
+
+automate process_args(int, char**);
 
 #endif
