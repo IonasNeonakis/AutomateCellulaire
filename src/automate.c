@@ -154,7 +154,7 @@ automate lire_fichier_automate(){
     
     //mettre des sets dans le main
     FILE* fp;
-    char chaine[200];
+    char chaine[20000];
 
     regex_t preg;
     int err ; 
@@ -167,7 +167,7 @@ automate lire_fichier_automate(){
         exit(1);
     }
 
-    fp=fopen("cfg/test1.config","r");
+    fp=fopen("cfg/test2.config","r");
     if (fp==NULL){
         fprintf(stderr,"Erreur lors de l'ouverture du fichier en lecture");
     }
@@ -191,14 +191,12 @@ automate lire_fichier_automate(){
     size_t size_valeur;
 
 
-    while(fgets(chaine,200,fp)!=NULL){
-        printf("%s",chaine);
+    while(fgets(chaine,20000,fp)!=NULL){
 
         pmatch = realloc (pmatch,sizeof (*pmatch)*nmatch);
 
         if (pmatch){
             match= regexec(&preg,chaine,nmatch,pmatch,0);
-            //regfree (&preg);
         }            
 
         if (match==0){
@@ -224,16 +222,13 @@ automate lire_fichier_automate(){
             {
                strncpy (type, &chaine[start_type], size_type);
                type[size_type] = '\0';
-               printf ("type ici : %s\n", type);
             }
             if(valeur){
                 strncpy (valeur, &chaine[start_valeur], size_valeur);
                 valeur[size_valeur] = '\0';
-                printf ("val ici : %s\n", valeur);
             }
 
             if(!strcmp(type,"nb_iteration")){
-                printf("je suis là %s \n\n",type);
                 if(nb_iterations!=0){
                     printf("duplication du type \"nb_iteration\". Arrêt du programme\n");
                     exit(1);
