@@ -46,6 +46,10 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     automate_cellulaire->configuration_actuelle = NULL;
     supprimer_regle(automate_cellulaire->_regle);
     free(automate_cellulaire);
+    free(automate_cellulaire->configuration_initiale);
+    automate_cellulaire->configuration_initiale=NULL;
+    free(automate_cellulaire->regle);
+    automate_cellulaire->regle=NULL;
     automate_cellulaire = NULL;
 }
 void afficher_automate(automate automate_cellulaire){
@@ -68,7 +72,8 @@ void set_type_regle(automate a ,int (*regle)(char*, unsigned int, unsigned int, 
 }
 
 void set_regle(automate a, char* regle_binaire){
-    a->regle = regle_binaire;
+    a->regle = (char*) malloc(sizeof(char)*strlen(regle_binaire));
+    a->regle = strcpy(a->regle,regle_binaire);
 }
 */
 
@@ -78,7 +83,9 @@ void set_configuration_initiale(automate automate_cellulaire, char* configuratio
         //printf("%d ", configuration_initiale[i] == '0');
         set_etat(automate_cellulaire->configuration_actuelle[0][i], configuration_initiale[i] == '0' ? 0 : 1);
     }
-    automate_cellulaire->configuration_initiale = configuration_initiale;
+    automate_cellulaire->configuration_initiale=(char*)malloc(sizeof(char)*strlen(configuration_initiale));
+    automate_cellulaire->configuration_initiale=strcpy(automate_cellulaire->configuration_initiale,configuration_initiale);
+    //automate_cellulaire->configuration_initiale = configuration_initiale;
 }
 
 void set_voisins(automate automate_cellulaire, unsigned int k){
@@ -244,17 +251,16 @@ automate lire_fichier_automate(){
                 }else{
                     regle = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
                     regle = strcpy(regle, valeur);
-                    printf("\n\n\nicicicicicici ::::: %s \n",regle);
-                    //regle[strlen(regle)-1]="\0";
                 }
                 
             }else if(!strcmp(type,"config_init")){
                if (config_init!=NULL){
                     printf("duplication du type \"config_init\". Arrêt du programme\n");
                     exit(1);
-                }else
-                config_init=valeur;
-                
+                }else{
+                config_init = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
+                config_init = strcpy(config_init, valeur);
+                }
             }else if(!strcmp(type,"nb_etats")){
                 if(nb_etats!=0){
                     printf("duplication du type \"nb_etats\". Arrêt du programme\n");
@@ -318,8 +324,6 @@ automate lire_fichier_automate(){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
         exit(1);
     }
-    printf("\n\n\nicicicicicici ::::: %s \n", regle);
-
     //regle[8]="\0";
     // automate a= creer_automate(dimension,nb_iterations,nb_etats);
     // a->regle =regle;
@@ -344,6 +348,7 @@ automate lire_fichier_automate(){
 
     free(pmatch);
     free(regle);
+    free(config_init);
     regfree(&preg);
 
     fclose(fp);
