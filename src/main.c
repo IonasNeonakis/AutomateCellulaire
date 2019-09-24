@@ -50,16 +50,8 @@ int main(int argc, char* argv[]){
     // cel** tableau = generer_automate(a);
 
     //affichage_automate_pgm(tableau, dimension_max, nb_iterations);
-    automate a;
-    a = lire_fichier_automate();
 
     //afficher_automate(a, &afficher_automate_console);
-    
-    
-    afficher_automate(a);
-
-
-    supprimer_automate(&a);
 
     return EXIT_SUCCESS;
 }
