@@ -63,7 +63,8 @@ void set_type_regle(automate a ,int (*regle)(char*, unsigned int, unsigned int, 
 }
 
 void set_regle(automate a, char* regle_binaire){
-    a->regle = regle_binaire;
+    a->regle = (char*) malloc(sizeof(char)*strlen(regle_binaire));
+    a->regle = strcpy(a->regle,regle_binaire);
 }
 
 void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
@@ -312,8 +313,6 @@ automate lire_fichier_automate(){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
         exit(1);
     }
-    printf("\n\n\nicicicicicici ::::: %s \n", regle);
-
     //regle[8]="\0";
     // automate a= creer_automate(dimension,nb_iterations,nb_etats);
     // a->regle =regle;
