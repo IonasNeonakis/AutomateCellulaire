@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <string.h>
+
 #include "../include/regle.h"
 #include "../include/utils.h"
 
@@ -18,6 +21,7 @@ regle creer_regle(){
 
 void supprimer_regle(regle* r){
     regle regle_a_supprimer = *r;
+    free(regle_a_supprimer->_regle);
     regle_a_supprimer->_regle = NULL;
     regle_a_supprimer->_type_regle = NULL;
     regle_a_supprimer->_affichage_regle = NULL;
@@ -27,7 +31,10 @@ void supprimer_regle(regle* r){
 }
 
 void set_regle(regle r, char* s){
-    r->_regle = s;
+    size_t taille_s = strlen(s);
+    r->_regle = (char*) malloc (sizeof(char) * taille_s + 1);
+    strcpy(r->_regle, s);
+    r->_regle[taille_s] = '\0';
 }
 
 void set_type_regle(regle r, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int)){
@@ -52,7 +59,7 @@ void (*get_affichage_regle(regle r))(int){
 
 int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
     int x = conversion_binaire_decimal(e_cg, e_cm, e_cd);
-    return regle[x] - 48;
+    return regle[strlen(regle) - 1 - x] - 48;
 }
 
 int regle_somme(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
