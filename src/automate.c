@@ -107,7 +107,7 @@ cel** generer_automate(automate automate_cellulaire){
     //automate_cellulaire->regle = regle;
     //automate_cellulaire->type_regle = type_regle;
     //automate_cellulaire->affichage_regle = affichage_regle;
-    for(int i = 0; i < automate_cellulaire->dimension_max; i++){
+    for(int i = 0; i <(int) automate_cellulaire->dimension_max; i++){
         printf("%d", get_etat(automate_cellulaire->configuration_actuelle[0][i]));
     }
     set_voisins(automate_cellulaire, 0);
@@ -129,6 +129,7 @@ automate lire_fichier_automate(){
     unsigned int dimension =0;
     unsigned int nb_etats =0;
     char* regle =NULL;
+    
     char* config_init=NULL;
     int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = NULL;
     void (*type_affichage)(automate) =NULL;
@@ -234,9 +235,12 @@ automate lire_fichier_automate(){
                 if (regle!=NULL){
                     printf("duplication du type \"regle\". Arrêt du programme\n");
                     exit(1);
-                }else
+                }else{
+                    //regle =(char*)malloc(sizeof(char)*strlen(valeur)+1);
                     regle=valeur;
-
+                    printf("\n\n\nicicicicicici ::::: %s \n",regle);
+                    //regle[strlen(regle)-1]="\0";
+                }
                 
             }else if(!strcmp(type,"config_init")){
                if (config_init!=NULL){
@@ -308,12 +312,28 @@ automate lire_fichier_automate(){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
         exit(1);
     }
+    printf("\n\n\nicicicicicici ::::: %c \n",regle);
+
+    //regle[8]="\0";
+    // automate a= creer_automate(dimension,nb_iterations,nb_etats);
+    // a->regle =regle;
+    // a->configuration_initiale=config_init;
+    // a->type_regle=type_regle;
+    // a->affichage_regle=affichage_cellule;
+    // a->affichage=type_affichage;
+    // generer_automate(a);
     automate a= creer_automate(dimension,nb_iterations,nb_etats);
-    a->regle =regle;
-    a->configuration_initiale=config_init;
-    a->type_regle=type_regle;
-    a->affichage_regle=affichage_cellule;
-    a->affichage=type_affichage;
+    //a->regle =regle;
+
+    set_regle(a,regle);
+    //a->configuration_initiale=config_init;
+    set_configuration_initiale(a,config_init);
+    set_type_regle(a,type_regle);
+    //a->type_regle=type_regle;
+    set_affichage_regle(a,affichage_cellule);
+    //a->affichage_regle=affichage_cellule;
+    set_affichage(a,type_affichage);;
+    //a->affichage=type_affichage;
     generer_automate(a);
 
     free(pmatch);
