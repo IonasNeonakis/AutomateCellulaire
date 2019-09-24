@@ -6,9 +6,9 @@ struct automate {
     cel** configuration_actuelle ; //chauqe char est un etat
     unsigned int dimension_max; // en gros la taille du tableau
     unsigned int nb_iterations_max; //
-    // char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme
-    // int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
-    // void (*affichage_regle) (int);
+    char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme
+    int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
+    void (*affichage_regle) (int);
     unsigned int nb_etats; //pas sûr wolfran =2(0,1) ; somme = 4(0,1,2,3)
     void (*affichage) (automate);
     char *configuration_initiale ; 
@@ -236,8 +236,8 @@ automate lire_fichier_automate(){
                     printf("duplication du type \"regle\". Arrêt du programme\n");
                     exit(1);
                 }else{
-                    //regle =(char*)malloc(sizeof(char)*strlen(valeur)+1);
-                    regle=valeur;
+                    regle = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
+                    regle = strcpy(regle, valeur);
                     printf("\n\n\nicicicicicici ::::: %s \n",regle);
                     //regle[strlen(regle)-1]="\0";
                 }
@@ -262,12 +262,12 @@ automate lire_fichier_automate(){
                 }else{
                     switch (conversion_char_int(valeur)){
                     case 0:
-                        type_regle=&regle_binaire;
-                        affichage_cellule=&afficher_cellule_binaire;
+                        type_regle = &regle_binaire;
+                        affichage_cellule = &afficher_cellule_binaire;
                         break;
                     case 1:
-                        type_regle=&regle_somme;
-                        affichage_cellule=&afficher_cellule_somme;
+                        type_regle = &regle_somme;
+                        affichage_cellule = &afficher_cellule_somme;
                         break;
                     default:
                         printf("Erreur de la regle, arrêt du programme.");
@@ -276,7 +276,7 @@ automate lire_fichier_automate(){
                     }
                 }
             }else if(!strcmp(type,"type_affichage")){
-                if(type_affichage!=NULL){
+                if(type_affichage != NULL){
                     printf("duplication du type \"type_affichage\". Arrêt du programme\n");
                     exit(1);
                 }else{
@@ -298,9 +298,9 @@ automate lire_fichier_automate(){
                 printf("\n\nerreur type inconnu\n\n");
                 exit(1);
             }
+            
             free (type);
             free (valeur);
-
 
         }else{
             printf("Fichier corrompu\n");
@@ -312,7 +312,7 @@ automate lire_fichier_automate(){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
         exit(1);
     }
-    printf("\n\n\nicicicicicici ::::: %c \n",regle);
+    printf("\n\n\nicicicicicici ::::: %s \n", regle);
 
     //regle[8]="\0";
     // automate a= creer_automate(dimension,nb_iterations,nb_etats);
@@ -337,6 +337,7 @@ automate lire_fichier_automate(){
     generer_automate(a);
 
     free(pmatch);
+    free(regle);
     regfree(&preg);
 
     fclose(fp);

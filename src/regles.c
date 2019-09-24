@@ -1,7 +1,7 @@
 #include "../include/regles.h"
 #include "../include/utils.h"
 
-struct regle {
+/* struct regle {
     char* _regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme par ex
     int (*_type_regle) (char*, unsigned int, unsigned int, unsigned int);
     void (*_affichage_regle) (int);
@@ -33,7 +33,8 @@ void set_type_regle(regle r, int (*type_regle) (char*, unsigned int, unsigned in
 
 void set_affichage_regle(regle r, void (*affichage_regle) (int)){
     r->_affichage_regle = affichage_regle;
-}
+} 
+*/
 
 int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
     int x = conversion_binaire_decimal(e_cg, e_cm, e_cd);
