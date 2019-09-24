@@ -8,11 +8,11 @@
 
 int main(int argc, char* argv[]){
 
-    unsigned int dimension_max = 32;
-    unsigned int nb_iterations = 16;
+    //unsigned int dimension_max = 32;
+    //unsigned int nb_iterations = 16;
     //char config_initiale[241] = "000011110001001110000001100000000001111100000000000000000000111100000011100000000001100000000110000000000000000000010000000000111100000000001111111110000000001111000000000000000000001110000000000000000000000010000011000000000000000000000000\0";
-    char config_initiale[33]="00000000000000001000000000000000\0";
-    automate a = creer_automate(dimension_max, nb_iterations, 3);
+    //char config_initiale[33]="00000000000000001000000000000000\0";
+    //automate a = creer_automate(dimension_max, nb_iterations, 3);
 
     //somme = 0013100132 
     
@@ -20,21 +20,22 @@ int main(int argc, char* argv[]){
 
     //cel** tableau = generer_automate(a, "0123000001", &regle_somme, config_initiale, &afficher_cellule_somme);
     
-    set_regle(a, "0013100132");
+    // set_regle(a, "2013101132");
 
-    set_type_regle(a,&regle_somme);
+    // set_type_regle(a,&regle_somme);
+    // 
 
-    set_configuration_initiale(a, config_initiale);
+    // set_configuration_initiale(a, config_initiale);
     
-    set_affichage_regle(a, &afficher_cellule_somme);
+    // set_affichage_regle(a, &afficher_cellule_somme);
     
-    set_affichage(a, &afficher_automate_console);
+    // set_affichage(a, &afficher_automate_console);
 
-    cel** tableau = generer_automate(a);
+    // cel** tableau = generer_automate(a);
 
     //affichage_automate_pgm(tableau, dimension_max, nb_iterations);
-    //automate a;
-    //a = lire_fichier_automate();
+    automate a;
+    a = lire_fichier_automate();
 
     //afficher_automate(a, &afficher_automate_console);
     
