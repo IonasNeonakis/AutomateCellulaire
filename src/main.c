@@ -11,9 +11,10 @@ int main(int argc, char* argv[]){
     if(argc > 1){
         char* argument = argv[1];
         if(argc == 3 && (!strcmp(argument, "-f") || !strcmp(argument, "--file"))){
-            a = lire_fichier_automate(); //on lit par fichier
+            //printf("%s",argv[2]);
+            a = lire_fichier_automate(argv[2]); //on lit par fichier
         }else if(argc == 8 && !strcmp(argument, "-a")){
-            //a = process_args(argv, argc); //on fait une lecture par arguments
+            a = process_args(argc,argv); //on fait une lecture par arguments
         }else{
             //nombre d'arguments incorrect
         }
