@@ -6,12 +6,13 @@ struct automate {
     cel** configuration_actuelle ; //chauqe char est un etat
     unsigned int dimension_max; // en gros la taille du tableau
     unsigned int nb_iterations_max; //
-    char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme
+    /*char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme
     int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
-    void (*affichage_regle) (int);
+    void (*affichage_regle) (int);*/
+    regle _regle;
     unsigned int nb_etats; //pas sûr wolfran =2(0,1) ; somme = 4(0,1,2,3)
     void (*affichage) (automate);
-    char *configuration_initiale ; 
+    char *configuration_initiale;
     //comment définir le types de transition a effectuer ? somme || configuration des voisins ?
 };
 
@@ -43,6 +44,7 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     }
     free(automate_cellulaire->configuration_actuelle);
     automate_cellulaire->configuration_actuelle = NULL;
+    supprimer_regle(automate_cellulaire->_regle);
     free(automate_cellulaire);
     automate_cellulaire = NULL;
 }
@@ -50,14 +52,17 @@ void afficher_automate(automate automate_cellulaire){
     automate_cellulaire->affichage(automate_cellulaire);
 }
 
+/*
 void set_affichage_regle(automate a,void (*afficher_cellule)(int)){
     a->affichage_regle = afficher_cellule;
 }
+*/
 
 void set_affichage(automate a ,void (*afficher_automate)(automate)){
     a->affichage = afficher_automate;
 }
 
+/*
 void set_type_regle(automate a ,int (*regle)(char*, unsigned int, unsigned int, unsigned int)){
     a->type_regle = regle;
 }
@@ -65,6 +70,7 @@ void set_type_regle(automate a ,int (*regle)(char*, unsigned int, unsigned int, 
 void set_regle(automate a, char* regle_binaire){
     a->regle = regle_binaire;
 }
+*/
 
 void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
     for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){

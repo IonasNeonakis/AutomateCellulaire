@@ -2,6 +2,7 @@
 #define AFFICHAGE_H
 
 #include "../include/automate.h"
+#include "../include/regle.h"
 
 void afficher_cellule_binaire(int);
 

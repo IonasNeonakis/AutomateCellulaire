@@ -19,13 +19,16 @@ void supprimer_automate(automate*);
 
 void afficher_automate(automate);
 
-void set_affichage_regle(automate,void (*afficher_cellule)(int));
+//void set_affichage_regle(automate,void (*afficher_cellule)(int));
 
 void set_affichage(automate,void (*afficher_automate_console)(automate));
 
+/*
 void set_type_regle(automate,int (*regle)(char*, unsigned int, unsigned int, unsigned int));
 
 void set_regle(automate, char*);
+
+*/
 
 void set_configuration_initiale(automate, char*);
 
