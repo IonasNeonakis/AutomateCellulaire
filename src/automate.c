@@ -6,17 +6,12 @@ struct automate {
     cel** configuration_actuelle ; //chauqe char est un etat
     unsigned int dimension_max; // en gros la taille du tableau
     unsigned int nb_iterations_max; //
-    /*char* regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme
-    int (*type_regle) (char*, unsigned int, unsigned int, unsigned int);
-    void (*affichage_regle) (int);*/
     regle _regle;
-    unsigned int nb_etats; //pas sûr wolfran =2(0,1) ; somme = 4(0,1,2,3)
     void (*affichage) (automate);
     char *configuration_initiale;
-    //comment définir le types de transition a effectuer ? somme || configuration des voisins ?
 };
 
-automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_max, unsigned int nb_etats){
+automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_max){
     automate automate_cellulaire = (automate) malloc (sizeof(struct automate));
     automate_cellulaire->temps = 0;
     automate_cellulaire->configuration_actuelle = (cel**) malloc (sizeof(cel*) * nb_iterations_max);
@@ -26,7 +21,6 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
     automate_cellulaire->_regle = NULL;
     automate_cellulaire->nb_iterations_max = nb_iterations_max;
     automate_cellulaire->dimension_max = dimension_max;
-    automate_cellulaire->nb_etats = nb_etats;
 
     return automate_cellulaire;
 }
@@ -53,36 +47,17 @@ void afficher_automate(automate automate_cellulaire){
     automate_cellulaire->affichage(automate_cellulaire);
 }
 
-/*
-void set_affichage_regle(automate a,void (*afficher_cellule)(int)){
-    a->affichage_regle = afficher_cellule;
-}
-*/
-
 void set_affichage(automate a ,void (*afficher_automate)(automate)){
     a->affichage = afficher_automate;
 }
 
-/*
-void set_type_regle(automate a ,int (*regle)(char*, unsigned int, unsigned int, unsigned int)){
-    a->type_regle = regle;
-}
-
-void set_regle(automate a, char* regle_binaire){
-    a->regle = (char*) malloc(sizeof(char)*strlen(regle_binaire));
-    a->regle = strcpy(a->regle,regle_binaire);
-}
-*/
-
 void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
     for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){
         automate_cellulaire->configuration_actuelle[0][i] = creer_cellule();
-        //printf("%d ", configuration_initiale[i] == '0');
         set_etat(automate_cellulaire->configuration_actuelle[0][i], configuration_initiale[i] == '0' ? 0 : 1);
     }
-    automate_cellulaire->configuration_initiale=(char*)malloc(sizeof(char)*strlen(configuration_initiale)+1);
-    automate_cellulaire->configuration_initiale=strcpy(automate_cellulaire->configuration_initiale,configuration_initiale);
-    //automate_cellulaire->configuration_initiale = configuration_initiale;
+    automate_cellulaire->configuration_initiale = (char*) malloc (sizeof(char) * strlen(configuration_initiale) + 1);
+    strcpy(automate_cellulaire->configuration_initiale, configuration_initiale);
 }
 
 void set_voisins(automate automate_cellulaire, unsigned int k){
@@ -104,7 +79,6 @@ unsigned int get_dimension_max(automate automate_cellulaire){
     return automate_cellulaire->dimension_max;
 }
 
-
 char* get_regle_automate(automate automate_cellulaire){
     return get_regle(automate_cellulaire->_regle);
 }
@@ -118,15 +92,7 @@ void set_regle_automate(automate automate_cellulaire, regle r){
 }
 
 cel** generer_automate(automate automate_cellulaire){
-    //set_configuration_initiale(automate_cellulaire, automate_cellulaire->configuration_initiale);
-    //automate_cellulaire->regle = regle;
-    //automate_cellulaire->type_regle = type_regle;
-    //automate_cellulaire->affichage_regle = affichage_regle;
-    for(int i = 0; i <(int) automate_cellulaire->dimension_max; i++){
-        printf("%d", get_etat(automate_cellulaire->configuration_actuelle[0][i]));
-    }
     set_voisins(automate_cellulaire, 0);
-    //char* regle_binaire = conversion_decimal_binaire(regle);
     for(unsigned int i = 1; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             cel cellule = creer_cellule();
@@ -136,49 +102,45 @@ cel** generer_automate(automate automate_cellulaire){
         }
         set_voisins(automate_cellulaire, i);
     }
-    //free(regle_binaire);
     return automate_cellulaire->configuration_actuelle;
 }
 
 automate lire_fichier_automate(){
-    unsigned int nb_iterations =0 ;
-    unsigned int dimension =0;
-    unsigned int nb_etats =0;
-    char* regle_string =NULL;
+    unsigned int nb_iterations = 0;
+    unsigned int dimension = 0;
+    char* regle_string = NULL;
     
-    char* config_init=NULL;
+    char* config_init = NULL;
     int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = NULL;
-    void (*type_affichage)(automate) =NULL;
-    void (*affichage_cellule)(int)=NULL;
+    void (*type_affichage)(automate) = NULL;
+    void (*affichage_cellule)(int) = NULL;
 
-    
-    //mettre des sets dans le main
     FILE* fp;
     char chaine[20000];
 
     regex_t preg;
-    int err ; 
-    const char *str_regex = "\"(type_affichage|type_regle|nb_iteration|dimension|config_init|nb_etats|regle)\"=([0123456789]*);$" ;
+    int err; 
+    const char *str_regex = "\"(type_affichage|type_regle|nb_iteration|dimension|config_init|regle)\"=([0123456789]*);$" ;
 
-    err = regcomp(&preg ,str_regex, REG_EXTENDED | REG_NEWLINE); 
+    err = regcomp(&preg, str_regex, REG_EXTENDED | REG_NEWLINE); 
 
-    if (err==1){
-        printf("erreur compliation regex");
+    if (err == 1){
+        printf("Erreur à la compilation du regex !");
         exit(1);
     }
 
-    fp=fopen("cfg/test2.config","r");
-    if (fp==NULL){
-        fprintf(stderr,"Erreur lors de l'ouverture du fichier en lecture");
+    fp = fopen("cfg/test2.config","r");
+    
+    if (fp == NULL){
+        fprintf(stderr,"Erreur lors de l'ouverture du fichier en lecture !");
+        exit(1);
     }
 
     int match;
-    size_t nmatch=0;
+    size_t nmatch = 0;
     regmatch_t *pmatch = NULL;
 
     nmatch=preg.re_nsub;
-
-
 
     char *type ;
     int start_type ;
@@ -190,162 +152,142 @@ automate lire_fichier_automate(){
     int end_valeur;
     size_t size_valeur;
 
+    while(fgets(chaine,20000,fp) != NULL){
 
-    while(fgets(chaine,20000,fp)!=NULL){
-
-        pmatch = realloc (pmatch,sizeof (*pmatch)*nmatch);
+        pmatch = realloc(pmatch, sizeof(*pmatch) * nmatch);
 
         if (pmatch){
-            match= regexec(&preg,chaine,nmatch,pmatch,0);
+            match = regexec(&preg,chaine,nmatch,pmatch,0);
         }            
 
-        if (match==0){
-            printf("motif correct\n");
-
+        if (match == 0){
             type = NULL;
             valeur = NULL;
             start_type = pmatch[1].rm_so;
             end_type = pmatch[1].rm_eo;
             size_type = end_type - start_type;
 
-
-
             start_valeur = pmatch[1].rm_eo+2;
             end_valeur = pmatch[0].rm_eo-1;
             size_valeur = end_valeur - start_valeur;
-
-
                
-            type = realloc (type,sizeof (*type) * (size_type + 1));
-            valeur=realloc(valeur,sizeof(*valeur)*(size_valeur+1));
-            if (type)
-            {
-               strncpy (type, &chaine[start_type], size_type);
+            type = realloc (type, sizeof(*type) * (size_type + 1));
+            valeur = realloc(valeur, sizeof(*valeur) * (size_valeur + 1));
+            
+            if(type){
+               strncpy(type, &chaine[start_type], size_type);
                type[size_type] = '\0';
             }
+
             if(valeur){
                 strncpy (valeur, &chaine[start_valeur], size_valeur);
                 valeur[size_valeur] = '\0';
             }
 
-            if(!strcmp(type,"nb_iteration")){
+            if(!strcmp(type, "nb_iteration")){
                 if(nb_iterations!=0){
-                    printf("duplication du type \"nb_iteration\". Arrêt du programme\n");
+                    printf("Duplication du type : \"nb_iteration\". Arrêt du programme !\n");
                     exit(1);
-                }else
+                }else{
                     nb_iterations=(unsigned int)conversion_char_int(valeur);
-
-            }else if(!strcmp(type,"dimension")){
-                if(dimension!=0){
-                    printf("duplication du type \"dimension\". Arrêt du programme\n");
+                }
+            }else if(!strcmp(type, "dimension")){
+                if(dimension != 0){
+                    printf("Duplication du type : \"dimension\". Arrêt du programme !\n");
                     exit(1);
-                }else
+                }else{
                     dimension=(unsigned int) conversion_char_int(valeur);
-
-            }else if(!strcmp(type,"regle")){
-                if (regle_string!=NULL){
-                    printf("duplication du type \"regle\". Arrêt du programme\n");
+                }
+            }else if(!strcmp(type, "regle")){
+                if (regle_string != NULL){
+                    printf("Duplication du type : \"regle\". Arrêt du programme !\n");
                     exit(1);
                 }else{
                     regle_string = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
                     regle_string = strcpy(regle_string, valeur);
                 }
-                
-            }else if(!strcmp(type,"config_init")){
-               if (config_init!=NULL){
-                    printf("duplication du type \"config_init\". Arrêt du programme\n");
+            }else if(!strcmp(type, "config_init")){
+               if (config_init != NULL){
+                    printf("Duplication du type : \"config_init\". Arrêt du programme !\n");
                     exit(1);
                 }else{
-                config_init = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
-                config_init = strcpy(config_init, valeur);
+                    config_init = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
+                    config_init = strcpy(config_init, valeur);
                 }
-            }else if(!strcmp(type,"nb_etats")){
-                if(nb_etats!=0){
-                    printf("duplication du type \"nb_etats\". Arrêt du programme\n");
-                    exit(1);
-                }else
-                nb_etats=(unsigned int) conversion_char_int(valeur);
-            }else if(!strcmp(type,"type_regle")){
-                if(type_regle!=NULL){
-                    printf("duplication du type \"type_regle\". Arrêt du programme\n");
+            }else if(!strcmp(type, "type_regle")){
+                if(type_regle != NULL){
+                    printf("duplication du type : \"type_regle\". Arrêt du programme !\n");
                     exit(1);
                 }else{
                     switch (conversion_char_int(valeur)){
-                    case 0:
-                        type_regle = &regle_binaire;
-                        affichage_cellule = &afficher_cellule_binaire;
-                        break;
-                    case 1:
-                        type_regle = &regle_somme;
-                        affichage_cellule = &afficher_cellule_somme;
-                        break;
-                    default:
-                        printf("Erreur de la regle, arrêt du programme.");
-                        exit(1);
-                        break;
+                        case 0: {
+                            type_regle = &regle_binaire;
+                            affichage_cellule = &afficher_cellule_binaire;
+                            break;
+                        }
+                        case 1: {
+                            type_regle = &regle_somme;
+                            affichage_cellule = &afficher_cellule_somme;
+                            break;
+                        }
+                        default: {
+                            printf("Erreur de la regle. Arrêt du programme !");
+                            exit(1);
+                            break;
+                        }
                     }
                 }
-            }else if(!strcmp(type,"type_affichage")){
+            }else if(!strcmp(type, "type_affichage")){
                 if(type_affichage != NULL){
-                    printf("duplication du type \"type_affichage\". Arrêt du programme\n");
+                    printf("Duplication du type : \"type_affichage\". Arrêt du programme !\n");
                     exit(1);
                 }else{
-                    switch (conversion_char_int(valeur)){
-                    case 0:
-                        type_affichage=&afficher_automate_console;
-                        break;
-                    case 1:
-                        type_affichage=&afficher_automate_pgm;
-                        break;
-                    default:
-                        printf("Erreur de l'affichage, arrêt du programme.");
-                        exit(1);
-                        break;
+                    switch(conversion_char_int(valeur)){
+                        case 0: {
+                            type_affichage=&afficher_automate_console;
+                            break;
+                        }
+                        case 1: {
+                            type_affichage=&afficher_automate_pgm;
+                            break;
+                        }
+                        default: {
+                            printf("Erreur de l'affichage, arrêt du programme.");
+                            exit(1);
+                            break;
+                        }
                     }
                 }
-
             }else{
-                printf("\n\nerreur type inconnu\n\n");
+                printf("\n\nErreur type inconnu !\n\n");
                 exit(1);
             }
-            
+
             free (type);
             free (valeur);
 
         }else{
-            printf("Fichier corrompu\n");
+            printf("Fichier corrompu !\n");
             exit(1);
         }
-
     }
-    if(dimension == 0 || regle_string == NULL || nb_etats == 0 || config_init == NULL || nb_iterations == 0 ||type_affichage==NULL ||type_regle==NULL){
-        printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
+    if(dimension == 0 || regle_string == NULL || config_init == NULL || nb_iterations == 0 ||type_affichage== NULL || type_regle == NULL){
+        printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme !\n");
         exit(1);
     }
-    //regle[8]="\0";
-    // automate a= creer_automate(dimension,nb_iterations,nb_etats);
-    // a->regle =regle;
-    // a->configuration_initiale=config_init;
-    // a->type_regle=type_regle;
-    // a->affichage_regle=affichage_cellule;
-    // a->affichage=type_affichage;
-    // generer_automate(a);
 
-    automate a = creer_automate(dimension,nb_iterations,nb_etats);
-    //a->regle =regle;
-
+    automate a = creer_automate(dimension,nb_iterations);
 
     regle r = creer_regle();
     set_regle(r, regle_string);
     set_type_regle(r, type_regle);
     set_affichage_regle(r, affichage_cellule);
+
     set_regle_automate(a, r);
-    //a->configuration_initiale=config_init;
-    set_configuration_initiale(a,config_init);
-    //a->type_regle=type_regle;
-    //a->affichage_regle=affichage_cellule;
-    set_affichage(a,type_affichage);;
-    //a->affichage=type_affichage;
+
+    set_configuration_initiale(a, config_init);
+    set_affichage(a,type_affichage);
+
     generer_automate(a);
 
     free(pmatch);

@@ -13,22 +13,13 @@ struct automate;
 
 typedef struct automate* automate;
 
-automate creer_automate(unsigned int, unsigned int, unsigned int);
+automate creer_automate(unsigned int, unsigned int);
 
 void supprimer_automate(automate*);
 
 void afficher_automate(automate);
 
-//void set_affichage_regle(automate,void (*afficher_cellule)(int));
-
 void set_affichage(automate,void (*afficher_automate_console)(automate));
-
-/*
-void set_type_regle(automate,int (*regle)(char*, unsigned int, unsigned int, unsigned int));
-
-void set_regle(automate, char*);
-
-*/
 
 void set_regle_automate(automate, regle);
 
