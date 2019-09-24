@@ -42,11 +42,11 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     }
     free(automate_cellulaire->configuration_actuelle);
     automate_cellulaire->configuration_actuelle = NULL;
-    supprimer_regle(&automate_cellulaire->_regle);
-    free(automate_cellulaire);
     free(automate_cellulaire->configuration_initiale);
     automate_cellulaire->configuration_initiale=NULL;
+    supprimer_regle(&automate_cellulaire->_regle);
     automate_cellulaire->_regle=NULL;
+    free(automate_cellulaire);
     automate_cellulaire = NULL;
 }
 void afficher_automate(automate automate_cellulaire){
@@ -80,7 +80,7 @@ void set_configuration_initiale(automate automate_cellulaire, char* configuratio
         //printf("%d ", configuration_initiale[i] == '0');
         set_etat(automate_cellulaire->configuration_actuelle[0][i], configuration_initiale[i] == '0' ? 0 : 1);
     }
-    automate_cellulaire->configuration_initiale=(char*)malloc(sizeof(char)*strlen(configuration_initiale));
+    automate_cellulaire->configuration_initiale=(char*)malloc(sizeof(char)*strlen(configuration_initiale)+1);
     automate_cellulaire->configuration_initiale=strcpy(automate_cellulaire->configuration_initiale,configuration_initiale);
     //automate_cellulaire->configuration_initiale = configuration_initiale;
 }

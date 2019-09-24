@@ -18,10 +18,11 @@ regle creer_regle(){
 
 void supprimer_regle(regle* r){
     regle regle_a_supprimer = *r;
-    free(regle_a_supprimer);
     regle_a_supprimer->_regle = NULL;
     regle_a_supprimer->_type_regle = NULL;
     regle_a_supprimer->_affichage_regle = NULL;
+    free(regle_a_supprimer);
+
     regle_a_supprimer = NULL;
 }
 
