@@ -44,6 +44,10 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     free(automate_cellulaire->configuration_actuelle);
     automate_cellulaire->configuration_actuelle = NULL;
     free(automate_cellulaire);
+    free(automate_cellulaire->configuration_initiale);
+    automate_cellulaire->configuration_initiale=NULL;
+    free(automate_cellulaire->regle);
+    automate_cellulaire->regle=NULL;
     automate_cellulaire = NULL;
 }
 void afficher_automate(automate automate_cellulaire){
@@ -73,7 +77,9 @@ void set_configuration_initiale(automate automate_cellulaire, char* configuratio
         //printf("%d ", configuration_initiale[i] == '0');
         set_etat(automate_cellulaire->configuration_actuelle[0][i], configuration_initiale[i] == '0' ? 0 : 1);
     }
-    automate_cellulaire->configuration_initiale = configuration_initiale;
+    automate_cellulaire->configuration_initiale=(char*)malloc(sizeof(char)*strlen(configuration_initiale));
+    automate_cellulaire->configuration_initiale=strcpy(automate_cellulaire->configuration_initiale,configuration_initiale);
+    //automate_cellulaire->configuration_initiale = configuration_initiale;
 }
 
 void set_voisins(automate automate_cellulaire, unsigned int k){
@@ -239,17 +245,16 @@ automate lire_fichier_automate(){
                 }else{
                     regle = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
                     regle = strcpy(regle, valeur);
-                    printf("\n\n\nicicicicicici ::::: %s \n",regle);
-                    //regle[strlen(regle)-1]="\0";
                 }
                 
             }else if(!strcmp(type,"config_init")){
                if (config_init!=NULL){
                     printf("duplication du type \"config_init\". Arrêt du programme\n");
                     exit(1);
-                }else
-                config_init=valeur;
-                
+                }else{
+                config_init = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
+                config_init = strcpy(config_init, valeur);
+                }
             }else if(!strcmp(type,"nb_etats")){
                 if(nb_etats!=0){
                     printf("duplication du type \"nb_etats\". Arrêt du programme\n");
@@ -337,6 +342,7 @@ automate lire_fichier_automate(){
 
     free(pmatch);
     free(regle);
+    free(config_init);
     regfree(&preg);
 
     fclose(fp);
