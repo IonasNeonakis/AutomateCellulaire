@@ -3,7 +3,7 @@
 
 #include "../include/affichage.h"
 #include "../include/automate.h"
-#include "../include/regles.h"
+#include "../include/regle.h"
 #include "../include/utils.h"
 
 int main(int argc, char* argv[]){

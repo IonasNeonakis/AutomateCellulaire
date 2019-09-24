@@ -23,12 +23,10 @@ automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_m
     for(unsigned int i = 0; i < nb_iterations_max; i++){
         automate_cellulaire->configuration_actuelle[i] = (cel*) malloc (sizeof(cel) * dimension_max);
     }
-    automate_cellulaire->regle = NULL;
-    automate_cellulaire->type_regle = NULL;
+    automate_cellulaire->_regle = NULL;
     automate_cellulaire->nb_iterations_max = nb_iterations_max;
     automate_cellulaire->dimension_max = dimension_max;
     automate_cellulaire->nb_etats = nb_etats;
-    automate_cellulaire->affichage_regle = NULL;
 
     return automate_cellulaire;
 }
@@ -44,12 +42,11 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     }
     free(automate_cellulaire->configuration_actuelle);
     automate_cellulaire->configuration_actuelle = NULL;
-    supprimer_regle(automate_cellulaire->_regle);
+    supprimer_regle(&automate_cellulaire->_regle);
     free(automate_cellulaire);
     free(automate_cellulaire->configuration_initiale);
     automate_cellulaire->configuration_initiale=NULL;
-    free(automate_cellulaire->regle);
-    automate_cellulaire->regle=NULL;
+    automate_cellulaire->_regle=NULL;
     automate_cellulaire = NULL;
 }
 void afficher_automate(automate automate_cellulaire){
@@ -107,12 +104,17 @@ unsigned int get_dimension_max(automate automate_cellulaire){
     return automate_cellulaire->dimension_max;
 }
 
-char* get_regle(automate automate_cellulaire){
-    return automate_cellulaire->regle;
+
+char* get_regle_automate(automate automate_cellulaire){
+    return get_regle(automate_cellulaire->_regle);
 }
 
-void (*get_affichage_regle(automate automate_cellulaire))(int){
-    return automate_cellulaire->affichage_regle;
+void (*get_affichage_regle_automate(automate automate_cellulaire))(int){
+    return get_affichage_regle(automate_cellulaire->_regle);
+}
+
+void set_regle_automate(automate automate_cellulaire, regle r){
+    automate_cellulaire->_regle = r;
 }
 
 cel** generer_automate(automate automate_cellulaire){
@@ -128,7 +130,8 @@ cel** generer_automate(automate automate_cellulaire){
     for(unsigned int i = 1; i < automate_cellulaire->nb_iterations_max; i++){
         for(unsigned int j = 0; j < automate_cellulaire->dimension_max; j++){
             cel cellule = creer_cellule();
-            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], automate_cellulaire->regle, automate_cellulaire->type_regle));
+            regle r = automate_cellulaire->_regle;
+            set_etat(cellule, etat_suivant(automate_cellulaire->configuration_actuelle[i-1][j], get_regle(r), get_type_regle(r)));
             automate_cellulaire->configuration_actuelle[i][j] = cellule;
         }
         set_voisins(automate_cellulaire, i);
@@ -141,7 +144,7 @@ automate lire_fichier_automate(){
     unsigned int nb_iterations =0 ;
     unsigned int dimension =0;
     unsigned int nb_etats =0;
-    char* regle =NULL;
+    char* regle_string =NULL;
     
     char* config_init=NULL;
     int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = NULL;
@@ -245,12 +248,12 @@ automate lire_fichier_automate(){
                     dimension=(unsigned int) conversion_char_int(valeur);
 
             }else if(!strcmp(type,"regle")){
-                if (regle!=NULL){
+                if (regle_string!=NULL){
                     printf("duplication du type \"regle\". Arrêt du programme\n");
                     exit(1);
                 }else{
-                    regle = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
-                    regle = strcpy(regle, valeur);
+                    regle_string = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
+                    regle_string = strcpy(regle_string, valeur);
                 }
                 
             }else if(!strcmp(type,"config_init")){
@@ -320,7 +323,7 @@ automate lire_fichier_automate(){
         }
 
     }
-    if(dimension == 0 || regle == NULL || nb_etats == 0 || config_init == NULL || nb_iterations == 0 ||type_affichage==NULL ||type_regle==NULL){
+    if(dimension == 0 || regle_string == NULL || nb_etats == 0 || config_init == NULL || nb_iterations == 0 ||type_affichage==NULL ||type_regle==NULL){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme\n");
         exit(1);
     }
@@ -332,22 +335,26 @@ automate lire_fichier_automate(){
     // a->affichage_regle=affichage_cellule;
     // a->affichage=type_affichage;
     // generer_automate(a);
-    automate a= creer_automate(dimension,nb_iterations,nb_etats);
+
+    automate a = creer_automate(dimension,nb_iterations,nb_etats);
     //a->regle =regle;
 
-    set_regle(a,regle);
+
+    regle r = creer_regle();
+    set_regle(r, regle_string);
+    set_type_regle(r, type_regle);
+    set_affichage_regle(r, affichage_cellule);
+    set_regle_automate(a, r);
     //a->configuration_initiale=config_init;
     set_configuration_initiale(a,config_init);
-    set_type_regle(a,type_regle);
     //a->type_regle=type_regle;
-    set_affichage_regle(a,affichage_cellule);
     //a->affichage_regle=affichage_cellule;
     set_affichage(a,type_affichage);;
     //a->affichage=type_affichage;
     generer_automate(a);
 
     free(pmatch);
-    free(regle);
+    free(regle_string);
     free(config_init);
     regfree(&preg);
 

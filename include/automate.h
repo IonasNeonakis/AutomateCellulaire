@@ -7,7 +7,7 @@
 
 #include "../include/cellule.h"
 #include "../include/utils.h"
-#include "../include/regles.h"
+#include "../include/regle.h"
 
 struct automate;
 
@@ -30,6 +30,8 @@ void set_regle(automate, char*);
 
 */
 
+void set_regle_automate(automate, regle);
+
 void set_configuration_initiale(automate, char*);
 
 void set_voisins(automate, unsigned int);
@@ -40,9 +42,9 @@ unsigned int get_nb_iterations_max();
 
 unsigned int get_dimension_max(automate);
 
-char* get_regle(automate);
+char* get_regle_automate(automate);
 
-void (*get_affichage_regle(automate))(int);
+void (*get_affichage_regle_automate(automate))(int);
 
 cel** generer_automate(automate);
 

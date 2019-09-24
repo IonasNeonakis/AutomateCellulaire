@@ -7,7 +7,7 @@ struct regle;
 
 typedef struct regle* regle;
 
-void creer_regle();
+regle creer_regle();
 
 void supprimer_regle(regle*);
 
@@ -16,6 +16,12 @@ void set_regle(regle, char*);
 void set_type_regle(regle, int (*) (char*, unsigned int, unsigned int, unsigned int));
 
 void set_affichage_regle(regle, void (*) (int));
+
+char* get_regle(regle);
+
+int (*get_type_regle(regle))(char*, unsigned int, unsigned int, unsigned int);
+
+void (*get_affichage_regle(regle))(int);
 
 int regle_binaire(char*, unsigned int, unsigned int, unsigned int);
 

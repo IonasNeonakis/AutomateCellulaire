@@ -1,4 +1,4 @@
-#include "../include/regles.h"
+#include "../include/regle.h"
 #include "../include/utils.h"
 
 struct regle {
@@ -7,11 +7,13 @@ struct regle {
     void (*_affichage_regle) (int);
 };
 
-void creer_regle(){
+regle creer_regle(){
     regle r = (regle) malloc (sizeof(struct regle));
     r->_regle = NULL;
     r->_type_regle = NULL;
     r->_affichage_regle = NULL;
+
+    return r;
 }
 
 void supprimer_regle(regle* r){
@@ -34,6 +36,18 @@ void set_type_regle(regle r, int (*type_regle) (char*, unsigned int, unsigned in
 void set_affichage_regle(regle r, void (*affichage_regle) (int)){
     r->_affichage_regle = affichage_regle;
 } 
+
+char* get_regle(regle r){
+    return r->_regle;
+}
+
+int (*get_type_regle(regle r))(char*, unsigned int, unsigned int, unsigned int){
+    return r->_type_regle;
+}
+
+void (*get_affichage_regle(regle r))(int){
+    return r->_affichage_regle;
+}
 
 int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
     int x = conversion_binaire_decimal(e_cg, e_cm, e_cd);
