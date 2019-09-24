@@ -308,12 +308,18 @@ automate lecture_runtime_automate(){
 
     printf("Nombre d'itérations : ");
     scanf("%ud\n", &nb_iteration_max);
+    while(nb_iteration_max < 1){
+        scanf("%ud\n", &nb_iteration_max);
+    }
 
     printf("Dimension maximale : ");
-    scanf("%ud\n", &dimension_max);
+    scanf("%ud", &dimension_max);
+    while(dimension_max < 1){
+        scanf("%ud", &dimension_max);
+    }
 
     char configuration_initiale[dimension_max];
-    char* regle = (char*) malloc (sizeof(char) * dimension_max);
+    char* _regle = (char*) malloc (sizeof(char) * 15);
     unsigned int type_regle;
     unsigned int type_affichage;
 
@@ -326,18 +332,62 @@ automate lecture_runtime_automate(){
     }
     
     printf("Règle : ");
-    scanf("%s", regle);
+    scanf("%s", _regle);
+    while((!est_regle_binaire(_regle) || !est_de_longueur(_regle, 8)) && (!est_regle_somme(_regle) || !est_de_longueur(_regle, 10))){
+        scanf("%s", _regle);
+    }
+    _regle = (char*) realloc (_regle, sizeof(char) * dimension_max);
 
     printf("Type règle : \n");
     printf("1 - Règle binaire\n");
     printf("2 - Règle somme\n");
     scanf("%ud", &type_regle);
+    while(type_regle != 1 && type_regle != 2){
+        scanf("%ud", &type_regle);
+    }
 
     printf("Type affichage : \n");
     printf("1 - Affichage console\n");
     printf("2 - Génération d'une image ppm\n");
     scanf("%ud", &type_affichage);
+    while(type_affichage != 1 && type_affichage != 2){
+        scanf("%ud", &type_affichage);
+    }
 
     automate a = creer_automate(dimension_max, nb_iteration_max);
-    
+    set_configuration_initiale(a, configuration_initiale);
+
+    regle r = creer_regle();
+    set_regle(r, _regle);
+    switch(type_regle){
+        case 1: {
+            set_type_regle(r, &regle_binaire);
+            set_affichage_regle(r, &afficher_cellule_binaire);
+            break;
+        }
+        case 2: {
+            set_type_regle(r, &regle_somme);
+            set_affichage_regle(r, &afficher_cellule_somme);
+            break;
+        }
+    }
+
+    set_regle_automate(a, r);
+
+    switch(type_affichage){
+        case 1: {
+            set_affichage(a, &afficher_automate_console);
+            break;
+        }
+        case 2: {
+            set_affichage(a, &afficher_automate_pgm);
+            break;
+        }
+    }
+
+    generer_automate(a);
+
+    free(_regle);
+
+    return a;
 }

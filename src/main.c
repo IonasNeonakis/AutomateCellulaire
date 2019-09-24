@@ -21,8 +21,8 @@ int main(int argc, char* argv[]){
         a = lecture_runtime_automate(); //on fait une lecture runtime
     }
 
-    //afficher_automate(a);
-    //supprimer_automate(&a);
+    afficher_automate(a);
+    supprimer_automate(&a);
 
     //unsigned int dimension_max = 32;
     //unsigned int nb_iterations = 16;
