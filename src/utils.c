@@ -37,3 +37,36 @@ int conversion_char_int(char * s){
     }
     return total;
 }
+
+bool est_un_int(char *s){
+    for (int i =0;i<(int) strlen(s);i++){
+        if(s[i]<48 || s[i]>57)
+            return false;
+    }
+    return true;
+}
+
+bool est_de_longueur(char *s,int n){
+    if((int)strlen(s)!=n){
+        return false;
+    }
+    return true;
+}
+
+bool est_regle_binaire(char *s){
+    for (int i =0;i<(int) strlen(s);i++){
+        if(s[i]!=48 && s[i]!=49){
+            return false;
+        }
+    }
+    return true;
+
+}
+
+bool est_regle_somme(char * s){
+    for (int i =0;i<(int) strlen(s);i++){
+        if(s[i]!=48 && s[i]!=49 && s[i]!=50 && s[i]!=51)
+            return false;
+    }
+    return true;
+}
