@@ -331,7 +331,7 @@ automate lecture_runtime_automate(regle r){
         scanf("%s", nb_iteration_max);
     }
     size_t taille = strlen(nb_iteration_max);
-    nb_iteration_max = (char*) realloc (nb_iteration_max, sizeof(char) * strlen(nb_iteration_max));
+    nb_iteration_max = (char*) realloc (nb_iteration_max, sizeof(char) * taille + 1);
     nb_iteration_max[taille] = '\0';
     unsigned int nb_iteration_max_int = conversion_char_int(nb_iteration_max);
 
@@ -341,7 +341,7 @@ automate lecture_runtime_automate(regle r){
         scanf("%s", dimension_max);
     }
     taille = strlen(dimension_max);
-    dimension_max = (char*) realloc (dimension_max, sizeof(char) * strlen(dimension_max));
+    dimension_max = (char*) realloc (dimension_max, sizeof(char) * taille + 1);
     dimension_max[taille] = '\0';
     unsigned int dimension_max_int = conversion_char_int(dimension_max);
 
@@ -356,7 +356,7 @@ automate lecture_runtime_automate(regle r){
         scanf("%s", nb_etats);
     }
     taille = strlen(nb_etats);
-    nb_etats = (char*) realloc (nb_etats, sizeof(char) * taille);
+    nb_etats = (char*) realloc (nb_etats, sizeof(char) * taille + 1);
     nb_etats[taille] = '\0';
     unsigned int nb_etats_int = conversion_char_int(nb_etats);
 
@@ -369,10 +369,10 @@ automate lecture_runtime_automate(regle r){
     
     printf("Règle : ");
     scanf("%s", _regle);
-    while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) < get_taille_regle(r)){
+    while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) != get_taille_regle(r)){
         scanf("%s", _regle);
     }
-    _regle = (char*) realloc (_regle, sizeof(char) * get_taille_regle(r));
+    _regle = (char*) realloc (_regle, sizeof(char) * get_taille_regle(r) + 1);
 
     printf("Type affichage : \n");
     printf("0 - Affichage console\n");
@@ -381,7 +381,7 @@ automate lecture_runtime_automate(regle r){
     while(!est_un_int(type_affichage) || (conversion_char_int(type_affichage) != 0 && conversion_char_int(type_affichage) != 1)){
         scanf("%s", type_affichage);
     }
-    type_affichage = (char*) realloc (type_affichage, sizeof(char) * 1);
+    type_affichage = (char*) realloc (type_affichage, sizeof(char) * 1 + 1);
     type_affichage[strlen(type_affichage)] = '\0';
     unsigned int type_affichage_int = conversion_char_int(type_affichage);
 
@@ -406,6 +406,10 @@ automate lecture_runtime_automate(regle r){
     generer_automate(a);
 
     free(_regle);
+    free(dimension_max);
+    free(nb_iteration_max);
+    free(type_affichage);
+    free(nb_etats);
 
     return a;
 }
