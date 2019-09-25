@@ -209,8 +209,8 @@ automate lire_fichier_automate(char* nom_fichier){
                 if (regle_string != NULL){
                     printf("Duplication du type : \"regle\". Arrêt du programme !\n");
                     exit(1);
-                }else if(type_regle!=NULL && ((type_regle==regle_binaire && (!est_de_longueur(valeur,8) || !est_regle_binaire(valeur)))|| (type_regle==regle_somme && (!est_de_longueur(valeur,10)|| est_regle_somme(valeur))))){
-                    printf("La regle n'est pas de la bonne longueur pour ce type d'automates ou le type d'etats est faux. Arrêt du programme !");
+                }else if(type_regle!=NULL && ((type_regle==regle_binaire && (!est_de_longueur(valeur,8) || !est_regle_binaire(valeur)))|| (type_regle==regle_somme && (!est_de_longueur(valeur,10)|| !est_regle_somme(valeur))))){
+                    printf("La regle n'est pas de la bonne longueur pour ce type d'automates ou le type d'etats est faux. Arrêt du programme !\n");
                     exit(1);
                 }else{
                     regle_string = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
@@ -232,7 +232,7 @@ automate lire_fichier_automate(char* nom_fichier){
                     printf("duplication du type : \"type_regle\". Arrêt du programme !\n");
                     exit(1);
                 }else if(regle_string!=NULL && ((conversion_char_int(valeur)==0 && ( !est_regle_binaire(regle_string)  || !est_de_longueur(regle_string,8))) || (conversion_char_int(valeur)==1 && (!est_regle_somme(regle_string) || !est_de_longueur(regle_string,10))))){
-                        printf("La regle n'est pas de la bonne longueur pour ce type d'automates ou le type d'etats est faux. Arrêt du programme !");
+                        printf("La regle n'est pas de la bonne longueur pour ce type d'automates ou le type d'etats est faux. Arrêt du programme !\n");
                         exit(1);    
                 }else{
 
