@@ -75,7 +75,7 @@ bool est_regle_somme(char* s){
 bool est_regle_correcte(char* s, unsigned int nb_etats){
     size_t taille = strlen(s);
     for(unsigned int i = 0; i < taille; i++){
-        if(s[i] < 48 || s[i] > 48 + nb_etats - 1){
+        if(s[i] < 48 || s[i] > 48 + ((int)nb_etats) - 1){
             return false;
         }
     }
