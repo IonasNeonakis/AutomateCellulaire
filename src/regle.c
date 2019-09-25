@@ -9,6 +9,7 @@ struct regle {
     int (*_type_regle) (char*, unsigned int, unsigned int, unsigned int);
     void (*_affichage_regle) (int);
     unsigned int nb_etats;
+    unsigned int taille_regle;
 };
 
 regle creer_regle(){
@@ -17,6 +18,7 @@ regle creer_regle(){
     r->_type_regle = NULL;
     r->_affichage_regle = NULL;
     r->nb_etats=0;
+    r->taille_regle=0;
 
     return r;
 }
@@ -28,6 +30,7 @@ void supprimer_regle(regle* r){
     regle_a_supprimer->_type_regle = NULL;
     regle_a_supprimer->_affichage_regle = NULL;
     regle_a_supprimer->nb_etats=NULL;
+    regle_a_supprimer->taille_regle=NULL;
     free(regle_a_supprimer);
 
     regle_a_supprimer = NULL;
@@ -52,6 +55,10 @@ void set_nb_etats(regle r,unsigned int nb_etats){
     r->nb_etats=nb_etats;
 }
 
+void set_taille_regle(regle r,unsigned int taille_regle){
+    r->taille_regle=taille_regle;
+}
+
 char* get_regle(regle r){
     return r->_regle;
 }
@@ -66,6 +73,10 @@ void (*get_affichage_regle(regle r))(int){
 
 int get_nb_etats(regle r){
     return r->nb_etats;
+}
+
+int get_taille_regle(regle r){
+    return r->taille_regle;
 }
 
 int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
