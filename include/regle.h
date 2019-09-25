@@ -25,6 +25,8 @@ int (*get_type_regle(regle))(char*, unsigned int, unsigned int, unsigned int);
 
 void (*get_affichage_regle(regle))(int);
 
+int get_nb_etats(regle);
+
 int regle_binaire(char*, unsigned int, unsigned int, unsigned int);
 
 int regle_somme(char*, unsigned int, unsigned int, unsigned int);

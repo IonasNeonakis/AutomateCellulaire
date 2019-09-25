@@ -64,6 +64,10 @@ void (*get_affichage_regle(regle r))(int){
     return r->_affichage_regle;
 }
 
+int get_nb_etats(regle r){
+    return r->nb_etats;
+}
+
 int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
     int x = conversion_binaire_decimal(e_cg, e_cm, e_cd);
     return regle[strlen(regle) - 1 - x] - 48;
