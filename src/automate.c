@@ -348,11 +348,11 @@ automate lecture_runtime_automate(regle r){
     char configuration_initiale[dimension_max_int];
     char* _regle = (char*) malloc (sizeof(char) * 15);
     char* nb_etats = (char*) malloc (sizeof(char) * 15);
-    unsigned int type_affichage;
+    char* type_affichage = (char*) malloc (sizeof(char) * 15);
 
     printf("Nombre d'états : \n");
-    scanf("%s", &nb_etats);
-    while(!est_est_int(nb_etats)){
+    scanf("%s", nb_etats);
+    while(!est_un_int(nb_etats)){
         scanf("%s", nb_etats);
     }
     taille = strlen(nb_etats);
@@ -369,32 +369,35 @@ automate lecture_runtime_automate(regle r){
     
     printf("Règle : ");
     scanf("%s", _regle);
-    while(!est_regle_correcte(_regle, nb_etats_int) || strlen(_regle) < get_taille_regle(r)){
+    while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) < get_taille_regle(r)){
         scanf("%s", _regle);
     }
-    _regle = (char*) realloc (_regle, sizeof(char) * dimension_max_int);
+    _regle = (char*) realloc (_regle, sizeof(char) * get_taille_regle(r));
 
     printf("Type affichage : \n");
-    printf("1 - Affichage console\n");
-    printf("2 - Génération d'une image ppm\n");
-    scanf("%ud", &type_affichage);
-    while(type_affichage != 1 && type_affichage != 2){
-        scanf("%ud", &type_affichage);
+    printf("0 - Affichage console\n");
+    printf("1 - Génération d'une image ppm\n");
+    scanf("%s", type_affichage);
+    while(!est_un_int(type_affichage) || (conversion_char_int(type_affichage) != 0 && conversion_char_int(type_affichage) != 1)){
+        scanf("%s", type_affichage);
     }
+    type_affichage = (char*) realloc (type_affichage, sizeof(char) * 1);
+    type_affichage[strlen(type_affichage)] = '\0';
+    unsigned int type_affichage_int = conversion_char_int(type_affichage);
 
-    automate a = creer_automate(dimension_max, nb_iteration_max_int);
+    automate a = creer_automate(dimension_max_int, nb_iteration_max_int);
     set_configuration_initiale(a, configuration_initiale);
     
     set_regle(r, _regle);
 
     set_regle_automate(a, r);
 
-    switch(type_affichage){
-        case 1: {
+    switch(type_affichage_int){
+        case 0: {
             set_affichage(a, &afficher_automate_console);
             break;
         }
-        case 2: {
+        case 1: {
             set_affichage(a, &afficher_automate_pgm);
             break;
         }
@@ -482,9 +485,7 @@ automate process_args(regle r,int argc, char* argv[]){
     }
     automate a ;
     a = creer_automate(dimension,nb_iterations);
-    
-    regle r = creer_regle();
-    //set_regle(r, regle_string);
+
     set_type_regle(r, type_regle);
     set_affichage_regle(r, affichage_cellule);
 
