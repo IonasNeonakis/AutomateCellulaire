@@ -296,7 +296,7 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
 
     automate a = creer_automate(dimension,nb_iterations);
 
-    regle r = creer_regle();
+    //regle r = creer_regle();
     set_regle(r, regle_string);
     set_type_regle(r, type_regle);
     set_affichage_regle(r, affichage_cellule);
@@ -410,6 +410,7 @@ automate lecture_runtime_automate(regle r){
 automate process_args(regle r,int argc, char* argv[]){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
+    unsigned int nb_etats;
     char* regle_string = NULL;
     
     char* config_init = NULL;
@@ -483,7 +484,7 @@ automate process_args(regle r,int argc, char* argv[]){
     a = creer_automate(dimension,nb_iterations);
     
     regle r = creer_regle();
-    set_regle(r, regle_string);
+    //set_regle(r, regle_string);
     set_type_regle(r, type_regle);
     set_affichage_regle(r, affichage_cellule);
 
