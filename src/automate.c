@@ -105,7 +105,7 @@ cel** generer_automate(automate automate_cellulaire){
     return automate_cellulaire->configuration_actuelle;
 }
 
-automate lire_fichier_automate(char* nom_fichier){
+automate lire_fichier_automate(regle r,char* nom_fichier){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     char* regle_string = NULL;
@@ -419,13 +419,13 @@ automate lecture_runtime_automate(){
     return a;
 }
 
-automate process_args(int argc, char* argv[]){
+automate process_args(regle r,int argc, char* argv[]){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     char* regle_string = NULL;
     
     char* config_init = NULL;
-    int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = NULL;
+    int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = get_type_regle(r);
     void (*type_affichage)(automate) = NULL;
     void (*affichage_cellule)(int) = NULL;
 
