@@ -17,6 +17,8 @@ void set_type_regle(regle, int (*) (char*, unsigned int, unsigned int, unsigned 
 
 void set_affichage_regle(regle, void (*) (int));
 
+void set_nb_etats(regle, unsigned int);
+
 char* get_regle(regle);
 
 int (*get_type_regle(regle))(char*, unsigned int, unsigned int, unsigned int);
