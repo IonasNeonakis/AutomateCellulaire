@@ -381,13 +381,6 @@ automate lecture_runtime_automate(regle r){
     set_regle(r, _regle);
 
     set_regle_automate(a, r);
-    unsigned int nb_iterations = 0;
-    unsigned int dimension = 0;
-    unsigned int nb_etats=0;
-    char* regle_string = NULL;
-    
-    char* config_init = NULL;
-    void (*type_affichage)(automate) = NULL;
     switch(type_affichage_int){
         case 0: {
             set_affichage(a, &afficher_automate_console);
