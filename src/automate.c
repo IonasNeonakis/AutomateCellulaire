@@ -318,7 +318,7 @@ automate lire_fichier_automate(char* nom_fichier){
     return a;
 }
 
-automate lecture_runtime_automate(){
+automate lecture_runtime_automate(regle r){
     char* nb_iteration_max = (char*) malloc (sizeof(char) * 6);
     char* dimension_max = (char*) malloc (sizeof(char) * 6);
 
@@ -347,28 +347,29 @@ automate lecture_runtime_automate(){
 
     char configuration_initiale[dimension_max_int];
     char* _regle = (char*) malloc (sizeof(char) * 15);
-    unsigned int type_regle;
+    char* nb_etats = (char*) malloc (sizeof(char) * 15);
     unsigned int type_affichage;
 
-    printf("Type règle : \n");
-    printf("1 - Règle binaire\n");
-    printf("2 - Règle somme\n");
-    scanf("%ud", &type_regle);
-    while(type_regle != 1 && type_regle != 2){
-        scanf("%ud", &type_regle);
+    printf("Nombre d'états : \n");
+    scanf("%s", &nb_etats);
+    while(!est_est_int(nb_etats)){
+        scanf("%s", nb_etats);
     }
+    taille = strlen(nb_etats);
+    nb_etats = (char*) realloc (nb_etats, sizeof(char) * taille);
+    nb_etats[taille] = '\0';
+    unsigned int nb_etats_int = conversion_char_int(nb_etats);
 
     printf("Configuration initiale : ");
     scanf("%s", configuration_initiale);
-    
-    while(!est_regle_binaire(configuration_initiale) || (configuration_initiale) != dimension_max_int){
+    while(!est_regle_correcte(configuration_initiale, nb_etats_int) || strlen(configuration_initiale) != dimension_max_int){
         printf("\nVous devez rentrer une configuration initiale dont le nombre de cellule est égale à la dimension de l'automate !\n");
         scanf("%s", configuration_initiale);
     }
     
     printf("Règle : ");
     scanf("%s", _regle);
-    while((!est_regle_binaire(_regle) || !est_de_longueur(_regle, 8)) && (!est_regle_somme(_regle) || !est_de_longueur(_regle, 10))){
+    while(!est_regle_correcte(_regle, nb_etats_int) || strlen(_regle) < get_taille_regle(r)){
         scanf("%s", _regle);
     }
     _regle = (char*) realloc (_regle, sizeof(char) * dimension_max_int);
@@ -383,21 +384,8 @@ automate lecture_runtime_automate(){
 
     automate a = creer_automate(dimension_max, nb_iteration_max_int);
     set_configuration_initiale(a, configuration_initiale);
-
-    regle r = creer_regle();
+    
     set_regle(r, _regle);
-    switch(type_regle){
-        case 1: {
-            set_type_regle(r, &regle_binaire);
-            set_affichage_regle(r, &afficher_cellule_binaire);
-            break;
-        }
-        case 2: {
-            set_type_regle(r, &regle_somme);
-            set_affichage_regle(r, &afficher_cellule_somme);
-            break;
-        }
-    }
 
     set_regle_automate(a, r);
 

@@ -43,6 +43,6 @@ automate lire_fichier_automate(char *);
 
 automate process_args(int, char**);
 
-automate lecture_runtime_automate();
+automate lecture_runtime_automate(regle);
 
 #endif
