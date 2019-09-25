@@ -63,10 +63,21 @@ bool est_regle_binaire(char *s){
 
 }
 
-bool est_regle_somme(char * s){
-    for (int i =0;i<(int) strlen(s);i++){
-        if(s[i]!=48 && s[i]!=49 && s[i]!=50 && s[i]!=51)
+bool est_regle_somme(char* s){
+    size_t taille = strlen(s);
+    for (unsigned int i = 0; i < taille; i++){
+        if(s[i] != 48 && s[i] != 49 && s[i] != 50 && s[i] != 51)
             return false;
+    }
+    return true;
+}
+
+bool est_regle_correcte(char* s, unsigned int nb_etats){
+    size_t taille = strlen(s);
+    for(unsigned int i = 0; i < taille; i++){
+        if(s[i] < 48 || s[i] > 48 + nb_etats - 1){
+            return false;
+        }
     }
     return true;
 }
