@@ -29,8 +29,6 @@ void supprimer_regle(regle* r){
     regle_a_supprimer->_regle = NULL;
     regle_a_supprimer->_type_regle = NULL;
     regle_a_supprimer->_affichage_regle = NULL;
-    regle_a_supprimer->nb_etats=NULL;
-    regle_a_supprimer->taille_regle=NULL;
     free(regle_a_supprimer);
 
     regle_a_supprimer = NULL;
