@@ -12,6 +12,7 @@ int main(int argc, char* argv[]){
     
     regle r = creer_regle();
     set_type_regle(r, &regle_binaire);
+    set_taille_regle(r,8);
     set_affichage_regle(r, &afficher_cellule_binaire);
 
     if(argc > 1){

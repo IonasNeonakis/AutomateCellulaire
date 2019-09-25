@@ -8,6 +8,8 @@ struct regle {
     char* _regle; // la regle a appliquer  (00011110) 2 = 30 || 0013100132 pour la somme par ex
     int (*_type_regle) (char*, unsigned int, unsigned int, unsigned int);
     void (*_affichage_regle) (int);
+    unsigned int nb_etats;
+    unsigned int taille_regle;
 };
 
 regle creer_regle(){
@@ -15,6 +17,8 @@ regle creer_regle(){
     r->_regle = NULL;
     r->_type_regle = NULL;
     r->_affichage_regle = NULL;
+    r->nb_etats=0;
+    r->taille_regle=0;
 
     return r;
 }
@@ -25,6 +29,8 @@ void supprimer_regle(regle* r){
     regle_a_supprimer->_regle = NULL;
     regle_a_supprimer->_type_regle = NULL;
     regle_a_supprimer->_affichage_regle = NULL;
+    regle_a_supprimer->nb_etats=NULL;
+    regle_a_supprimer->taille_regle=NULL;
     free(regle_a_supprimer);
 
     regle_a_supprimer = NULL;
@@ -43,7 +49,15 @@ void set_type_regle(regle r, int (*type_regle) (char*, unsigned int, unsigned in
 
 void set_affichage_regle(regle r, void (*affichage_regle) (int)){
     r->_affichage_regle = affichage_regle;
-} 
+}
+
+void set_nb_etats(regle r,unsigned int nb_etats){
+    r->nb_etats=nb_etats;
+}
+
+void set_taille_regle(regle r,unsigned int taille_regle){
+    r->taille_regle=taille_regle;
+}
 
 char* get_regle(regle r){
     return r->_regle;
@@ -57,6 +71,14 @@ void (*get_affichage_regle(regle r))(int){
     return r->_affichage_regle;
 }
 
+int get_nb_etats(regle r){
+    return r->nb_etats;
+}
+
+int get_taille_regle(regle r){
+    return r->taille_regle;
+}
+
 int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
     int x = conversion_binaire_decimal(e_cg, e_cm, e_cd);
     return regle[strlen(regle) - 1 - x] - 48;
@@ -64,5 +86,12 @@ int regle_binaire(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned in
 
 int regle_somme(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
     int x = e_cg + e_cm + e_cd;
+    return regle[x] - 48;
+}
+
+int regle_ionas(char* regle, unsigned int e_cg, unsigned int e_cm, unsigned int e_cd){
+    int x = e_cg +e_cd+e_cm;
+    if (x<0)
+        x=0;
     return regle[x] - 48;
 }

@@ -17,11 +17,19 @@ void set_type_regle(regle, int (*) (char*, unsigned int, unsigned int, unsigned 
 
 void set_affichage_regle(regle, void (*) (int));
 
+void set_nb_etats(regle, unsigned int);
+
+void set_taille_regle(regle r, unsigned int );
+
 char* get_regle(regle);
 
 int (*get_type_regle(regle))(char*, unsigned int, unsigned int, unsigned int);
 
 void (*get_affichage_regle(regle))(int);
+
+int get_nb_etats(regle);
+
+int get_taille_regle(regle);
 
 int regle_binaire(char*, unsigned int, unsigned int, unsigned int);
 
