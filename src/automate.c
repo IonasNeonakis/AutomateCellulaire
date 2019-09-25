@@ -108,19 +108,19 @@ cel** generer_automate(automate automate_cellulaire){
 automate lire_fichier_automate(regle r,char* nom_fichier){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
+    unsigned int nb_etats=0;
     char* regle_string = NULL;
     
     char* config_init = NULL;
-    int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = NULL;
     void (*type_affichage)(automate) = NULL;
-    void (*affichage_cellule)(int) = NULL;
+
 
     FILE* fp;
     char chaine[20000];
 
     regex_t preg;
     int err; 
-    const char *str_regex = "\"(type_affichage|type_regle|nb_iteration|dimension|config_init|regle)\"=([0123456789]*);$" ;
+    const char *str_regex = "\"(type_affichage|nb_etats|nb_iteration|dimension|config_init|regle)\"=([0123456789]*);$" ;
 
     err = regcomp(&preg, str_regex, REG_EXTENDED | REG_NEWLINE); 
 
@@ -209,13 +209,21 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
                 if (regle_string != NULL){
                     printf("Duplication du type : \"regle\". Arrêt du programme !\n");
                     exit(1);
-                }else if(type_regle!=NULL && ((type_regle==regle_binaire && (!est_de_longueur(valeur,8) || !est_regle_binaire(valeur)))|| (type_regle==regle_somme && (!est_de_longueur(valeur,10)|| !est_regle_somme(valeur))))){
-                    printf("La regle n'est pas de la bonne longueur pour ce type d'automates ou le type d'etats est faux. Arrêt du programme !\n");
+                }else if(!est_de_longueur(valeur,get_taille_regle(r))){    
+                    printf("La regle n'est pas de la bonne longueur. Arrêt du programme !\n");
+                    exit(1);
+                }else if(nb_etats==0){
+                    printf("nb_etat doit etre défini avant regle. Arrêt du programme !\n");
+                    exit(1);
+                }else if(!est_regle_correcte(valeur,nb_etats)){
+                    printf("Erreur de la saisie de la regle comparé aux nombre d'états. Arrêt du programme ! \n");
                     exit(1);
                 }else{
                     regle_string = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
                     regle_string = strcpy(regle_string, valeur);
                 }
+
+
             }else if(!strcmp(type, "config_init")){
                if (config_init != NULL){
                     printf("Duplication du type : \"config_init\". Arrêt du programme !\n");
@@ -223,36 +231,22 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
                 }else if(dimension!=0 && !est_de_longueur(valeur,dimension)){
                     printf("La dimension doit etre de la même longuer que la configuration initiale. Arrêt du programme !\n");
                     exit(1);
+                }else if(nb_etats==0){
+                    printf("nb_etats doit etre défini avant config_init. Arrêt du programme !\n");
+                    exit(1);
+                }else if(!est_regle_correcte(valeur,nb_etats)){
+                    printf("Erreur de la saisie de la regle comparé aux nombre d'états. Arrêt du programme ! \n");
+                    exit(1);
                 }else{
                     config_init = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
                     config_init = strcpy(config_init, valeur);
                 }
-            }else if(!strcmp(type, "type_regle")){
-                if(type_regle != NULL){
-                    printf("duplication du type : \"type_regle\". Arrêt du programme !\n");
+            }else if(!strcmp(type, "nb_etats")){
+                if(nb_etats!=0){
+                    printf("Duplication du type : \"nb_iteration\". Arrêt du programme !\n");
                     exit(1);
-                }else if(regle_string!=NULL && ((conversion_char_int(valeur)==0 && ( !est_regle_binaire(regle_string)  || !est_de_longueur(regle_string,8))) || (conversion_char_int(valeur)==1 && (!est_regle_somme(regle_string) || !est_de_longueur(regle_string,10))))){
-                        printf("La regle n'est pas de la bonne longueur pour ce type d'automates ou le type d'etats est faux. Arrêt du programme !\n");
-                        exit(1);    
                 }else{
-
-                    switch (conversion_char_int(valeur)){
-                        case 0: {
-                            type_regle = &regle_binaire;
-                            affichage_cellule = &afficher_cellule_binaire;
-                            break;
-                        }
-                        case 1: {
-                            type_regle = &regle_somme;
-                            affichage_cellule = &afficher_cellule_somme;
-                            break;
-                        }
-                        default: {
-                            printf("Erreur de la regle. Arrêt du programme !");
-                            exit(1);
-                            break;
-                        }
-                    }
+                    nb_etats=(unsigned int)conversion_char_int(valeur);
                 }
             }else if(!strcmp(type, "type_affichage")){
                 if(type_affichage != NULL){
@@ -288,19 +282,15 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
             exit(1);
         }
     }
-    if(dimension == 0 || regle_string == NULL || config_init == NULL || nb_iterations == 0 ||type_affichage== NULL || type_regle == NULL){
-        printf("\n%s \n",regle_string);
+    if(dimension == 0 || regle_string == NULL || config_init == NULL || nb_iterations == 0 ||type_affichage== NULL || nb_etats == 0){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme !\n");
         exit(1);
     }
 
     automate a = creer_automate(dimension,nb_iterations);
-
-    //regle r = creer_regle();
+    
     set_regle(r, regle_string);
-    set_type_regle(r, type_regle);
-    set_affichage_regle(r, affichage_cellule);
-
+    set_nb_etats(r, nb_etats);
     set_regle_automate(a, r);
 
     set_configuration_initiale(a, config_init);
@@ -391,7 +381,13 @@ automate lecture_runtime_automate(regle r){
     set_regle(r, _regle);
 
     set_regle_automate(a, r);
-
+    unsigned int nb_iterations = 0;
+    unsigned int dimension = 0;
+    unsigned int nb_etats=0;
+    char* regle_string = NULL;
+    
+    char* config_init = NULL;
+    void (*type_affichage)(automate) = NULL;
     switch(type_affichage_int){
         case 0: {
             set_affichage(a, &afficher_automate_console);
@@ -417,9 +413,7 @@ automate process_args(regle r,int argc, char* argv[]){
     char* regle_string = NULL;
     
     char* config_init = NULL;
-    int (*type_regle)(char*, unsigned int, unsigned int, unsigned int) = get_type_regle(r);
     void (*type_affichage)(automate) = NULL;
-    void (*affichage_cellule)(int) = NULL;
 
     if(!est_un_int(argv[6])){
         printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
