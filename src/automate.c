@@ -422,7 +422,7 @@ automate lecture_runtime_automate(){
 automate process_args(regle r,int argc, char* argv[]){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
-    unsigned int nb_etats;
+    unsigned int nb_etats=0;
     char* regle_string = NULL;
     
     char* config_init = NULL;
@@ -430,18 +430,13 @@ automate process_args(regle r,int argc, char* argv[]){
     void (*type_affichage)(automate) = NULL;
     void (*affichage_cellule)(int) = NULL;
 
-    if(strcmp(argv[6],"0") && strcmp(argv[6],"1")){
-        printf("Erreur de l'argument type_regle : Arrêt du programme ! \n");
+    if(!est_un_int(argv[6])){
+        printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
         exit(1);
-    }else{
-        if (!strcmp(argv[6],"0")){
-        type_regle = &regle_binaire;
-        affichage_cellule = &afficher_cellule_binaire;
-        }else if(!strcmp(argv[6],"1")) {
-            type_regle = &regle_somme;
-            affichage_cellule = &afficher_cellule_somme;
-        }
+    }{
+        nb_etats=(unsigned int)conversion_char_int(argv[6]);
     }
+
 
 
     if (!est_un_int(argv[2])){
@@ -464,17 +459,14 @@ automate process_args(regle r,int argc, char* argv[]){
         printf("Erreur de l'argument dimension ou configuration : Arrêt du programme ! \n");
         exit(1);
     }else{
-        if(( !strcmp(argv[6],"0")  && !est_regle_binaire(argv[4])) || ( !strcmp(argv[6],"1")  && !est_regle_somme(argv[4])) ){
+        if(!est_regle_correcte(argv[4],nb_etats)){
             printf("Erreur de l'argument configuration : Arrêt du programme ! \n");
             exit(1);
         }else {
         config_init=argv[4];
         }
     }
-
-    if(( !strcmp(argv[6],"0")  && (!est_regle_binaire(argv[5]) || !est_de_longueur(argv[5],8))) || ( !strcmp(argv[6],"1")  && (!est_regle_somme(argv[5]) || !est_de_longueur(argv[5],10)))){
-        //printf("%s | %s\n",argv[6] , argv[5]);
-
+    if(!est_regle_correcte(argv[5],nb_etats) || !est_de_longueur(argv[5],get_taille_regle(r))){
         printf("Erreur de l'argument regle : Arrêt du programme ! \n");
         exit(1);
     }else{
@@ -495,11 +487,8 @@ automate process_args(regle r,int argc, char* argv[]){
     automate a ;
     a = creer_automate(dimension,nb_iterations);
     
-    regle r = creer_regle();
-    //set_regle(r, regle_string);
-    set_type_regle(r, type_regle);
-    set_affichage_regle(r, affichage_cellule);
-
+    set_regle(r, regle_string);
+    set_nb_etats(r, nb_etats);
     set_regle_automate(a, r);
 
     set_configuration_initiale(a, config_init);
