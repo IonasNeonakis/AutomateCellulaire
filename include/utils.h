@@ -17,4 +17,6 @@ bool est_regle_somme(char * );
 
 bool est_de_longueur(char *,int);
 
+bool est_regle_correcte(char*, unsigned int);
+
 #endif

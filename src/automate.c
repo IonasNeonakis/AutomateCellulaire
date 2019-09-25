@@ -318,7 +318,7 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
     return a;
 }
 
-automate lecture_runtime_automate(){
+automate lecture_runtime_automate(regle r){
     char* nb_iteration_max = (char*) malloc (sizeof(char) * 6);
     char* dimension_max = (char*) malloc (sizeof(char) * 6);
 
@@ -347,66 +347,57 @@ automate lecture_runtime_automate(){
 
     char configuration_initiale[dimension_max_int];
     char* _regle = (char*) malloc (sizeof(char) * 15);
-    unsigned int type_regle;
-    unsigned int type_affichage;
+    char* nb_etats = (char*) malloc (sizeof(char) * 15);
+    char* type_affichage = (char*) malloc (sizeof(char) * 15);
 
-    printf("Type règle : \n");
-    printf("1 - Règle binaire\n");
-    printf("2 - Règle somme\n");
-    scanf("%ud", &type_regle);
-    while(type_regle != 1 && type_regle != 2){
-        scanf("%ud", &type_regle);
+    printf("Nombre d'états : \n");
+    scanf("%s", nb_etats);
+    while(!est_un_int(nb_etats)){
+        scanf("%s", nb_etats);
     }
+    taille = strlen(nb_etats);
+    nb_etats = (char*) realloc (nb_etats, sizeof(char) * taille);
+    nb_etats[taille] = '\0';
+    unsigned int nb_etats_int = conversion_char_int(nb_etats);
 
     printf("Configuration initiale : ");
     scanf("%s", configuration_initiale);
-    
-    while(!est_regle_binaire(configuration_initiale) || (configuration_initiale) != dimension_max_int){
+    while(!est_regle_correcte(configuration_initiale, nb_etats_int) || strlen(configuration_initiale) != dimension_max_int){
         printf("\nVous devez rentrer une configuration initiale dont le nombre de cellule est égale à la dimension de l'automate !\n");
         scanf("%s", configuration_initiale);
     }
     
     printf("Règle : ");
     scanf("%s", _regle);
-    while((!est_regle_binaire(_regle) || !est_de_longueur(_regle, 8)) && (!est_regle_somme(_regle) || !est_de_longueur(_regle, 10))){
+    while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) < get_taille_regle(r)){
         scanf("%s", _regle);
     }
-    _regle = (char*) realloc (_regle, sizeof(char) * dimension_max_int);
+    _regle = (char*) realloc (_regle, sizeof(char) * get_taille_regle(r));
 
     printf("Type affichage : \n");
-    printf("1 - Affichage console\n");
-    printf("2 - Génération d'une image ppm\n");
-    scanf("%ud", &type_affichage);
-    while(type_affichage != 1 && type_affichage != 2){
-        scanf("%ud", &type_affichage);
+    printf("0 - Affichage console\n");
+    printf("1 - Génération d'une image ppm\n");
+    scanf("%s", type_affichage);
+    while(!est_un_int(type_affichage) || (conversion_char_int(type_affichage) != 0 && conversion_char_int(type_affichage) != 1)){
+        scanf("%s", type_affichage);
     }
+    type_affichage = (char*) realloc (type_affichage, sizeof(char) * 1);
+    type_affichage[strlen(type_affichage)] = '\0';
+    unsigned int type_affichage_int = conversion_char_int(type_affichage);
 
-    automate a = creer_automate(dimension_max, nb_iteration_max_int);
+    automate a = creer_automate(dimension_max_int, nb_iteration_max_int);
     set_configuration_initiale(a, configuration_initiale);
-
-    regle r = creer_regle();
+    
     set_regle(r, _regle);
-    switch(type_regle){
-        case 1: {
-            set_type_regle(r, &regle_binaire);
-            set_affichage_regle(r, &afficher_cellule_binaire);
-            break;
-        }
-        case 2: {
-            set_type_regle(r, &regle_somme);
-            set_affichage_regle(r, &afficher_cellule_somme);
-            break;
-        }
-    }
 
     set_regle_automate(a, r);
 
-    switch(type_affichage){
-        case 1: {
+    switch(type_affichage_int){
+        case 0: {
             set_affichage(a, &afficher_automate_console);
             break;
         }
-        case 2: {
+        case 1: {
             set_affichage(a, &afficher_automate_pgm);
             break;
         }
