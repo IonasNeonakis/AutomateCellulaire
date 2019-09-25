@@ -39,9 +39,9 @@ void (*get_affichage_regle_automate(automate))(int);
 
 cel** generer_automate(automate);
 
-automate lire_fichier_automate(char *);
+automate lire_fichier_automate(regle, char *);
 
-automate process_args(int, char**);
+automate process_args(regle,int, char**);
 
 automate lecture_runtime_automate(regle);
 
