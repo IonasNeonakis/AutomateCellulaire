@@ -47,15 +47,17 @@ int get_etat(cel c){
     return c->etat;
 }
 
-
-
-
-int etat_suivant(cel cellule,char * regle, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int)){
+int etat_suivant(cel cellule,char * regle, int (*type_regle) (char*, int* etats)){
     int etat_gauche, etat_droite, etat_milieu;
     etat_gauche=cellule->voisin_g->etat;
     etat_droite=cellule->voisin_d->etat;
     etat_milieu=cellule->etat;
-    int x = type_regle(regle,etat_gauche,etat_milieu,etat_droite); 
+    size_t taille_tab = 3; 
+    int* tab_etats = (int*) malloc (sizeof(int) * taille_tab);
+    tab_etats[0] = etat_gauche;
+    tab_etats[1] = etat_milieu;
+    tab_etats[2] = etat_droite;
+    int x = type_regle(regle, tab_etats); 
     return x;
 }
 

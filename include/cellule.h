@@ -27,7 +27,7 @@ cel get_voisin_gauche(cel);
 
 int get_etat(cel);
 
-int etat_suivant(cel cellule,char * regle, int (*type_regle) (char*, unsigned int, unsigned int, unsigned int));
+int etat_suivant(cel cellule,char * regle, int (*type_regle) (char*, int*));
 
 void afficher_cellule(cel, void (*affichage_cellule) (int));
 

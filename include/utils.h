@@ -21,4 +21,6 @@ bool est_de_longueur(char *,int);
 
 bool est_regle_correcte(char*, unsigned int);
 
+void manuel();
+
 #endif

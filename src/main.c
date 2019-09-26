@@ -22,6 +22,9 @@ int main(int argc, char* argv[]){
             a = lire_fichier_automate(r, argv[2]); //on lit par fichier
         }else if((argc == 9 || argc==8) && !strcmp(argument, "-a")){
             a = process_args(r, argc, argv); //on fait une lecture par arguments
+        }else if(argc == 2 && !strcmp(argv[1], "--help")){
+            manuel();
+            exit(EXIT_SUCCESS);
         }else{
             printf("Erreur du nombre d'arguments. Arrêt du programme ! \n");
             exit(1);
