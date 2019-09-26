@@ -251,7 +251,6 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
     set_regle(r, regle_string);
     set_nb_etats(r, nb_etats);
     set_regle_automate(a, r);
-
     set_configuration_initiale(a, config_init);
     set_affichage(a,type_affichage);
 
