@@ -1,7 +1,23 @@
+/**
+ * \file affichage.c
+ * \brief Ce fichier s'occupe de l'affichage des cellules ainsi que de la sortie de l'affichage.
+ * \author Ionas Samir
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "../include/affichage.h"
+
+
+/**
+ * \fn void afficher_cellule_binaire(int etat)
+ * \brief Fonction qui affiche un X à la place d'un etat à 1 et un espace à la place d'un état à 0
+ *        Elle est utilisée pour l'affichage de la règle binaire  
+ * \author Ionas
+ * \param etat est l'état de la cellule à afficher.
+ */
 
 void afficher_cellule_binaire(int etat){
     char car;
@@ -13,6 +29,14 @@ void afficher_cellule_binaire(int etat){
     printf("%c", car);
 }
 
+
+/**
+ * \fn void afficher_cellule_somme(int etat)
+ * \brief Fonction qui affiche un le nombre de l'état et un espace si le nombre de l'état est 0. Elle est utilisée
+ *        Elle est utilisée pour l'affichage de la regle Somme  
+ * \author Ionas
+ * \param etat est l'état de la cellule à afficher.
+ */
 void afficher_cellule_somme(int etat){
     char car;
     switch (etat){
@@ -32,12 +56,27 @@ void afficher_cellule_somme(int etat){
     printf("%c", car);
 }
 
+/**
+ * \fn void afficher_ligne(cel* ligne,unsigned int dimensions_max, void (*affichage_cellule) (int))
+ * \brief Fonction qui affiche la ligne compléte d'une cellule  
+ * \author Ionas
+ * \param ligne est la ligne à afficher.
+ * \param dimensions_max est la dimension max soit la longueur de la ligne
+ * \param affichage_cellule est la fonction d'affichage d'une cellule
+ */
+
 void afficher_ligne(cel* ligne,unsigned int dimensions_max, void (*affichage_cellule) (int)){
     for(unsigned int i = 0; i < dimensions_max; i++){
         cel x = ligne[i];
         afficher_cellule(x, affichage_cellule);
     }
 }
+/**
+ * \fn void afficher_automate_console(automate automate_cellulaire)
+ * \brief Fonction qui affiche un automate sur la console  
+ * \author Ionas Samir
+ * \param automate_cellulaire est l'automate à afficher.
+ */
 
 void afficher_automate_console(automate automate_cellulaire){
     char* regle = get_regle_automate(automate_cellulaire);
@@ -65,6 +104,13 @@ void afficher_automate_console(automate automate_cellulaire){
         printf("\n");
     }
 }
+
+/**
+ * \fn void afficher_automate_pgm(automate automate_cellulaire)
+ * \brief Fonction qui affiche un automate sous la forme d'une image ppm, elle est de couleur si la regle est de type Somme 
+ * \author Ionas 
+ * \param automate_cellulaire est l'automate à afficher.
+ */
 
 void afficher_automate_pgm(automate automate_cellulaire){
     FILE* image;
