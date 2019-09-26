@@ -391,8 +391,17 @@ automate lecture_runtime_automate(regle r){
    if(type_regle_int == 0){
         regle_en_binaire = conversion_decimal_binaire(conversion_char_int(_regle));
         set_regle(r, regle_en_binaire);
-   }else{
+        set_type_regle(r, &regle_binaire);
+        set_affichage_regle(r, &afficher_cellule_binaire);
+        
+        free(regle_en_binaire);
+        regle_en_binaire = NULL;
+   }else if(type_regle_int == 1){
         set_regle(r, _regle);
+        set_type_regle(r, &regle_somme);
+        set_affichage_regle(r, &afficher_cellule_somme);
+   }else{
+       set_regle(r, _regle);
    }
 
     set_regle_automate(a, r);
@@ -413,8 +422,6 @@ automate lecture_runtime_automate(regle r){
     _regle = NULL;
     free(type_regle);
     type_regle = NULL;
-    free(regle_en_binaire);
-    regle_en_binaire = NULL;
     free(dimension_max);
     dimension_max = NULL;
     free(nb_iteration_max);
