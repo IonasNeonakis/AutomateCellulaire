@@ -23,6 +23,8 @@ int main(int argc, char* argv[]){
         }else if((argc == 9 || argc==8) && !strcmp(argument, "-a")){
             a = process_args(r, argc, argv); //on fait une lecture par arguments
         }else{
+            printf("Erreur du nombre d'arguments. Arrêt du programme ! \n");
+            exit(1);
             //nombre d'arguments incorrect
         }
     }else if(argc == 1){
