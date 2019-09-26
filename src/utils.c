@@ -9,6 +9,18 @@ int conversion_binaire_decimal(int etat_cel1, int etat_cel2, int etat_cel3){
     return ((etat_cel1 * 4) + (etat_cel2 * 2) + etat_cel3); 
 }
 
+int conversion_regle_binaire_decimal(char* regle){
+    size_t taille = strlen(regle);
+    int res = 0;
+    for(int i = taille - 1; i >= 0; i--){
+        int n = regle[i] - 48;
+        if(n == 1){
+            res += pow(2, taille - i - 1);
+        }
+    }
+    return res;
+}
+
 char* conversion_decimal_binaire(int n){
     int taille = (int)floor(log2(n));
     char* nombre_binaire = (char*) calloc (8, sizeof(char) * 8);

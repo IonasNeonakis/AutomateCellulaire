@@ -45,9 +45,12 @@ void afficher_automate_console(automate automate_cellulaire){
     unsigned int dimension_max = get_dimension_max(automate_cellulaire);
     cel** configuration_actuelle = get_configuration_actuelle(automate_cellulaire);
     void (*affichage_regle)(int) = get_affichage_regle_automate(automate_cellulaire);
-
+    
     printf("Règle           : %s\n", regle);
-    printf("Règle binaire   : %s\n", regle);
+    if(est_regle_binaire(regle)){
+        int regle_int = conversion_regle_binaire_decimal(regle);
+        printf("Règle binaire   : %d\n", regle_int);
+    }
     printf("Itérations      : %u\n", nb_iterations_max);
     printf("Dimensions Max. : %u\n\n", dimension_max);
 
