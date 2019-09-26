@@ -246,6 +246,8 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
 
     automate a = creer_automate(dimension,nb_iterations);
     
+    
+    printf("%s", regle_string);
     set_regle(r, regle_string);
     set_nb_etats(r, nb_etats);
     set_regle_automate(a, r);
@@ -393,7 +395,7 @@ automate lecture_runtime_automate(regle r){
         set_regle(r, regle_en_binaire);
         set_type_regle(r, &regle_binaire);
         set_affichage_regle(r, &afficher_cellule_binaire);
-        
+
         free(regle_en_binaire);
         regle_en_binaire = NULL;
    }else if(type_regle_int == 1){

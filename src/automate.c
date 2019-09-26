@@ -116,7 +116,7 @@ void set_affichage(automate a ,void (*afficher_automate)(automate)){
 void set_configuration_initiale(automate automate_cellulaire, char* configuration_initiale){
     for(unsigned int i = 0; i < automate_cellulaire->dimension_max; i++){
         automate_cellulaire->configuration_actuelle[0][i] = creer_cellule();
-        set_etat(automate_cellulaire->configuration_actuelle[0][i], configuration_initiale[i] == '0' ? 0 : 1);
+        set_etat(automate_cellulaire->configuration_actuelle[0][i], configuration_initiale[i] - 48);
     }
     automate_cellulaire->configuration_initiale = (char*) malloc (sizeof(char) * strlen(configuration_initiale) + 1);
     strcpy(automate_cellulaire->configuration_initiale, configuration_initiale);
