@@ -133,8 +133,10 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
                     if(type_regle==0 && (conversion_char_int(valeur)>255 || conversion_char_int(valeur)<0)){
                         printf("la regle binaire doit être entre 0 et 255. Arrêt du programe ! \n");
                         exit(1);
-                    }else{
+                    }else if(type_regle==0){
                         regle_string = strcpy(regle_string, conversion_decimal_binaire(conversion_char_int(valeur)));
+                    }else {
+                        regle_string = strcpy(regle_string, valeur);
                     }
                 }
 
