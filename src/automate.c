@@ -437,12 +437,19 @@ automate lecture_runtime_automate(regle r){
     generer_automate(a);
 
     free(_regle);
+    _regle = NULL;
     free(type_regle);
+    type_regle = NULL;
     free(regle_en_binaire);
+    regle_en_binaire = NULL;
     free(dimension_max);
+    dimension_max = NULL;
     free(nb_iteration_max);
+    nb_iteration_max = NULL;
     free(type_affichage);
+    type_affichage = NULL;
     free(nb_etats);
+    nb_etats = NULL;
 
     return a;
 }
