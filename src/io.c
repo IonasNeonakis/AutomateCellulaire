@@ -313,7 +313,7 @@ automate lecture_runtime_automate(regle r){
     printf("1 - Regle somme\n");
     printf("2 - Regle personnalisée\n");
     scanf("%s", type_regle);
-    while(!est_un_int(type_regle) || (conversion_char_int(type_regle) < 0 && conversion_char_int(type_regle) > 2)){
+    while(!est_un_int(type_regle) || (conversion_char_int(type_regle) < 0 || conversion_char_int(type_regle) > 2)){
         scanf("%s", type_regle);
     }
     taille = strlen(type_regle);
@@ -355,9 +355,15 @@ automate lecture_runtime_automate(regle r){
 
     printf("Règle : ");
     scanf("%s", _regle);
-    if(type_regle_int == 0 && (conversion_char_int(_regle) < 0 || conversion_char_int(_regle) > 255)){
-        scanf("%s", _regle);
-    }else if(type_regle_int == 1 || type_regle_int == 2){
+    if(type_regle_int == 0){
+        while (conversion_char_int(_regle) < 0 || conversion_char_int(_regle) > 255){
+            scanf("%s", _regle);
+        }
+    }else if(type_regle_int == 1 ){ 
+        while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) != 10){
+            scanf("%s", _regle);
+        }
+    }else if(type_regle_int == 2){
         while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) != get_taille_regle(r)){
             scanf("%s", _regle);
         }   
@@ -529,4 +535,36 @@ automate process_args(regle r,int argc, char* argv[]){
     generer_automate(a);
 
     return a;
+}
+
+/**
+ * \fn void manuel()
+ * \brief Cette fonction affiche le manuel
+ * \author Samir
+ */
+
+void manuel(){
+    printf("Bienvenue dans le manuel !\n\n");
+    printf("Ce programme vous permet de générer un automate cellulaire en fonction de plusieurs paramètres.\n");
+    printf("Afin de correctement générer un automate, plusieurs options sont disponibles : \n\n");
+    printf("Il est tout d'abord possible de générer l'automate cellulaire en utilisant un fichier de configuration, cela peut se faire en utilisant l'argument '-f' ou '--file' suivi du nom du fichier à utiliser.\n");
+    printf("Ce fichier doit être placer dans le dossier 'cfg' et doit absolument respecter les modèles déjà présent dans ce dossier.\n\n");
+    printf("EXEMPLE : ./automate -f nom_du_fichier.config\n\n");
+    printf("NOTE : Le nombre d'état ne doit être précisé dans le cas unique où vous créez votre propre règle. Il n'est donc pas nécessaire de préciser ce nombre lors de l'utilisation de la règle de Wolfram ou Somme\n\n");
+    printf("Il est également possible de générer un automate  en passant des arguments directement au programme, cela peut se faire en utilisant l'argument '-a' ou '--args' suivi des paramètres dont voici l'ordre :\n\n");
+    printf("NOMBRE_ITERATIONS  DIMENSION_MAX  CONFIGURATION_INITIALE  REGLE  TYPE_REGLE  TYPE_AFFICHAGE  [NB_ETATS]\n\n");
+    printf("EXEMPLE : ./automate -a 16 11 00000100000 30 0 1\n\n");
+    printf("- Le nombre d'itération doit etre un entier positif\n");
+    printf("- La dimension max doit être un entier positif\n");
+    printf("- La taille de la configuration initiale doit être égale à la dimension max, et ne doit comporter que des chiffres compris entre 0 et le nombre d'états possibles\n");
+    printf("- La règle somme est une succession de 10 entier compris entre 0 et 3\n");
+    printf("- La règle de Wolfram est un entier compris entre 0 et 255\n\n");
+    printf("NOTE : Dans le cas d'une règle personnalisée, vous devrez concevoir son implémentation ainsi que sa règle d'affichage dans le code\n\n");
+    printf("- Type règle est 0 pour une règle de Wolfram, 1 pour une règle somme, 2 pour une règle personnalisée\n");
+    printf("- Type affichage est 0 pour un affichage dans la console, 1 pour la génération d'une image de l'automate\n");
+    printf("Nombre d'états corresponds aux états possibles pour une cellule, ce chiffre, positif, ne doit être précisé seulement dans le cas de l'utilisation d'une règle personnalisée\n\n");
+    printf("Enfin, il est possible de générer un automate en utilisant la lecture runtime, c'est à dire pendant l'exécution du programme, cela se fait en ne passant aucun arguments au programme.\n");
+    printf("Les règles à respecter sont identiques à celles cîtées plus haut.\n\n");
+    printf("NOTE : Tant que vous ne rentrerez pas une valeur correcte vérifiant chacunes de ces règles, le programme vous redemandera la valeur.\n\n");
+    printf("Merci d'avoir lu ce manuel, bon courage !\n");
 }

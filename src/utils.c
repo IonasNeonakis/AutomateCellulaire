@@ -57,7 +57,12 @@ int conversion_regle_binaire_decimal(char* regle){
  */
 
 char* conversion_decimal_binaire(int n){
-    int taille = (int)floor(log2(n));
+    int taille;
+    if (n==0){
+        taille =-1;
+    }else{
+    taille = (int)floor(log2(n));
+    }
     char* nombre_binaire = (char*) calloc (8, sizeof(char) * 8);
     int i = 0; 
     while (n > 0) {
@@ -66,10 +71,10 @@ char* conversion_decimal_binaire(int n){
         i++; 
     }
     char* remplir = (char*) calloc (8, sizeof(char) * 8 + 1);
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < 8-taille-1; i++){
         remplir[i] = '0';
     }
-    remplir[7] = '\0';
+    remplir[8] = '\0';
     nombre_binaire[taille + 1] = '\0';
     strcat(remplir, nombre_binaire);
     free(nombre_binaire);
@@ -180,34 +185,3 @@ bool est_regle_correcte(char* s, unsigned int nb_etats){
 }
 
 
-/**
- * \fn void manuel()
- * \brief Cette fonction affiche le manuel
- * \author Samir
- */
-
-void manuel(){
-    printf("Bienvenue dans le manuel !\n\n");
-    printf("Ce programme vous permet de générer un automate cellulaire en fonction de plusieurs paramètres.\n");
-    printf("Afin de correctement générer un automate, plusieurs options sont disponibles : \n\n");
-    printf("Il est tout d'abord possible de générer l'automate cellulaire en utilisant un fichier de configuration, cela peut se faire en utilisant l'argument '-f' ou '--file' suivi du nom du fichier à utiliser.\n");
-    printf("Ce fichier doit être placer dans le dossier 'cfg' et doit absolument respecter les modèles déjà présent dans ce dossier.\n\n");
-    printf("EXEMPLE : ./automate -f nom_du_fichier.config\n\n");
-    printf("NOTE : Le nombre d'état ne doit être précisé dans le cas unique où vous créez votre propre règle. Il n'est donc pas nécessaire de préciser ce nombre lors de l'utilisation de la règle de Wolfram ou Somme\n\n");
-    printf("Il est également possible de générer un automate  en passant des arguments directement au programme, cela peut se faire en utilisant l'argument '-a' ou '--args' suivi des paramètres dont voici l'ordre :\n\n");
-    printf("NOMBRE_ITERATIONS  DIMENSION_MAX  CONFIGURATION_INITIALE  REGLE  TYPE_REGLE  TYPE_AFFICHAGE  [NB_ETATS]\n\n");
-    printf("EXEMPLE : ./automate -a 16 11 00000100000 30 0 1\n\n");
-    printf("- Le nombre d'itération doit etre un entier positif\n");
-    printf("- La dimension max doit être un entier positif\n");
-    printf("- La taille de la configuration initiale doit être égale à la dimension max, et ne doit comporter que des chiffres compris entre 0 et le nombre d'états possibles\n");
-    printf("- La règle somme est une succession de 10 entier compris entre 0 et 3\n");
-    printf("- La règle de Wolfram est un entier compris entre 0 et 255\n\n");
-    printf("NOTE : Dans le cas d'une règle personnalisée, vous devrez concevoir son implémentation ainsi que sa règle d'affichage dans le code\n\n");
-    printf("- Type règle est 0 pour une règle de Wolfram, 1 pour une règle somme, 2 pour une règle personnalisée\n");
-    printf("- Type affichage est 0 pour un affichage dans la console, 1 pour la génération d'une image de l'automate\n");
-    printf("Nombre d'états corresponds aux états possibles pour une cellule, ce chiffre, positif, ne doit être précisé seulement dans le cas de l'utilisation d'une règle personnalisée\n\n");
-    printf("Enfin, il est possible de générer un automate en utilisant la lecture runtime, c'est à dire pendant l'exécution du programme, cela se fait en ne passant aucun arguments au programme.\n");
-    printf("Les règles à respecter sont identiques à celles cîtées plus haut.\n\n");
-    printf("NOTE : Tant que vous ne rentrerez pas une valeur correcte vérifiant chacunes de ces règles, le programme vous redemandera la valeur.\n\n");
-    printf("Merci d'avoir lu ce manuel, bon courage !\n");
-}
