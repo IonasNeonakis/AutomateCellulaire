@@ -225,7 +225,7 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
                         printf("la regle binaire doit être entre 0 et 255. Arrêt du programe ! \n");
                         exit(1);
                     }else{
-                        regle_string = strcpy(regle_string, valeur);
+                        regle_string = strcpy(regle_string, conversion_decimal_binaire(conversion_char_int(valeur)));
                     }
                 }
 
@@ -568,7 +568,7 @@ automate process_args(regle r,int argc, char* argv[]){
             printf("Erreur de l'argument regle pour la somme, c'est un entier qui doit etre compris enre 0 et 255");
             exit(1);
         }else{
-            regle_string=argv[5];
+            regle_string=conversion_decimal_binaire(conversion_char_int(argv[5]));
         }
     }else{
         if(!est_regle_correcte(argv[5],nb_etats) || !est_de_longueur(argv[5],get_taille_regle(r))){
