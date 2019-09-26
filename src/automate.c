@@ -109,6 +109,7 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     unsigned int nb_etats=0;
+    int type_regle=-1;
     char* regle_string = NULL;
     
     char* config_init = NULL;
@@ -120,7 +121,7 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
 
     regex_t preg;
     int err; 
-    const char *str_regex = "\"(type_affichage|nb_etats|nb_iteration|dimension|config_init|regle)\"=([0123456789]*);$" ;
+    const char *str_regex = "\"(type_affichage|nb_etats|type_regle|nb_iteration|dimension|config_init|regle)\"=([0123456789]*);$" ;
 
     err = regcomp(&preg, str_regex, REG_EXTENDED | REG_NEWLINE); 
 
@@ -209,18 +210,23 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
                 if (regle_string != NULL){
                     printf("Duplication du type : \"regle\". Arrêt du programme !\n");
                     exit(1);
-                }else if(!est_de_longueur(valeur,get_taille_regle(r))){    
+                }else if(type_regle!=0 && !est_de_longueur(valeur,get_taille_regle(r))){    
                     printf("La regle n'est pas de la bonne longueur. Arrêt du programme !\n");
                     exit(1);
                 }else if(nb_etats==0){
                     printf("nb_etat doit etre défini avant regle. Arrêt du programme !\n");
                     exit(1);
-                }else if(!est_regle_correcte(valeur,nb_etats)){
+                }else if(type_regle!=0 && !est_regle_correcte(valeur,nb_etats)){
                     printf("Erreur de la saisie de la regle comparé aux nombre d'états. Arrêt du programme ! \n");
                     exit(1);
                 }else{
                     regle_string = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
-                    regle_string = strcpy(regle_string, valeur);
+                    if(type_regle==0 && (conversion_char_int(valeur)>255 || conversion_char_int(valeur)<0)){
+                        printf("la regle binaire doit être entre 0 et 255. Arrêt du programe ! \n");
+                        exit(1);
+                    }else{
+                        regle_string = strcpy(regle_string, valeur);
+                    }
                 }
 
 
@@ -242,8 +248,17 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
                     config_init = strcpy(config_init, valeur);
                 }
             }else if(!strcmp(type, "nb_etats")){
-                if(nb_etats!=0){
+                if(type_regle==0 || type_regle==1){
+                    printf("nb_etats ne doit pas être défini si type_regle vaut 0 ou 1. Arrêt du programme ! \n");
+                    exit(1);
+                }else if(type_regle==-1){
+                    printf("Le type de regle doit être défini avant nb_etats. Arrêt du programme ! \n");
+                    exit(1);
+                }else if(nb_etats!=0){
                     printf("Duplication du type : \"nb_iteration\". Arrêt du programme !\n");
+                    exit(1);
+                }else if(conversion_char_int(valeur)>9){
+                    printf("le nombre d'états ne peut être supérieur à 9. Arrêt du programme ! \n");
                     exit(1);
                 }else{
                     nb_etats=(unsigned int)conversion_char_int(valeur);
@@ -269,6 +284,39 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
                         }
                     }
                 }
+            }else if(!strcmp(type,"type_regle")){
+                if(type_regle!=-1){
+                    printf("Duplication du type : \"type_regle\". Arrêt du programme !\n");
+                    exit(1);
+                }else{
+                    switch (conversion_char_int(valeur)){
+                        case 0: {
+                            set_type_regle(r, &regle_binaire);
+                            set_taille_regle(r, 8);
+                            set_affichage_regle(r, &afficher_cellule_binaire);
+                            nb_etats=2;
+                            type_regle=0;
+                            break;
+                        }case 1 :{
+                            set_type_regle(r, &regle_somme);
+                            set_taille_regle(r, 10);
+                            set_affichage_regle(r, &afficher_cellule_somme);
+                            nb_etats=4;
+                            type_regle=1;
+                            break;
+                        }case 2 : {
+                            type_regle=2;
+                            break;
+                        }
+                        default:{
+                            printf("Erreur de type_regle. Arrêt du programme ! \n");
+                            exit(1);
+                            break;
+                        }
+                    }
+                }
+
+
             }else{
                 printf("\n\nErreur type inconnu !\n\n");
                 exit(1);
@@ -282,7 +330,7 @@ automate lire_fichier_automate(regle r,char* nom_fichier){
             exit(1);
         }
     }
-    if(dimension == 0 || regle_string == NULL || config_init == NULL || nb_iterations == 0 ||type_affichage== NULL || nb_etats == 0){
+    if(dimension == 0 || regle_string == NULL || config_init == NULL || nb_iterations == 0 ||type_affichage== NULL || type_regle==-1 || (nb_etats == 0 && type_regle==2)){
         printf("Fichier incomplet pour l'éxecution du programme. Arrêt du programme !\n");
         exit(1);
     }
@@ -407,7 +455,7 @@ automate process_args(regle r,int argc, char* argv[]){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     unsigned int nb_etats=0;
-    unsigned int type_regle =2;
+    int type_regle =-1;
 
     char* regle_string = NULL;
     
@@ -433,11 +481,11 @@ automate process_args(regle r,int argc, char* argv[]){
             exit(1);
         }
     }else{
-        if(!est_un_int(argv[8])){
+        if(!est_un_int(argv[8]) || conversion_char_int(argv[8])>9){
             printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
             exit(1);
         }else{
-            nb_etats=(unsigned int)conversion_char_int(argv[6]);
+            nb_etats=(unsigned int)conversion_char_int(argv[8]);
             type_regle=2;
         }
     }
