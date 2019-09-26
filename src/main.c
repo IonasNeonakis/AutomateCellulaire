@@ -9,8 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/affichage.h"
 #include "../include/automate.h"
+#include "../include/affichage.h"
+#include "../include/io.h"
 #include "../include/regle.h"
 #include "../include/utils.h"
 
