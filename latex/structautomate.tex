@@ -1,0 +1,52 @@
+\hypertarget{structautomate}{}\section{automate Struct Reference}
+\label{structautomate}\index{automate@{automate}}
+
+
+Cette structure permet de représenter un automate.  
+
+
+
+
+{\ttfamily \#include $<$automate.\+h$>$}
+
+
+
+Collaboration diagram for automate\+:
+% FIG 0
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structautomate_acd8db0ae22d81e76231caa704b1b1772}\label{structautomate_acd8db0ae22d81e76231caa704b1b1772}} 
+unsigned int {\bfseries temps}
+\item 
+\mbox{\Hypertarget{structautomate_a04efa82bafedbc910965ca41c0ffceb1}\label{structautomate_a04efa82bafedbc910965ca41c0ffceb1}} 
+\hyperlink{structcellule}{cel} $\ast$$\ast$ {\bfseries configuration\+\_\+actuelle}
+\item 
+\mbox{\Hypertarget{structautomate_a5fc5a034eea38f8ee798237e64528013}\label{structautomate_a5fc5a034eea38f8ee798237e64528013}} 
+unsigned int {\bfseries dimension\+\_\+max}
+\item 
+\mbox{\Hypertarget{structautomate_a0c74b4e7059210c328cb56b19d8e76cc}\label{structautomate_a0c74b4e7059210c328cb56b19d8e76cc}} 
+unsigned int {\bfseries nb\+\_\+iterations\+\_\+max}
+\item 
+\mbox{\Hypertarget{structautomate_a00e06d1492bcdbfab74e8614993b9d7e}\label{structautomate_a00e06d1492bcdbfab74e8614993b9d7e}} 
+\hyperlink{structregle}{regle} {\bfseries \+\_\+regle}
+\item 
+\mbox{\Hypertarget{structautomate_a5f0dc5dc52d7b220eb216792bf7764c5}\label{structautomate_a5f0dc5dc52d7b220eb216792bf7764c5}} 
+void($\ast$ {\bfseries affichage} )(\hyperlink{structautomate}{automate})
+\item 
+\mbox{\Hypertarget{structautomate_ae84af55cf081b599acce8f512ec66ddf}\label{structautomate_ae84af55cf081b599acce8f512ec66ddf}} 
+char $\ast$ {\bfseries configuration\+\_\+initiale}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Cette structure permet de représenter un automate. 
+
+\begin{DoxyAuthor}{Author}
+Ionas Samir
+\end{DoxyAuthor}
+configuration\+\_\+actuelle représente un tableau à deux dimension où chaque ligne représente une génération de cellule. dimension\+\_\+max représente le nombre de cellules maximum sur une ligne nb\+\_\+iterations\+\_\+max représente le nombre de générations qui seront générées \+\_\+regle représente la règle de transition à suivre pour passer à la génération suivante affichage est une fonction d\textquotesingle{}affichage de l\textquotesingle{}automate configuration\+\_\+initiale représente la configuration initiale de l\textquotesingle{}automate c\textquotesingle{}est à dire la configuration de cellule au temps t = 0 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\hyperlink{automate_8c}{automate.\+c}\end{DoxyCompactItemize}

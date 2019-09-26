@@ -1,0 +1,192 @@
+\hypertarget{automate_8c}{}\section{src/automate.c File Reference}
+\label{automate_8c}\index{src/automate.\+c@{src/automate.\+c}}
+
+
+Fichier se rapportant à la création d\textquotesingle{}un automate, sa gestion ainsi que son affichage.  
+
+
+{\ttfamily \#include \char`\"{}../include/automate.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../include/affichage.\+h\char`\"{}}\newline
+Include dependency graph for automate.\+c\+:
+% FIG 0
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structautomate}{automate}
+\begin{DoxyCompactList}\small\item\em Cette structure permet de représenter un automate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structautomate}{automate} \hyperlink{automate_8c_a27726f179545ee3b1df813bd8fb14fd6}{creer\+\_\+automate} (unsigned int dimension\+\_\+max, unsigned int nb\+\_\+iterations\+\_\+max)
+\begin{DoxyCompactList}\small\item\em Fonction de création de l\textquotesingle{}automate, allocation de la mémoire pour le tableau à deux dimensions, et passage des valeurs de dimension\+\_\+max et nb\+\_\+iterations\+\_\+max dans la structure. \end{DoxyCompactList}\item 
+void \hyperlink{automate_8c_a1cd8c5edbf3d9be7dc5a7616149bfaa3}{supprimer\+\_\+automate} (\hyperlink{structautomate}{automate} $\ast$automate\+\_\+cellulaire\+\_\+ptr)
+\begin{DoxyCompactList}\small\item\em Fonction de suppression de l\textquotesingle{}automate, désallocation de la mémoire. \end{DoxyCompactList}\item 
+void \hyperlink{automate_8c_a2a8a68df62e61a685bb9214a0be27b3f}{afficher\+\_\+automate} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\begin{DoxyCompactList}\small\item\em Fonction d\textquotesingle{}affichage de l\textquotesingle{}automate. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{automate_8c_a9b9f7be45c494e908bf572dad206906f}\label{automate_8c_a9b9f7be45c494e908bf572dad206906f}} 
+void {\bfseries set\+\_\+affichage} (\hyperlink{structautomate}{automate} a, void($\ast$\hyperlink{automate_8c_a2a8a68df62e61a685bb9214a0be27b3f}{afficher\+\_\+automate})(\hyperlink{structautomate}{automate}))
+\item 
+void \hyperlink{automate_8c_a6ca4776ea35cdd3941637691b5d1ea65}{set\+\_\+configuration\+\_\+initiale} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire, char $\ast$configuration\+\_\+initiale)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de définir correctement l\textquotesingle{}état initial de l\textquotesingle{}automate. \end{DoxyCompactList}\item 
+void \hyperlink{automate_8c_a6a0a8b76af50f7f7778a928e76e1bf0e}{set\+\_\+voisins} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire, unsigned int k)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de définir correctement les voisins de chaque cellule. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{automate_8c_a7df0f9a130f58ae5ea735687aaefbc46}\label{automate_8c_a7df0f9a130f58ae5ea735687aaefbc46}} 
+\hyperlink{structcellule}{cel} $\ast$$\ast$ {\bfseries get\+\_\+configuration\+\_\+actuelle} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\item 
+\mbox{\Hypertarget{automate_8c_a78507f6bd39d4e10edab7eb46fa5e9a8}\label{automate_8c_a78507f6bd39d4e10edab7eb46fa5e9a8}} 
+unsigned int {\bfseries get\+\_\+nb\+\_\+iterations\+\_\+max} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\item 
+\mbox{\Hypertarget{automate_8c_a85dc94784b6d93601994919e5f561b87}\label{automate_8c_a85dc94784b6d93601994919e5f561b87}} 
+unsigned int {\bfseries get\+\_\+dimension\+\_\+max} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\item 
+\mbox{\Hypertarget{automate_8c_a5526ce1772351774bf7f67e63c754b61}\label{automate_8c_a5526ce1772351774bf7f67e63c754b61}} 
+char $\ast$ {\bfseries get\+\_\+regle\+\_\+automate} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\item 
+\mbox{\Hypertarget{automate_8c_a1c9954e89b8ced50b013b80871961c89}\label{automate_8c_a1c9954e89b8ced50b013b80871961c89}} 
+void {\bfseries set\+\_\+regle\+\_\+automate} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire, \hyperlink{structregle}{regle} r)
+\item 
+\hyperlink{structcellule}{cel} $\ast$$\ast$ \hyperlink{automate_8c_ab705b5965ea49cfa46b53a6b1965f58d}{generer\+\_\+automate} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\begin{DoxyCompactList}\small\item\em Fonction permettant de générer l\textquotesingle{}automate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{automate_8c_a884efe31c9b724241b7e77211b1b9fdd}\label{automate_8c_a884efe31c9b724241b7e77211b1b9fdd}} 
+void($\ast$)(int) {\bfseries get\+\_\+affichage\+\_\+regle\+\_\+automate} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Fichier se rapportant à la création d\textquotesingle{}un automate, sa gestion ainsi que son affichage. 
+
+\begin{DoxyAuthor}{Author}
+Ionas Samir
+\end{DoxyAuthor}
+Ce fichier permet de créer un automate à partir des paramètres donnés soit par arguments, soit par fichier, ou soit par lecture runtime. L\textquotesingle{}automate ainsi créé pourra s\textquotesingle{}afficher selon une fonction d\textquotesingle{}affichage définie par l\textquotesingle{}utilisateur 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{automate_8c_a2a8a68df62e61a685bb9214a0be27b3f}\label{automate_8c_a2a8a68df62e61a685bb9214a0be27b3f}} 
+\index{automate.\+c@{automate.\+c}!afficher\+\_\+automate@{afficher\+\_\+automate}}
+\index{afficher\+\_\+automate@{afficher\+\_\+automate}!automate.\+c@{automate.\+c}}
+\subsubsection{\texorpdfstring{afficher\+\_\+automate()}{afficher\_automate()}}
+{\footnotesize\ttfamily void afficher\+\_\+automate (\begin{DoxyParamCaption}\item[{\hyperlink{structautomate}{automate}}]{automate\+\_\+cellulaire }\end{DoxyParamCaption})}
+
+
+
+Fonction d\textquotesingle{}affichage de l\textquotesingle{}automate. 
+
+\begin{DoxyAuthor}{Author}
+Samir
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em automate$\ast$} & automate\+\_\+cellulaire représente l\textquotesingle{}automate à afficher \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{automate_8c_a27726f179545ee3b1df813bd8fb14fd6}\label{automate_8c_a27726f179545ee3b1df813bd8fb14fd6}} 
+\index{automate.\+c@{automate.\+c}!creer\+\_\+automate@{creer\+\_\+automate}}
+\index{creer\+\_\+automate@{creer\+\_\+automate}!automate.\+c@{automate.\+c}}
+\subsubsection{\texorpdfstring{creer\+\_\+automate()}{creer\_automate()}}
+{\footnotesize\ttfamily \hyperlink{structautomate}{automate} creer\+\_\+automate (\begin{DoxyParamCaption}\item[{unsigned int}]{dimension\+\_\+max,  }\item[{unsigned int}]{nb\+\_\+iterations\+\_\+max }\end{DoxyParamCaption})}
+
+
+
+Fonction de création de l\textquotesingle{}automate, allocation de la mémoire pour le tableau à deux dimensions, et passage des valeurs de dimension\+\_\+max et nb\+\_\+iterations\+\_\+max dans la structure. 
+
+\begin{DoxyAuthor}{Author}
+Samir
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em unsigned} & int dimension\+\_\+max représente le nombre de cellules maximum sur une ligne \\
+\hline
+{\em unsigned} & int nb\+\_\+iterations\+\_\+max représente le nombre de générations qui seront générées \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+automate ainsi créé 
+\end{DoxyReturn}
+\mbox{\Hypertarget{automate_8c_ab705b5965ea49cfa46b53a6b1965f58d}\label{automate_8c_ab705b5965ea49cfa46b53a6b1965f58d}} 
+\index{automate.\+c@{automate.\+c}!generer\+\_\+automate@{generer\+\_\+automate}}
+\index{generer\+\_\+automate@{generer\+\_\+automate}!automate.\+c@{automate.\+c}}
+\subsubsection{\texorpdfstring{generer\+\_\+automate()}{generer\_automate()}}
+{\footnotesize\ttfamily \hyperlink{structcellule}{cel}$\ast$$\ast$ generer\+\_\+automate (\begin{DoxyParamCaption}\item[{\hyperlink{structautomate}{automate}}]{automate\+\_\+cellulaire }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de générer l\textquotesingle{}automate. 
+
+\begin{DoxyAuthor}{Author}
+Samir
+\end{DoxyAuthor}
+On génère l\textquotesingle{}automate en utilisant sa règle de transition jusqu\textquotesingle{}au nombre d\textquotesingle{}itérations maximum défini pour l\textquotesingle{}automate. Pour ce faire, on part de la première génération à réellement génerer, et pour chaque cellule on va venir appliquer la règle, redéfinir l\textquotesingle{}état de la cellule et redéfinir les différents voisins.
+
+
+\begin{DoxyParams}{Parameters}
+{\em automate} & automate\+\_\+cellulaire représente l\textquotesingle{}automate sur lequel la fonction va opérer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+cel$\ast$$\ast$ le tableau à deux dimensions de générations de cellules 
+\end{DoxyReturn}
+\mbox{\Hypertarget{automate_8c_a6ca4776ea35cdd3941637691b5d1ea65}\label{automate_8c_a6ca4776ea35cdd3941637691b5d1ea65}} 
+\index{automate.\+c@{automate.\+c}!set\+\_\+configuration\+\_\+initiale@{set\+\_\+configuration\+\_\+initiale}}
+\index{set\+\_\+configuration\+\_\+initiale@{set\+\_\+configuration\+\_\+initiale}!automate.\+c@{automate.\+c}}
+\subsubsection{\texorpdfstring{set\+\_\+configuration\+\_\+initiale()}{set\_configuration\_initiale()}}
+{\footnotesize\ttfamily void set\+\_\+configuration\+\_\+initiale (\begin{DoxyParamCaption}\item[{\hyperlink{structautomate}{automate}}]{automate\+\_\+cellulaire,  }\item[{char $\ast$}]{configuration\+\_\+initiale }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de définir correctement l\textquotesingle{}état initial de l\textquotesingle{}automate. 
+
+\begin{DoxyAuthor}{Author}
+Samir
+\end{DoxyAuthor}
+La configuration initiale sera mise en place avec les états de cellules correspondants
+
+
+\begin{DoxyParams}{Parameters}
+{\em automate} & automate\+\_\+cellulaire représente l\textquotesingle{}automate sur lequel la fonction va opérer \\
+\hline
+{\em char$\ast$} & configuration\+\_\+initiale représente la configuration initiale à passer \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{automate_8c_a6a0a8b76af50f7f7778a928e76e1bf0e}\label{automate_8c_a6a0a8b76af50f7f7778a928e76e1bf0e}} 
+\index{automate.\+c@{automate.\+c}!set\+\_\+voisins@{set\+\_\+voisins}}
+\index{set\+\_\+voisins@{set\+\_\+voisins}!automate.\+c@{automate.\+c}}
+\subsubsection{\texorpdfstring{set\+\_\+voisins()}{set\_voisins()}}
+{\footnotesize\ttfamily void set\+\_\+voisins (\begin{DoxyParamCaption}\item[{\hyperlink{structautomate}{automate}}]{automate\+\_\+cellulaire,  }\item[{unsigned int}]{k }\end{DoxyParamCaption})}
+
+
+
+Fonction permettant de définir correctement les voisins de chaque cellule. 
+
+\begin{DoxyAuthor}{Author}
+Samir
+\end{DoxyAuthor}
+On réalise cette opération en partant de la seconde cellule et en mettant la cellule à la position j -\/ 1 comme son voisin de gauche
+
+
+\begin{DoxyParams}{Parameters}
+{\em automate} & automate\+\_\+cellulaire représente l\textquotesingle{}automate sur lequel la fonction va opérer \\
+\hline
+{\em unsigned} & int k représente la ligne, soit la génération de cellule concernée \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{automate_8c_a1cd8c5edbf3d9be7dc5a7616149bfaa3}\label{automate_8c_a1cd8c5edbf3d9be7dc5a7616149bfaa3}} 
+\index{automate.\+c@{automate.\+c}!supprimer\+\_\+automate@{supprimer\+\_\+automate}}
+\index{supprimer\+\_\+automate@{supprimer\+\_\+automate}!automate.\+c@{automate.\+c}}
+\subsubsection{\texorpdfstring{supprimer\+\_\+automate()}{supprimer\_automate()}}
+{\footnotesize\ttfamily void supprimer\+\_\+automate (\begin{DoxyParamCaption}\item[{\hyperlink{structautomate}{automate} $\ast$}]{automate\+\_\+cellulaire\+\_\+ptr }\end{DoxyParamCaption})}
+
+
+
+Fonction de suppression de l\textquotesingle{}automate, désallocation de la mémoire. 
+
+\begin{DoxyAuthor}{Author}
+Samir
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em automate$\ast$} & automate\+\_\+cellulaire représente l\textquotesingle{}automate à supprimer \\
+\hline
+\end{DoxyParams}

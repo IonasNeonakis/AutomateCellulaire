@@ -1,0 +1,130 @@
+\hypertarget{affichage_8c}{}\section{src/affichage.c File Reference}
+\label{affichage_8c}\index{src/affichage.\+c@{src/affichage.\+c}}
+
+
+Ce fichier s\textquotesingle{}occupe de l\textquotesingle{}affichage des cellules ainsi que de la sortie de l\textquotesingle{}affichage.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}../include/affichage.\+h\char`\"{}}\newline
+Include dependency graph for affichage.\+c\+:
+% FIG 0
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{affichage_8c_ac005cd6aec81ba91465f626efd404041}{afficher\+\_\+cellule\+\_\+binaire} (int etat)
+\begin{DoxyCompactList}\small\item\em Fonction qui affiche un X à la place d\textquotesingle{}un etat à 1 et un espace à la place d\textquotesingle{}un état à 0 Elle est utilisée pour l\textquotesingle{}affichage de la règle binaire. \end{DoxyCompactList}\item 
+void \hyperlink{affichage_8c_a1b45b7d41423f8c1037c13afb9c2b6cd}{afficher\+\_\+cellule\+\_\+somme} (int etat)
+\begin{DoxyCompactList}\small\item\em Fonction qui affiche un le nombre de l\textquotesingle{}état et un espace si le nombre de l\textquotesingle{}état est 0. Elle est utilisée Elle est utilisée pour l\textquotesingle{}affichage de la regle Somme. \end{DoxyCompactList}\item 
+void \hyperlink{affichage_8c_aeaec0e79fce1e1733cc1ac19fb8f43a0}{afficher\+\_\+ligne} (\hyperlink{structcellule}{cel} $\ast$ligne, unsigned int dimensions\+\_\+max, void($\ast$affichage\+\_\+cellule)(int))
+\begin{DoxyCompactList}\small\item\em Fonction qui affiche la ligne compléte d\textquotesingle{}une cellule. \end{DoxyCompactList}\item 
+void \hyperlink{affichage_8c_abfdcb767e454c9f018d6dde30b02978e}{afficher\+\_\+automate\+\_\+console} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\begin{DoxyCompactList}\small\item\em Fonction qui affiche un automate sur la console. \end{DoxyCompactList}\item 
+void \hyperlink{affichage_8c_ab912e4a769bc6ffa8671b81f332b93a9}{afficher\+\_\+automate\+\_\+pgm} (\hyperlink{structautomate}{automate} automate\+\_\+cellulaire)
+\begin{DoxyCompactList}\small\item\em Fonction qui affiche un automate sous la forme d\textquotesingle{}une image ppm, elle est de couleur si la regle est de type Somme. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Ce fichier s\textquotesingle{}occupe de l\textquotesingle{}affichage des cellules ainsi que de la sortie de l\textquotesingle{}affichage. 
+
+\begin{DoxyAuthor}{Author}
+Ionas Samir 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{affichage_8c_abfdcb767e454c9f018d6dde30b02978e}\label{affichage_8c_abfdcb767e454c9f018d6dde30b02978e}} 
+\index{affichage.\+c@{affichage.\+c}!afficher\+\_\+automate\+\_\+console@{afficher\+\_\+automate\+\_\+console}}
+\index{afficher\+\_\+automate\+\_\+console@{afficher\+\_\+automate\+\_\+console}!affichage.\+c@{affichage.\+c}}
+\subsubsection{\texorpdfstring{afficher\+\_\+automate\+\_\+console()}{afficher\_automate\_console()}}
+{\footnotesize\ttfamily void afficher\+\_\+automate\+\_\+console (\begin{DoxyParamCaption}\item[{\hyperlink{structautomate}{automate}}]{automate\+\_\+cellulaire }\end{DoxyParamCaption})}
+
+
+
+Fonction qui affiche un automate sur la console. 
+
+\begin{DoxyAuthor}{Author}
+Ionas Samir 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em automate\+\_\+cellulaire} & est l\textquotesingle{}automate à afficher. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{affichage_8c_ab912e4a769bc6ffa8671b81f332b93a9}\label{affichage_8c_ab912e4a769bc6ffa8671b81f332b93a9}} 
+\index{affichage.\+c@{affichage.\+c}!afficher\+\_\+automate\+\_\+pgm@{afficher\+\_\+automate\+\_\+pgm}}
+\index{afficher\+\_\+automate\+\_\+pgm@{afficher\+\_\+automate\+\_\+pgm}!affichage.\+c@{affichage.\+c}}
+\subsubsection{\texorpdfstring{afficher\+\_\+automate\+\_\+pgm()}{afficher\_automate\_pgm()}}
+{\footnotesize\ttfamily void afficher\+\_\+automate\+\_\+pgm (\begin{DoxyParamCaption}\item[{\hyperlink{structautomate}{automate}}]{automate\+\_\+cellulaire }\end{DoxyParamCaption})}
+
+
+
+Fonction qui affiche un automate sous la forme d\textquotesingle{}une image ppm, elle est de couleur si la regle est de type Somme. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em automate\+\_\+cellulaire} & est l\textquotesingle{}automate à afficher. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{affichage_8c_ac005cd6aec81ba91465f626efd404041}\label{affichage_8c_ac005cd6aec81ba91465f626efd404041}} 
+\index{affichage.\+c@{affichage.\+c}!afficher\+\_\+cellule\+\_\+binaire@{afficher\+\_\+cellule\+\_\+binaire}}
+\index{afficher\+\_\+cellule\+\_\+binaire@{afficher\+\_\+cellule\+\_\+binaire}!affichage.\+c@{affichage.\+c}}
+\subsubsection{\texorpdfstring{afficher\+\_\+cellule\+\_\+binaire()}{afficher\_cellule\_binaire()}}
+{\footnotesize\ttfamily void afficher\+\_\+cellule\+\_\+binaire (\begin{DoxyParamCaption}\item[{int}]{etat }\end{DoxyParamCaption})}
+
+
+
+Fonction qui affiche un X à la place d\textquotesingle{}un etat à 1 et un espace à la place d\textquotesingle{}un état à 0 Elle est utilisée pour l\textquotesingle{}affichage de la règle binaire. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em etat} & est l\textquotesingle{}état de la cellule à afficher. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{affichage_8c_a1b45b7d41423f8c1037c13afb9c2b6cd}\label{affichage_8c_a1b45b7d41423f8c1037c13afb9c2b6cd}} 
+\index{affichage.\+c@{affichage.\+c}!afficher\+\_\+cellule\+\_\+somme@{afficher\+\_\+cellule\+\_\+somme}}
+\index{afficher\+\_\+cellule\+\_\+somme@{afficher\+\_\+cellule\+\_\+somme}!affichage.\+c@{affichage.\+c}}
+\subsubsection{\texorpdfstring{afficher\+\_\+cellule\+\_\+somme()}{afficher\_cellule\_somme()}}
+{\footnotesize\ttfamily void afficher\+\_\+cellule\+\_\+somme (\begin{DoxyParamCaption}\item[{int}]{etat }\end{DoxyParamCaption})}
+
+
+
+Fonction qui affiche un le nombre de l\textquotesingle{}état et un espace si le nombre de l\textquotesingle{}état est 0. Elle est utilisée Elle est utilisée pour l\textquotesingle{}affichage de la regle Somme. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em etat} & est l\textquotesingle{}état de la cellule à afficher. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{affichage_8c_aeaec0e79fce1e1733cc1ac19fb8f43a0}\label{affichage_8c_aeaec0e79fce1e1733cc1ac19fb8f43a0}} 
+\index{affichage.\+c@{affichage.\+c}!afficher\+\_\+ligne@{afficher\+\_\+ligne}}
+\index{afficher\+\_\+ligne@{afficher\+\_\+ligne}!affichage.\+c@{affichage.\+c}}
+\subsubsection{\texorpdfstring{afficher\+\_\+ligne()}{afficher\_ligne()}}
+{\footnotesize\ttfamily void afficher\+\_\+ligne (\begin{DoxyParamCaption}\item[{\hyperlink{structcellule}{cel} $\ast$}]{ligne,  }\item[{unsigned int}]{dimensions\+\_\+max,  }\item[{void($\ast$)(int)}]{affichage\+\_\+cellule }\end{DoxyParamCaption})}
+
+
+
+Fonction qui affiche la ligne compléte d\textquotesingle{}une cellule. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em ligne} & est la ligne à afficher. \\
+\hline
+{\em dimensions\+\_\+max} & est la dimension max soit la longueur de la ligne \\
+\hline
+{\em affichage\+\_\+cellule} & est la fonction d\textquotesingle{}affichage d\textquotesingle{}une cellule \\
+\hline
+\end{DoxyParams}

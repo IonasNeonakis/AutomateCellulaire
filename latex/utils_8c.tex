@@ -1,0 +1,251 @@
+\hypertarget{utils_8c}{}\section{src/utils.c File Reference}
+\label{utils_8c}\index{src/utils.\+c@{src/utils.\+c}}
+
+
+Ce fichier s\textquotesingle{}occupe de toutes le foctions utilitaires.  
+
+
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}../include/utils.\+h\char`\"{}}\newline
+Include dependency graph for utils.\+c\+:
+% FIG 0
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{utils_8c_ad618854d9a06a372185f60e31036886d}{conversion\+\_\+binaire\+\_\+decimal} (int etat\+\_\+cel1, int etat\+\_\+cel2, int etat\+\_\+cel3)
+\begin{DoxyCompactList}\small\item\em Cette fonction prends 3 etats en forme de int et retourne le nombre décimal de ce chiffre binaire à 3 bits. \end{DoxyCompactList}\item 
+int \hyperlink{utils_8c_ae5f946cf2867d15294255ba440dfbff4}{conversion\+\_\+regle\+\_\+binaire\+\_\+decimal} (char $\ast$\hyperlink{structregle}{regle})
+\begin{DoxyCompactList}\small\item\em Cette fonction prends une regle sous forme de bits et retourne l\textquotesingle{}entier correspondant. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{utils_8c_a49be39cd14fe4a5f921bf4b88d1d5e9d}\label{utils_8c_a49be39cd14fe4a5f921bf4b88d1d5e9d}} 
+char $\ast$ {\bfseries conversion\+\_\+decimal\+\_\+binaire} (int n)
+\item 
+int \hyperlink{utils_8c_a5f05411d77161e273810d402a0bde012}{conversion\+\_\+char\+\_\+int} (char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Cette fonction prends un char$\ast$ et l\textquotesingle{}entier de ce char$\ast$. \end{DoxyCompactList}\item 
+bool \hyperlink{utils_8c_af10d334a183dd59f2d5ce917ff339270}{est\+\_\+un\+\_\+int} (char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres est bien un entier. \end{DoxyCompactList}\item 
+bool \hyperlink{utils_8c_aa0e99e447dccc108be42c96987a0aa3c}{est\+\_\+de\+\_\+longueur} (char $\ast$s, int n)
+\begin{DoxyCompactList}\small\item\em Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres est de longeur n passé en paramètres. \end{DoxyCompactList}\item 
+bool \hyperlink{utils_8c_ae617a80ae645048e47e870aaa5dbf60f}{est\+\_\+regle\+\_\+binaire} (char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres est un char$\ast$ composé de 0 et de 1. \end{DoxyCompactList}\item 
+bool \hyperlink{utils_8c_a3659558032b103843ffda7a6e6a3ae02}{est\+\_\+regle\+\_\+somme} (char $\ast$s)
+\begin{DoxyCompactList}\small\item\em Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres soit composé de 0, 1, 2 et 3. \end{DoxyCompactList}\item 
+bool \hyperlink{utils_8c_a5fcd4c1825fe15f8b85c4a1334e8622a}{est\+\_\+regle\+\_\+correcte} (char $\ast$s, unsigned int nb\+\_\+etats)
+\begin{DoxyCompactList}\small\item\em Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres soit composé de nombres entre 0 et nb\+\_\+etats-\/1. \end{DoxyCompactList}\item 
+void \hyperlink{utils_8c_acf5aae1e7905e5e970d32c12dda6d210}{manuel} ()
+\begin{DoxyCompactList}\small\item\em Cette fonction affiche le manuel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Ce fichier s\textquotesingle{}occupe de toutes le foctions utilitaires. 
+
+\begin{DoxyAuthor}{Author}
+Ionas Samir
+\end{DoxyAuthor}
+Fonctions utilitaires tels que les conversions et les tests de types 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{utils_8c_ad618854d9a06a372185f60e31036886d}\label{utils_8c_ad618854d9a06a372185f60e31036886d}} 
+\index{utils.\+c@{utils.\+c}!conversion\+\_\+binaire\+\_\+decimal@{conversion\+\_\+binaire\+\_\+decimal}}
+\index{conversion\+\_\+binaire\+\_\+decimal@{conversion\+\_\+binaire\+\_\+decimal}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{conversion\+\_\+binaire\+\_\+decimal()}{conversion\_binaire\_decimal()}}
+{\footnotesize\ttfamily int conversion\+\_\+binaire\+\_\+decimal (\begin{DoxyParamCaption}\item[{int}]{etat\+\_\+cel1,  }\item[{int}]{etat\+\_\+cel2,  }\item[{int}]{etat\+\_\+cel3 }\end{DoxyParamCaption})}
+
+
+
+Cette fonction prends 3 etats en forme de int et retourne le nombre décimal de ce chiffre binaire à 3 bits. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em etat\+\_\+cel1} & est le premier bit \\
+\hline
+{\em etat\+\_\+cel2} & est le deuxième bit \\
+\hline
+{\em etat\+\_\+cel3} & est le troisième bit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Le nombre decimal de ce chiffre binaire à 3 bits. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8c_a5f05411d77161e273810d402a0bde012}\label{utils_8c_a5f05411d77161e273810d402a0bde012}} 
+\index{utils.\+c@{utils.\+c}!conversion\+\_\+char\+\_\+int@{conversion\+\_\+char\+\_\+int}}
+\index{conversion\+\_\+char\+\_\+int@{conversion\+\_\+char\+\_\+int}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{conversion\+\_\+char\+\_\+int()}{conversion\_char\_int()}}
+{\footnotesize\ttfamily int conversion\+\_\+char\+\_\+int (\begin{DoxyParamCaption}\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Cette fonction prends un char$\ast$ et l\textquotesingle{}entier de ce char$\ast$. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em l\textquotesingle{}int} & sous forme d\textquotesingle{}un char$\ast$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+le nombre en int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8c_ae5f946cf2867d15294255ba440dfbff4}\label{utils_8c_ae5f946cf2867d15294255ba440dfbff4}} 
+\index{utils.\+c@{utils.\+c}!conversion\+\_\+regle\+\_\+binaire\+\_\+decimal@{conversion\+\_\+regle\+\_\+binaire\+\_\+decimal}}
+\index{conversion\+\_\+regle\+\_\+binaire\+\_\+decimal@{conversion\+\_\+regle\+\_\+binaire\+\_\+decimal}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{conversion\+\_\+regle\+\_\+binaire\+\_\+decimal()}{conversion\_regle\_binaire\_decimal()}}
+{\footnotesize\ttfamily int conversion\+\_\+regle\+\_\+binaire\+\_\+decimal (\begin{DoxyParamCaption}\item[{char $\ast$}]{regle }\end{DoxyParamCaption})}
+
+
+
+Cette fonction prends une regle sous forme de bits et retourne l\textquotesingle{}entier correspondant. 
+
+Cette fonction prends une entier et retourne le nombre binaire correspondant.
+
+\begin{DoxyAuthor}{Author}
+Samir 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em regle} & est la regle en bits \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+un int correspondant au bit entré en paramètres
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Samir 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em n} & est l\textquotesingle{}entier à convertir \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+le nombre en binaire sous form d\textquotesingle{}un char$\ast$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8c_aa0e99e447dccc108be42c96987a0aa3c}\label{utils_8c_aa0e99e447dccc108be42c96987a0aa3c}} 
+\index{utils.\+c@{utils.\+c}!est\+\_\+de\+\_\+longueur@{est\+\_\+de\+\_\+longueur}}
+\index{est\+\_\+de\+\_\+longueur@{est\+\_\+de\+\_\+longueur}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{est\+\_\+de\+\_\+longueur()}{est\_de\_longueur()}}
+{\footnotesize\ttfamily bool est\+\_\+de\+\_\+longueur (\begin{DoxyParamCaption}\item[{char $\ast$}]{s,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres est de longeur n passé en paramètres. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em s} & est le char$\ast$ sur lequel on va tester s\textquotesingle{}il est de longueur \\
+\hline
+{\em n} & est l\textquotesingle{}entier à verifier si il est de la même longueur que la chaine s \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true si c\textquotesingle{}est de la même taille, false sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8c_ae617a80ae645048e47e870aaa5dbf60f}\label{utils_8c_ae617a80ae645048e47e870aaa5dbf60f}} 
+\index{utils.\+c@{utils.\+c}!est\+\_\+regle\+\_\+binaire@{est\+\_\+regle\+\_\+binaire}}
+\index{est\+\_\+regle\+\_\+binaire@{est\+\_\+regle\+\_\+binaire}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{est\+\_\+regle\+\_\+binaire()}{est\_regle\_binaire()}}
+{\footnotesize\ttfamily bool est\+\_\+regle\+\_\+binaire (\begin{DoxyParamCaption}\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres est un char$\ast$ composé de 0 et de 1. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em s} & est le char$\ast$ sur lequel on va tester s\textquotesingle{}il c\textquotesingle{}est un binaire \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true si c\textquotesingle{}est un char$\ast$ binaire, false sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8c_a5fcd4c1825fe15f8b85c4a1334e8622a}\label{utils_8c_a5fcd4c1825fe15f8b85c4a1334e8622a}} 
+\index{utils.\+c@{utils.\+c}!est\+\_\+regle\+\_\+correcte@{est\+\_\+regle\+\_\+correcte}}
+\index{est\+\_\+regle\+\_\+correcte@{est\+\_\+regle\+\_\+correcte}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{est\+\_\+regle\+\_\+correcte()}{est\_regle\_correcte()}}
+{\footnotesize\ttfamily bool est\+\_\+regle\+\_\+correcte (\begin{DoxyParamCaption}\item[{char $\ast$}]{s,  }\item[{unsigned int}]{nb\+\_\+etats }\end{DoxyParamCaption})}
+
+
+
+Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres soit composé de nombres entre 0 et nb\+\_\+etats-\/1. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em s} & est le char$\ast$ sur lequel on va tester s\textquotesingle{}il c\textquotesingle{}est un type correcte \\
+\hline
+{\em nb\+\_\+etats} & est le nombre d\textquotesingle{}états d\textquotesingle{}une règle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true si c\textquotesingle{}est un char$\ast$ de type correcte, false sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8c_a3659558032b103843ffda7a6e6a3ae02}\label{utils_8c_a3659558032b103843ffda7a6e6a3ae02}} 
+\index{utils.\+c@{utils.\+c}!est\+\_\+regle\+\_\+somme@{est\+\_\+regle\+\_\+somme}}
+\index{est\+\_\+regle\+\_\+somme@{est\+\_\+regle\+\_\+somme}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{est\+\_\+regle\+\_\+somme()}{est\_regle\_somme()}}
+{\footnotesize\ttfamily bool est\+\_\+regle\+\_\+somme (\begin{DoxyParamCaption}\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres soit composé de 0, 1, 2 et 3. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em s} & est le char$\ast$ sur lequel on va tester s\textquotesingle{}il c\textquotesingle{}est un type somme \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true si c\textquotesingle{}est un char$\ast$ de type somme, false sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8c_af10d334a183dd59f2d5ce917ff339270}\label{utils_8c_af10d334a183dd59f2d5ce917ff339270}} 
+\index{utils.\+c@{utils.\+c}!est\+\_\+un\+\_\+int@{est\+\_\+un\+\_\+int}}
+\index{est\+\_\+un\+\_\+int@{est\+\_\+un\+\_\+int}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{est\+\_\+un\+\_\+int()}{est\_un\_int()}}
+{\footnotesize\ttfamily bool est\+\_\+un\+\_\+int (\begin{DoxyParamCaption}\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Cette fonction vérifie qu\textquotesingle{}un char$\ast$ passé en paramètres est bien un entier. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em s} & est le char$\ast$ sur lequel on va tester s\textquotesingle{}il est entier \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true si c\textquotesingle{}est un int, false sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8c_acf5aae1e7905e5e970d32c12dda6d210}\label{utils_8c_acf5aae1e7905e5e970d32c12dda6d210}} 
+\index{utils.\+c@{utils.\+c}!manuel@{manuel}}
+\index{manuel@{manuel}!utils.\+c@{utils.\+c}}
+\subsubsection{\texorpdfstring{manuel()}{manuel()}}
+{\footnotesize\ttfamily void manuel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Cette fonction affiche le manuel. 
+
+\begin{DoxyAuthor}{Author}
+Samir 
+\end{DoxyAuthor}
