@@ -46,7 +46,8 @@ int main(int argc, char* argv[]){
             a = process_args(r, argc, argv); //on fait une lecture par arguments
         }else if(argc == 2 && !strcmp(argv[1], "--help")){
             manuel();
-            exit(EXIT_SUCCESS);
+            supprimer_automate(&a);
+            //exit(EXIT_SUCCESS);
         }else{
             printf("Erreur du nombre d'arguments. Arrêt du programme ! \n");
             exit(1);

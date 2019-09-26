@@ -1,0 +1,42 @@
+\hypertarget{structregle}{}\section{regle Struct Reference}
+\label{structregle}\index{regle@{regle}}
+
+
+Cette structure permet de représenter une règle de transition.  
+
+
+
+
+{\ttfamily \#include $<$regle.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structregle_a93c3b6352d3440704ea937d901b60507}\label{structregle_a93c3b6352d3440704ea937d901b60507}} 
+char $\ast$ {\bfseries \+\_\+regle}
+\item 
+\mbox{\Hypertarget{structregle_ad637964e86be8cf4612e9919a843990b}\label{structregle_ad637964e86be8cf4612e9919a843990b}} 
+int($\ast$ {\bfseries \+\_\+type\+\_\+regle} )(char $\ast$, int $\ast$)
+\item 
+\mbox{\Hypertarget{structregle_a49b56d4a4e935e8028caa8e9933728b8}\label{structregle_a49b56d4a4e935e8028caa8e9933728b8}} 
+void($\ast$ {\bfseries \+\_\+affichage\+\_\+regle} )(int)
+\item 
+\mbox{\Hypertarget{structregle_adc6243fac2a2edb105cc19fd7cdbc160}\label{structregle_adc6243fac2a2edb105cc19fd7cdbc160}} 
+unsigned int {\bfseries nb\+\_\+etats}
+\item 
+\mbox{\Hypertarget{structregle_aca265533fe6390b22b923bc52115c1f4}\label{structregle_aca265533fe6390b22b923bc52115c1f4}} 
+unsigned int {\bfseries taille\+\_\+regle}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Cette structure permet de représenter une règle de transition. 
+
+\begin{DoxyAuthor}{Author}
+Samir
+\end{DoxyAuthor}
+\+\_\+regle représente la règle à appliquer, sous forme d\textquotesingle{}une succesion d\textquotesingle{}entier compris entre 0 et le nombre d\textquotesingle{}états type\+\_\+regle représente la fonction permettant d\textquotesingle{}appliquer la transition à la génération suivante de cellule \+\_\+affichage\+\_\+regle correspond à la fonction d\textquotesingle{}affichage de la cellule, elle dépend de la règle, voilà pourquoi elle se situe ici nb\+\_\+etats représente le nombre d\textquotesingle{}états que peut prendre une cellule en fonction de la règle taille\+\_\+regle correspond à la longueur de la règle en caractère 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/regle.\+c\end{DoxyCompactItemize}

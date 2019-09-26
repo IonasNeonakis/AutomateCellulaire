@@ -1,0 +1,190 @@
+\hypertarget{cellule_8c}{}\section{src/cellule.c File Reference}
+\label{cellule_8c}\index{src/cellule.\+c@{src/cellule.\+c}}
+
+
+Ce fichier s\textquotesingle{}occupe des cellules.  
+
+
+{\ttfamily \#include \char`\"{}../include/cellule.\+h\char`\"{}}\newline
+Include dependency graph for cellule.\+c\+:
+% FIG 0
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structcellule}{cellule}
+\begin{DoxyCompactList}\small\item\em Cette structure nous permet de savoir l\textquotesingle{}état d\textquotesingle{}une cellule ainsi que ses voisins. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structcellule}{cel} \hyperlink{cellule_8c_ac77ba85b2a7dcef31c674989f9b2bbb9}{creer\+\_\+cellule} ()
+\begin{DoxyCompactList}\small\item\em fonction qui crée une cellule et qui affecte ses voisins à null et son etat à 0. \end{DoxyCompactList}\item 
+void \hyperlink{cellule_8c_a52f266edcf715974c381e7c3eabf6745}{supprimer\+\_\+cellule} (\hyperlink{structcellule}{cel} $\ast$\hyperlink{structcellule}{cellule})
+\begin{DoxyCompactList}\small\item\em fonction qui supprime la cellue en faisant le free de cette cellule et en metant le pointeur vers N\+U\+LL. \end{DoxyCompactList}\item 
+void \hyperlink{cellule_8c_aab3c6f6136a07c79d720137457002a52}{set\+\_\+voisin\+\_\+droite} (\hyperlink{structcellule}{cel} actuelle, \hyperlink{structcellule}{cel} droite)
+\begin{DoxyCompactList}\small\item\em fonction qui associe deux cellules entre-\/elles. \end{DoxyCompactList}\item 
+void \hyperlink{cellule_8c_ad93187d61ed753a2871372f87821ad63}{set\+\_\+voisin\+\_\+gauche} (\hyperlink{structcellule}{cel} actuelle, \hyperlink{structcellule}{cel} gauche)
+\begin{DoxyCompactList}\small\item\em fonction qui associe deux cellules entre-\/elles. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{cellule_8c_aeba558c7e5db21e9826a7533795f81b6}\label{cellule_8c_aeba558c7e5db21e9826a7533795f81b6}} 
+void {\bfseries set\+\_\+etat} (\hyperlink{structcellule}{cel} \hyperlink{structcellule}{cellule}, int etat)
+\item 
+\mbox{\Hypertarget{cellule_8c_a561bba83fc84bd30f67e46fa7faddf7d}\label{cellule_8c_a561bba83fc84bd30f67e46fa7faddf7d}} 
+\hyperlink{structcellule}{cel} {\bfseries get\+\_\+voisin\+\_\+droite} (\hyperlink{structcellule}{cel} c)
+\item 
+\mbox{\Hypertarget{cellule_8c_a0fa21ef0b396b43e3ce9281430042f57}\label{cellule_8c_a0fa21ef0b396b43e3ce9281430042f57}} 
+\hyperlink{structcellule}{cel} {\bfseries get\+\_\+voisin\+\_\+gauche} (\hyperlink{structcellule}{cel} c)
+\item 
+int \hyperlink{cellule_8c_aebcca307502204bea30c57133e505857}{get\+\_\+etat} (\hyperlink{structcellule}{cel} c)
+\begin{DoxyCompactList}\small\item\em Fonction qui retourne l\textquotesingle{}état de la cellule c, si cette cellule est N\+U\+LL alors elle retourne 0. \end{DoxyCompactList}\item 
+int \hyperlink{cellule_8c_afccbc1ffe33c8c8f02441f7ea8be602e}{etat\+\_\+suivant} (\hyperlink{structcellule}{cel} \hyperlink{structcellule}{cellule}, char $\ast$\hyperlink{structregle}{regle}, int($\ast$type\+\_\+regle)(char $\ast$, int $\ast$etats))
+\begin{DoxyCompactList}\small\item\em Cette fonction retourne l\textquotesingle{}état suivant d\textquotesingle{}une cellule en fonction de la regle, du type de regle et de ses voisins. \end{DoxyCompactList}\item 
+void \hyperlink{cellule_8c_ae14e78e38528d8c05dd0bb0a759ceaa1}{afficher\+\_\+cellule} (\hyperlink{structcellule}{cel} \hyperlink{structcellule}{cellule}, void($\ast$affichage\+\_\+cellule)(int))
+\begin{DoxyCompactList}\small\item\em cette fonction affiche une cellule en fonction de la fonction D\textquotesingle{}affichage de la cellule \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Ce fichier s\textquotesingle{}occupe des cellules. 
+
+\begin{DoxyAuthor}{Author}
+Ionas Samir 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{cellule_8c_ae14e78e38528d8c05dd0bb0a759ceaa1}\label{cellule_8c_ae14e78e38528d8c05dd0bb0a759ceaa1}} 
+\index{cellule.\+c@{cellule.\+c}!afficher\+\_\+cellule@{afficher\+\_\+cellule}}
+\index{afficher\+\_\+cellule@{afficher\+\_\+cellule}!cellule.\+c@{cellule.\+c}}
+\subsubsection{\texorpdfstring{afficher\+\_\+cellule()}{afficher\_cellule()}}
+{\footnotesize\ttfamily void afficher\+\_\+cellule (\begin{DoxyParamCaption}\item[{\hyperlink{structcellule}{cel}}]{cellule,  }\item[{void($\ast$)(int)}]{affichage\+\_\+cellule }\end{DoxyParamCaption})}
+
+
+
+cette fonction affiche une cellule en fonction de la fonction D\textquotesingle{}affichage de la cellule 
+
+\begin{DoxyAuthor}{Author}
+Samir 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em cellule} & est la cellule a afficher  est la fonction d\textquotesingle{}affichage de la cellule \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{cellule_8c_ac77ba85b2a7dcef31c674989f9b2bbb9}\label{cellule_8c_ac77ba85b2a7dcef31c674989f9b2bbb9}} 
+\index{cellule.\+c@{cellule.\+c}!creer\+\_\+cellule@{creer\+\_\+cellule}}
+\index{creer\+\_\+cellule@{creer\+\_\+cellule}!cellule.\+c@{cellule.\+c}}
+\subsubsection{\texorpdfstring{creer\+\_\+cellule()}{creer\_cellule()}}
+{\footnotesize\ttfamily \hyperlink{structcellule}{cel} creer\+\_\+cellule (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+fonction qui crée une cellule et qui affecte ses voisins à null et son etat à 0. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+\begin{DoxyReturn}{Returns}
+la nouvelle cellule créée. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{cellule_8c_afccbc1ffe33c8c8f02441f7ea8be602e}\label{cellule_8c_afccbc1ffe33c8c8f02441f7ea8be602e}} 
+\index{cellule.\+c@{cellule.\+c}!etat\+\_\+suivant@{etat\+\_\+suivant}}
+\index{etat\+\_\+suivant@{etat\+\_\+suivant}!cellule.\+c@{cellule.\+c}}
+\subsubsection{\texorpdfstring{etat\+\_\+suivant()}{etat\_suivant()}}
+{\footnotesize\ttfamily int etat\+\_\+suivant (\begin{DoxyParamCaption}\item[{\hyperlink{structcellule}{cel}}]{cellule,  }\item[{char $\ast$}]{regle,  }\item[{int($\ast$)(char $\ast$, int $\ast$etats)}]{type\+\_\+regle }\end{DoxyParamCaption})}
+
+
+
+Cette fonction retourne l\textquotesingle{}état suivant d\textquotesingle{}une cellule en fonction de la regle, du type de regle et de ses voisins. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em cellule} & est la cellule sur laquelle on va generer l\textquotesingle{}état suivant \\
+\hline
+{\em regle} & est la regle sur laquelle on se base pour generer l\textquotesingle{}état suivant \\
+\hline
+{\em type\+\_\+regle} & est la fonction de la type de regle, soit Wolfram soit Somme soit une autre défini par l\textquotesingle{}utilisateur \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+l\textquotesingle{}état de la cellule c au temps t+1 
+\end{DoxyReturn}
+\mbox{\Hypertarget{cellule_8c_aebcca307502204bea30c57133e505857}\label{cellule_8c_aebcca307502204bea30c57133e505857}} 
+\index{cellule.\+c@{cellule.\+c}!get\+\_\+etat@{get\+\_\+etat}}
+\index{get\+\_\+etat@{get\+\_\+etat}!cellule.\+c@{cellule.\+c}}
+\subsubsection{\texorpdfstring{get\+\_\+etat()}{get\_etat()}}
+{\footnotesize\ttfamily int get\+\_\+etat (\begin{DoxyParamCaption}\item[{\hyperlink{structcellule}{cel}}]{c }\end{DoxyParamCaption})}
+
+
+
+Fonction qui retourne l\textquotesingle{}état de la cellule c, si cette cellule est N\+U\+LL alors elle retourne 0. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em c} & est la cellule \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+l\textquotesingle{}état de la cellule c 
+\end{DoxyReturn}
+\mbox{\Hypertarget{cellule_8c_aab3c6f6136a07c79d720137457002a52}\label{cellule_8c_aab3c6f6136a07c79d720137457002a52}} 
+\index{cellule.\+c@{cellule.\+c}!set\+\_\+voisin\+\_\+droite@{set\+\_\+voisin\+\_\+droite}}
+\index{set\+\_\+voisin\+\_\+droite@{set\+\_\+voisin\+\_\+droite}!cellule.\+c@{cellule.\+c}}
+\subsubsection{\texorpdfstring{set\+\_\+voisin\+\_\+droite()}{set\_voisin\_droite()}}
+{\footnotesize\ttfamily void set\+\_\+voisin\+\_\+droite (\begin{DoxyParamCaption}\item[{\hyperlink{structcellule}{cel}}]{actuelle,  }\item[{\hyperlink{structcellule}{cel}}]{droite }\end{DoxyParamCaption})}
+
+
+
+fonction qui associe deux cellules entre-\/elles. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em actuelle} & est la cellule actuelle à laquelle on va ajouter une cellule à droite \\
+\hline
+{\em droite} & est la cellue de droite à laquelle on va ajouter une cellule à gauche \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{cellule_8c_ad93187d61ed753a2871372f87821ad63}\label{cellule_8c_ad93187d61ed753a2871372f87821ad63}} 
+\index{cellule.\+c@{cellule.\+c}!set\+\_\+voisin\+\_\+gauche@{set\+\_\+voisin\+\_\+gauche}}
+\index{set\+\_\+voisin\+\_\+gauche@{set\+\_\+voisin\+\_\+gauche}!cellule.\+c@{cellule.\+c}}
+\subsubsection{\texorpdfstring{set\+\_\+voisin\+\_\+gauche()}{set\_voisin\_gauche()}}
+{\footnotesize\ttfamily void set\+\_\+voisin\+\_\+gauche (\begin{DoxyParamCaption}\item[{\hyperlink{structcellule}{cel}}]{actuelle,  }\item[{\hyperlink{structcellule}{cel}}]{gauche }\end{DoxyParamCaption})}
+
+
+
+fonction qui associe deux cellules entre-\/elles. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em actuelle} & est la cellule actuelle à laquelle on va ajouter une cellule à gauche \\
+\hline
+{\em gauche} & est la cellue de gauche à laquelle on va ajouter une cellule à droite \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{cellule_8c_a52f266edcf715974c381e7c3eabf6745}\label{cellule_8c_a52f266edcf715974c381e7c3eabf6745}} 
+\index{cellule.\+c@{cellule.\+c}!supprimer\+\_\+cellule@{supprimer\+\_\+cellule}}
+\index{supprimer\+\_\+cellule@{supprimer\+\_\+cellule}!cellule.\+c@{cellule.\+c}}
+\subsubsection{\texorpdfstring{supprimer\+\_\+cellule()}{supprimer\_cellule()}}
+{\footnotesize\ttfamily void supprimer\+\_\+cellule (\begin{DoxyParamCaption}\item[{\hyperlink{structcellule}{cel} $\ast$}]{cellule }\end{DoxyParamCaption})}
+
+
+
+fonction qui supprime la cellue en faisant le free de cette cellule et en metant le pointeur vers N\+U\+LL. 
+
+\begin{DoxyAuthor}{Author}
+Ionas 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em cellule} & est la cellule à supprimer \\
+\hline
+\end{DoxyParams}
