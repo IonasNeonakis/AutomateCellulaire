@@ -407,18 +407,40 @@ automate process_args(regle r,int argc, char* argv[]){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     unsigned int nb_etats=0;
+    unsigned int type_regle =2;
+
     char* regle_string = NULL;
     
     char* config_init = NULL;
     void (*type_affichage)(automate) = NULL;
 
-    if(!est_un_int(argv[6])){
-        printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
-        exit(1);
-    }{
-        nb_etats=(unsigned int)conversion_char_int(argv[6]);
-    }
 
+    if(argc==8){
+        if(!strcmp(argv[6],"0")){
+            set_type_regle(r, &regle_binaire);
+            set_taille_regle(r, 8);
+            set_affichage_regle(r, &afficher_cellule_binaire);
+            nb_etats=2;
+            type_regle=0;
+        }else if(!strcmp(argv[6],"1")){
+            set_type_regle(r, &regle_somme);
+            set_taille_regle(r, 10);
+            set_affichage_regle(r, &afficher_cellule_somme);
+            nb_etats=4;
+            type_regle=1;
+        }else{
+            printf("Erreur de l'argument type_regle. Arrêt du programme");
+            exit(1);
+        }
+    }else{
+        if(!est_un_int(argv[8])){
+            printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
+            exit(1);
+        }else{
+            nb_etats=(unsigned int)conversion_char_int(argv[6]);
+            type_regle=2;
+        }
+    }
 
 
     if (!est_un_int(argv[2])){
@@ -448,11 +470,21 @@ automate process_args(regle r,int argc, char* argv[]){
         config_init=argv[4];
         }
     }
-    if(!est_regle_correcte(argv[5],nb_etats) || !est_de_longueur(argv[5],get_taille_regle(r))){
-        printf("Erreur de l'argument regle : Arrêt du programme ! \n");
-        exit(1);
+
+    if(type_regle==0){
+        if(!est_un_int(argv[5]) ||  conversion_char_int(argv[5])<0 || conversion_char_int(argv[5])>255){
+            printf("Erreur de l'argument regle pour la somme, c'est un entier qui doit etre compris enre 0 et 255");
+            exit(1);
+        }else{
+            regle_string=argv[5];
+        }
     }else{
-        regle_string = argv[5];
+        if(!est_regle_correcte(argv[5],nb_etats) || !est_de_longueur(argv[5],get_taille_regle(r))){
+            printf("Erreur de l'argument regle : Arrêt du programme ! \n");
+            exit(1);
+        }else{
+            regle_string = argv[5];
+        }
     }
 
 
