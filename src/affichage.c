@@ -49,7 +49,7 @@ void afficher_automate_console(automate automate_cellulaire){
     printf("Règle           : %s\n", regle);
     if(est_regle_binaire(regle)){
         int regle_int = conversion_regle_binaire_decimal(regle);
-        printf("Règle binaire   : %d\n", regle_int);
+        printf("Règle Wolfram   : %d\n", regle_int);
     }
     printf("Itérations      : %u\n", nb_iterations_max);
     printf("Dimensions Max. : %u\n\n", dimension_max);
