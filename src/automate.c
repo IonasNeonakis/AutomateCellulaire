@@ -387,16 +387,45 @@ automate lecture_runtime_automate(regle r){
     char* _regle = (char*) malloc (sizeof(char) * 15);
     char* nb_etats = (char*) malloc (sizeof(char) * 15);
     char* type_affichage = (char*) malloc (sizeof(char) * 15);
+    char* type_regle = (char*) malloc (sizeof(char) * 1 + 1);
 
-    printf("Nombre d'états : \n");
-    scanf("%s", nb_etats);
-    while(!est_un_int(nb_etats)){
-        scanf("%s", nb_etats);
+    printf("Type règle : \n");
+    printf("0 - Règle binaire\n");
+    printf("1 - Regle somme\n");
+    printf("2 - Regle personnalisée\n");
+    scanf("%s", type_regle);
+    while(!est_un_int(type_regle) || (conversion_char_int(type_regle) < 0 && conversion_char_int(type_regle) > 2)){
+        scanf("%s", type_regle);
     }
-    taille = strlen(nb_etats);
-    nb_etats = (char*) realloc (nb_etats, sizeof(char) * taille + 1);
-    nb_etats[taille] = '\0';
-    unsigned int nb_etats_int = conversion_char_int(nb_etats);
+    taille = strlen(type_regle);
+    type_regle[taille] = '\0';
+    unsigned int type_regle_int = conversion_char_int(type_regle);
+
+    unsigned int nb_etats_int;
+
+    if(type_regle_int == 2){
+        printf("Nombre d'états : \n");
+        scanf("%s", nb_etats);
+        while(!est_un_int(nb_etats)){
+            scanf("%s", nb_etats);
+        }
+
+        taille = strlen(nb_etats);
+        nb_etats = (char*) realloc (nb_etats, sizeof(char) * taille + 1);
+        nb_etats[taille] = '\0';
+        nb_etats_int = conversion_char_int(nb_etats);
+    }
+
+    switch(type_regle_int){
+        case 0: {
+            nb_etats_int = 2;
+            break;
+        }
+        case 1: {
+            nb_etats_int = 4;
+            break;
+        }
+    }
 
     printf("Configuration initiale : ");
     scanf("%s", configuration_initiale);
@@ -404,13 +433,19 @@ automate lecture_runtime_automate(regle r){
         printf("\nVous devez rentrer une configuration initiale dont le nombre de cellule est égale à la dimension de l'automate !\n");
         scanf("%s", configuration_initiale);
     }
-    
+
     printf("Règle : ");
     scanf("%s", _regle);
-    while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) != get_taille_regle(r)){
+    if(type_regle_int == 0 && (conversion_char_int(_regle) < 0 || conversion_char_int(_regle) > 255)){
         scanf("%s", _regle);
+    }else if(type_regle_int == 1 || type_regle_int == 2){
+        while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) != get_taille_regle(r)){
+            scanf("%s", _regle);
+        }   
     }
-    _regle = (char*) realloc (_regle, sizeof(char) * get_taille_regle(r) + 1);
+    taille = strlen(_regle);
+    _regle = (char*) realloc (_regle, sizeof(char) * taille + 1);
+    _regle[taille] = '\0';
 
     printf("Type affichage : \n");
     printf("0 - Affichage console\n");
@@ -426,7 +461,14 @@ automate lecture_runtime_automate(regle r){
     automate a = creer_automate(dimension_max_int, nb_iteration_max_int);
     set_configuration_initiale(a, configuration_initiale);
     
-    set_regle(r, _regle);
+    char* regle_en_binaire;
+
+   if(type_regle_int == 0){
+        regle_en_binaire = conversion_decimal_binaire(conversion_char_int(_regle));
+        set_regle(r, regle_en_binaire);
+   }else{
+        set_regle(r, _regle);
+   }
 
     set_regle_automate(a, r);
     switch(type_affichage_int){
@@ -443,6 +485,8 @@ automate lecture_runtime_automate(regle r){
     generer_automate(a);
 
     free(_regle);
+    free(type_regle);
+    free(regle_en_binaire);
     free(dimension_max);
     free(nb_iteration_max);
     free(type_affichage);
