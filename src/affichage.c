@@ -86,7 +86,7 @@ void afficher_automate_console(automate automate_cellulaire){
     void (*affichage_regle)(int) = get_affichage_regle_automate(automate_cellulaire);
     
     printf("Règle           : %s\n", regle);
-    if(est_regle_binaire(regle)){
+    if(affichage_regle == &afficher_cellule_binaire){
         int regle_int = conversion_regle_binaire_decimal(regle);
         printf("Règle Wolfram   : %d\n", regle_int);
     }
