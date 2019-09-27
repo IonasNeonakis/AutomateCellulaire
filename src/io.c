@@ -248,8 +248,6 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
 
     automate a = creer_automate(dimension,nb_iterations);
     
-    
-    printf("%s", regle_string);
     set_regle(r, regle_string);
     set_nb_etats(r, nb_etats);
     set_regle_automate(a, r);
