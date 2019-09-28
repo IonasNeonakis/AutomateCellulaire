@@ -79,11 +79,12 @@ void afficher_ligne(cel* ligne,unsigned int dimensions_max, void (*affichage_cel
  */
 
 void afficher_automate_console(automate automate_cellulaire){
-    char* regle = get_regle_automate(automate_cellulaire);
+    regle r = get_regle_automate(automate_cellulaire);
+    char* regle = get_regle(r);
     unsigned int nb_iterations_max = get_nb_iterations_max(automate_cellulaire);
     unsigned int dimension_max = get_dimension_max(automate_cellulaire);
     cel** configuration_actuelle = get_configuration_actuelle(automate_cellulaire);
-    void (*affichage_regle)(int) = get_affichage_regle_automate(automate_cellulaire);
+    void (*affichage_regle)(int) = get_affichage_regle(r);
     
     printf("Règle           : %s\n", regle);
     if(affichage_regle == &afficher_cellule_binaire){

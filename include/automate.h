@@ -33,9 +33,7 @@ unsigned int get_nb_iterations_max();
 
 unsigned int get_dimension_max(automate);
 
-char* get_regle_automate(automate);
-
-void (*get_affichage_regle_automate(automate))(int);
+regle get_regle_automate(automate);
 
 cel** generer_automate(automate);
 

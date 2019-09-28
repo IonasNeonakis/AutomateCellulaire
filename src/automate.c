@@ -152,16 +152,12 @@ unsigned int get_dimension_max(automate automate_cellulaire){
     return automate_cellulaire->dimension_max;
 }
 
-char* get_regle_automate(automate automate_cellulaire){
-    return get_regle(automate_cellulaire->_regle);
-}
-
-void (*get_affichage_regle_automate(automate automate_cellulaire))(int){
-    return get_affichage_regle(automate_cellulaire->_regle);
-}
-
 void set_regle_automate(automate automate_cellulaire, regle r){
     automate_cellulaire->_regle = r;
+}
+
+regle get_regle_automate(automate automate_cellulaire){
+    return automate_cellulaire->_regle;
 }
 
 
