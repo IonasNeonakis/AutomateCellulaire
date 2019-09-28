@@ -277,63 +277,59 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
  * \return automate ainsi créé
  */
 automate lecture_runtime_automate(regle r){
-    char* nb_iteration_max = (char*) malloc (sizeof(char) * 6);
-    char* dimension_max = (char*) malloc (sizeof(char) * 6);
+    char* piscine_buffer = (char*) malloc (sizeof(char) * 256);
 
     printf("Bienvenue dans le générateur d'automate cellulaire !\n");
     printf("Afin de générer un automate, veuillez rentrer les paramètres suivants :\n");
 
     printf("Nombre d'itérations : ");
-    scanf("%s", nb_iteration_max);
-    while(!est_un_int(nb_iteration_max) || conversion_char_int(nb_iteration_max) < 1){
-        scanf("%s", nb_iteration_max);
+    scanf("%s", piscine_buffer);
+    while(!est_un_int(piscine_buffer) || conversion_char_int(piscine_buffer) < 1){
+        scanf("%s", piscine_buffer);
     }
-    size_t taille = strlen(nb_iteration_max);
-    nb_iteration_max = (char*) realloc (nb_iteration_max, sizeof(char) * taille + 1);
-    nb_iteration_max[taille] = '\0';
-    unsigned int nb_iteration_max_int = conversion_char_int(nb_iteration_max);
+    size_t taille = strlen(piscine_buffer);
+    piscine_buffer[taille] = '\0';
+    unsigned int nb_iteration_max_int = conversion_char_int(piscine_buffer);
 
     printf("Dimension maximale : ");
-    scanf("%s", dimension_max);
-    while(!est_un_int(dimension_max) || conversion_char_int(dimension_max) < 1){
-        scanf("%s", dimension_max);
+    scanf("%s", piscine_buffer);
+    while(!est_un_int(piscine_buffer) || conversion_char_int(piscine_buffer) < 1){
+        scanf("%s", piscine_buffer);
     }
-    taille = strlen(dimension_max);
-    dimension_max = (char*) realloc (dimension_max, sizeof(char) * taille + 1);
-    dimension_max[taille] = '\0';
-    unsigned int dimension_max_int = conversion_char_int(dimension_max);
+    taille = strlen(piscine_buffer);
+    piscine_buffer[taille] = '\0';
+    unsigned int dimension_max_int = conversion_char_int(piscine_buffer);
 
     char configuration_initiale[dimension_max_int];
-    char* _regle = (char*) malloc (sizeof(char) * 15);
-    char* nb_etats = (char*) malloc (sizeof(char) * 15);
+    char* _regle;
+    /*char* nb_etats = (char*) malloc (sizeof(char) * 15);
     char* type_affichage = (char*) malloc (sizeof(char) * 15);
-    char* type_regle = (char*) malloc (sizeof(char) * 1 + 1);
+    char* type_regle = (char*) malloc (sizeof(char) * 1 + 1);*/
 
     printf("Type règle : \n");
     printf("0 - Règle binaire\n");
     printf("1 - Regle somme\n");
     printf("2 - Regle personnalisée\n");
-    scanf("%s", type_regle);
-    while(!est_un_int(type_regle) || (conversion_char_int(type_regle) < 0 || conversion_char_int(type_regle) > 2)){
-        scanf("%s", type_regle);
+    scanf("%s", piscine_buffer);
+    while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) < 0 || conversion_char_int(piscine_buffer) > 2)){
+        scanf("%s", piscine_buffer);
     }
-    taille = strlen(type_regle);
-    type_regle[taille] = '\0';
-    unsigned int type_regle_int = conversion_char_int(type_regle);
+    taille = strlen(piscine_buffer);
+    piscine_buffer[taille] = '\0';
+    unsigned int type_regle_int = conversion_char_int(piscine_buffer);
 
     unsigned int nb_etats_int;
 
     if(type_regle_int == 2){
         printf("Nombre d'états : \n");
-        scanf("%s", nb_etats);
-        while(!est_un_int(nb_etats)){
-            scanf("%s", nb_etats);
+        scanf("%s", piscine_buffer);
+        while(!est_un_int(piscine_buffer)){
+            scanf("%s", piscine_buffer);
         }
 
-        taille = strlen(nb_etats);
-        nb_etats = (char*) realloc (nb_etats, sizeof(char) * taille + 1);
-        nb_etats[taille] = '\0';
-        nb_etats_int = conversion_char_int(nb_etats);
+        taille = strlen(piscine_buffer);
+        piscine_buffer[taille] = '\0';
+        nb_etats_int = conversion_char_int(piscine_buffer);
     }
 
     switch(type_regle_int){
@@ -355,40 +351,40 @@ automate lecture_runtime_automate(regle r){
     }
 
     printf("Règle : ");
-    scanf("%s", _regle);
+    scanf("%s", piscine_buffer);
     if(type_regle_int == 0){
-        while (conversion_char_int(_regle) < 0 || conversion_char_int(_regle) > 255){
-            scanf("%s", _regle);
+        while (conversion_char_int(piscine_buffer) < 0 || conversion_char_int(piscine_buffer) > 255){
+            scanf("%s", piscine_buffer);
         }
     }else if(type_regle_int == 1 ){ 
-        while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) != 10){
-            scanf("%s", _regle);
+        while(!est_regle_correcte(piscine_buffer, nb_etats_int) || (int) strlen(piscine_buffer) != 10){
+            scanf("%s", piscine_buffer);
         }
     }else if(type_regle_int == 2){
-        while(!est_regle_correcte(_regle, nb_etats_int) || (int) strlen(_regle) != get_taille_regle(r)){
-            scanf("%s", _regle);
+        while(!est_regle_correcte(piscine_buffer, nb_etats_int) || (int) strlen(piscine_buffer) != get_taille_regle(r)){
+            scanf("%s", piscine_buffer);
         }   
     }
-    taille = strlen(_regle);
-    _regle = (char*) realloc (_regle, sizeof(char) * taille + 1);
+    taille = strlen(piscine_buffer);
+    _regle = (char*) malloc (sizeof(char) * taille + 1);
     _regle[taille] = '\0';
 
     printf("Type affichage : \n");
     printf("0 - Affichage console\n");
     printf("1 - Génération d'une image ppm\n");
-    scanf("%s", type_affichage);
-    while(!est_un_int(type_affichage) || (conversion_char_int(type_affichage) != 0 && conversion_char_int(type_affichage) != 1)){
-        scanf("%s", type_affichage);
+    scanf("%s", piscine_buffer);
+    while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) != 0 && conversion_char_int(piscine_buffer) != 1)){
+        scanf("%s", piscine_buffer);
     }
-    type_affichage = (char*) realloc (type_affichage, sizeof(char) * 1 + 1);
-    type_affichage[strlen(type_affichage)] = '\0';
-    unsigned int type_affichage_int = conversion_char_int(type_affichage);
+    piscine_buffer[strlen(piscine_buffer)] = '\0';
+    unsigned int type_affichage_int = conversion_char_int(piscine_buffer);
 
     automate a = creer_automate(dimension_max_int, nb_iteration_max_int);
     set_configuration_initiale(a, configuration_initiale);
     
     char* regle_en_binaire;
 
+    printf("%s", _regle);
    if(type_regle_int == 0){
         regle_en_binaire = conversion_decimal_binaire(conversion_char_int(_regle));
         set_regle(r, regle_en_binaire);
@@ -421,16 +417,18 @@ automate lecture_runtime_automate(regle r){
 
     free(_regle);
     _regle = NULL;
-    free(type_regle);
-    type_regle = NULL;
-    free(dimension_max);
-    dimension_max = NULL;
-    free(nb_iteration_max);
-    nb_iteration_max = NULL;
-    free(type_affichage);
-    type_affichage = NULL;
-    free(nb_etats);
-    nb_etats = NULL;
+    //free(type_regle);
+    //type_regle = NULL;
+    //free(dimension_max);
+    //dimension_max = NULL;
+    //free(nb_iteration_max);
+    //nb_iteration_max = NULL;
+    //free(type_affichage);
+    //type_affichage = NULL;
+    //free(nb_etats);
+    //nb_etats = NULL;
+    free(piscine_buffer);
+    piscine_buffer = NULL;
 
     return a;
 }
