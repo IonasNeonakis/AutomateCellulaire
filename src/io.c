@@ -129,12 +129,14 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
                     printf("Erreur de la saisie de la regle comparé aux nombre d'états. Arrêt du programme ! \n");
                     exit(1);
                 }else{
-                    regle_string = (char*) malloc (sizeof(char) * strlen(valeur) + 1);
+                    regle_string = (char*) calloc(strlen(valeur)+1,sizeof(char) * strlen(valeur)+1);
                     if(type_regle==0 && (conversion_char_int(valeur)>255 || conversion_char_int(valeur)<0)){
                         printf("la regle binaire doit être entre 0 et 255. Arrêt du programe ! \n");
                         exit(1);
                     }else if(type_regle==0){
-                        regle_string = strcpy(regle_string, conversion_decimal_binaire(conversion_char_int(valeur)));
+                        char *tab = conversion_decimal_binaire(conversion_char_int(valeur));
+                        regle_string = strcpy(regle_string, tab);
+                        free(tab);
                     }else {
                         regle_string = strcpy(regle_string, valeur);
                     }
@@ -475,7 +477,7 @@ automate process_args(regle r,int argc, char* argv[]){
     }
 
 
-    if (!est_un_int(argv[2])){
+    if (!est_un_int(argv[2]) || conversion_char_int(argv[2])<1){
         printf("Erreur de l'argument nb_iteration : Arrêt du programme ! \n");
         exit(1);
     }else{
@@ -483,7 +485,7 @@ automate process_args(regle r,int argc, char* argv[]){
     }
 
 
-    if (!est_un_int(argv[3])){
+    if (!est_un_int(argv[3]) || conversion_char_int(argv[3])<1){
         printf("Erreur de l'argument dimension : Arrêt du programme ! \n");
         exit(1);
     }else{
@@ -505,7 +507,7 @@ automate process_args(regle r,int argc, char* argv[]){
 
     if(type_regle==0){
         if(!est_un_int(argv[5]) ||  conversion_char_int(argv[5])<0 || conversion_char_int(argv[5])>255){
-            printf("Erreur de l'argument regle pour la somme, c'est un entier qui doit etre compris enre 0 et 255");
+            printf("Erreur de l'argument regle pour Wolfram, c'est un entier qui doit etre compris enre 0 et 255");
             exit(1);
         }else{
             regle_string=conversion_decimal_binaire(conversion_char_int(argv[5]));
