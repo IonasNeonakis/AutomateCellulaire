@@ -369,6 +369,7 @@ automate lecture_runtime_automate(regle r){
     }
     taille = strlen(piscine_buffer);
     _regle = (char*) malloc (sizeof(char) * taille + 1);
+    strcpy(_regle, piscine_buffer);
     _regle[taille] = '\0';
 
     printf("Type affichage : \n");
@@ -386,7 +387,6 @@ automate lecture_runtime_automate(regle r){
     
     char* regle_en_binaire;
 
-    printf("%s", _regle);
    if(type_regle_int == 0){
         regle_en_binaire = conversion_decimal_binaire(conversion_char_int(_regle));
         set_regle(r, regle_en_binaire);
@@ -506,7 +506,7 @@ automate process_args(regle r,int argc, char* argv[]){
     if(type_regle==0){
         if(!est_un_int(argv[5]) ||  conversion_char_int(argv[5])<0 || conversion_char_int(argv[5])>255){
             printf("Erreur de l'argument regle pour Wolfram, c'est un entier qui doit etre compris enre 0 et 255");
-            exit(1);
+                exit(1);
         }else{
             regle_string=conversion_decimal_binaire(conversion_char_int(argv[5]));
         }
