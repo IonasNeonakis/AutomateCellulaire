@@ -508,7 +508,10 @@ automate process_args(regle r,int argc, char* argv[]){
             printf("Erreur de l'argument regle pour Wolfram, c'est un entier qui doit etre compris enre 0 et 255");
                 exit(1);
         }else{
-            regle_string=conversion_decimal_binaire(conversion_char_int(argv[5]));
+            regle_string = (char*) calloc(strlen(argv[5])+1,sizeof(char) * strlen(argv[5])+1);
+            char *tab =conversion_decimal_binaire(conversion_char_int(argv[5]));
+            regle_string=strcpy(regle_string,tab);
+            free(tab);
         }
     }else{
         if(!est_regle_correcte(argv[5],nb_etats) || !est_de_longueur(argv[5],get_taille_regle(r))){
@@ -534,6 +537,7 @@ automate process_args(regle r,int argc, char* argv[]){
     a = creer_automate(dimension,nb_iterations);
     
     set_regle(r, regle_string);
+    free(regle_string);
     set_nb_etats(r, nb_etats);
     set_regle_automate(a, r);
 
