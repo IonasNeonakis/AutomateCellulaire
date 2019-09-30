@@ -409,14 +409,17 @@ void lecture_runtime_automate(automate a, regle r){
    }
 
     set_regle_automate(a, r);
-    switch(type_affichage_int){
-        case 0: {
+    if(type_regle_int == 0){
+        if(type_affichage_int == 0){
             set_affichage(a, &afficher_automate_console_binaire);
-            break;
+        }else if(type_affichage_int == 1){
+            set_affichage(a, &afficher_automate_pgm_binaire);
         }
-        case 1: {
-            //set_affichage(a, &afficher_automate_pgm);
-            break;
+    }else if(type_regle_int == 1){
+        if(type_affichage_int == 0){
+            set_affichage(a, &afficher_automate_console_somme);
+        }else if(type_affichage_int == 1){
+            set_affichage(a, &afficher_automate_pgm_somme);
         }
     }
 
@@ -424,16 +427,6 @@ void lecture_runtime_automate(automate a, regle r){
 
     free(_regle);
     _regle = NULL;
-    //free(type_regle);
-    //type_regle = NULL;
-    //free(dimension_max);
-    //dimension_max = NULL;
-    //free(nb_iteration_max);
-    //nb_iteration_max = NULL;
-    //free(type_affichage);
-    //type_affichage = NULL;
-    //free(nb_etats);
-    //nb_etats = NULL;
     free(piscine_buffer);
     piscine_buffer = NULL;
 }

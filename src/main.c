@@ -61,6 +61,7 @@ int main(int argc, char* argv[]){
     }
 
     afficher_automate(a);
+    supprimer_regle(&r);
     supprimer_automate(&a);
  
     return EXIT_SUCCESS;
