@@ -441,9 +441,9 @@ void lecture_runtime_automate(automate a, regle r){
 automate process_args(regle r,int argc, char* argv[]){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
-    unsigned int nb_etats=0;
     int type_regle =-1;
 
+    unsigned int nb_etats=0;
     char* regle_string = NULL;
     
     char* config_init = NULL;
@@ -463,11 +463,14 @@ automate process_args(regle r,int argc, char* argv[]){
             // set_affichage_regle(r, &afficher_cellule_somme);
             nb_etats=4;
             type_regle=1;
-        }else{
-            printf("Erreur de l'argument type_regle. Arrêt du programme");
-            exit(1);
+        }else if(!strcmp(argv[6],"2")){
+            type_regle=2;
         }
     }else{
+        
+    }
+
+    if(!strcmp(argv[6],"2")){
         if(!est_un_int(argv[8]) || conversion_char_int(argv[8])>9){
             printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
             exit(1);
@@ -475,8 +478,26 @@ automate process_args(regle r,int argc, char* argv[]){
             nb_etats=(unsigned int)conversion_char_int(argv[8]);
             type_regle=2;
         }
-    }
+    }else{
+        if(!est_un_int(argv[8]) || conversion_char_int(argv[8])>1 || conversion_char_int(argv[8])<0){
+            printf("Erreur de l'argument type_affichage");
+            exit(1);
+        }else if (type_regle==0){ // binaire
+            if (conversion_char_int(argv[8])==0){ // console
+                //set_affichage(a,&affichage_cellule_binaire_console)          
+            }else{ // pgm
 
+            }
+        }else if (type_regle==1){ // somme
+            if (conversion_char_int(argv[8])==0){ // console
+            
+            }else{ // pgm
+
+            }
+        }else{
+
+        }
+    }
 
     if (!est_un_int(argv[2]) || conversion_char_int(argv[2])<1){
         printf("Erreur de l'argument nb_iteration : Arrêt du programme ! \n");

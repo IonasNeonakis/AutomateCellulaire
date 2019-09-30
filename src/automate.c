@@ -173,7 +173,6 @@ void set_dimension_max(automate automate_cellulaire, unsigned int n){
 void set_nb_iterations_max(automate automate_cellulaire, unsigned int n){
     automate_cellulaire->nb_iterations_max = n;
 }
-
 /**
  * \fn cel** generer_automate(automate automate_cellulaire)
  * \brief Fonction permettant de générer l'automate
