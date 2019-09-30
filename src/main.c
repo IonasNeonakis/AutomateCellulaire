@@ -30,12 +30,14 @@
  */
 int main(int argc, char* argv[]){
     
-    automate a;
+    automate a = creer_automate();
     
     regle r = creer_regle();
     set_type_regle(r, &regle_binaire);
     set_taille_regle(r, 8);
-    set_affichage_regle(r, &afficher_cellule_binaire);
+    // set_affichage(a, &afficher_automate_console_binaire);
+    set_regle_automate(a, r);
+    set_affichage(a, &afficher_automate_console_binaire);
 
     if(argc > 1){
         char* argument = argv[1];
@@ -55,11 +57,11 @@ int main(int argc, char* argv[]){
             //nombre d'arguments incorrect
         }
     }else if(argc == 1){
-        a = lecture_runtime_automate(r); //on fait une lecture runtime
+        lecture_runtime_automate(a, r); //on fait une lecture runtime
     }
 
     afficher_automate(a);
     supprimer_automate(&a);
-
+ 
     return EXIT_SUCCESS;
 }

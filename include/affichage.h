@@ -10,7 +10,7 @@ void afficher_cellule_somme(int);
 
 void afficher_ligne(cel*, unsigned int, void (*) (int));
 
-void afficher_automate_console(automate);
+void afficher_automate_console_binaire(automate);
 
 void afficher_automate_pgm(automate);
 

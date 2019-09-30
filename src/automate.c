@@ -45,16 +45,13 @@ struct automate {
  * \return automate ainsi créé
  */
 
-automate creer_automate(unsigned int dimension_max, unsigned int nb_iterations_max){
+automate creer_automate(){
     automate automate_cellulaire = (automate) malloc (sizeof(struct automate));
     automate_cellulaire->temps = 0;
-    automate_cellulaire->configuration_actuelle = (cel**) malloc (sizeof(cel*) * nb_iterations_max);
-    for(unsigned int i = 0; i < nb_iterations_max; i++){
-        automate_cellulaire->configuration_actuelle[i] = (cel*) malloc (sizeof(cel) * dimension_max);
-    }
+    automate_cellulaire->configuration_actuelle = NULL;
     automate_cellulaire->_regle = NULL;
-    automate_cellulaire->nb_iterations_max = nb_iterations_max;
-    automate_cellulaire->dimension_max = dimension_max;
+    automate_cellulaire->nb_iterations_max = 0;
+    automate_cellulaire->dimension_max = 0;
 
     return automate_cellulaire;
 }
@@ -160,6 +157,22 @@ regle get_regle_automate(automate automate_cellulaire){
     return automate_cellulaire->_regle;
 }
 
+void init_configuration_actuelle(automate automate_cellulaire){
+    unsigned int dimension_max = get_dimension_max(automate_cellulaire);
+    unsigned int nb_iterations_max = get_nb_iterations_max(automate_cellulaire);
+    automate_cellulaire->configuration_actuelle = (cel**) malloc (sizeof(cel*) * nb_iterations_max);
+    for(unsigned int i = 0; i < nb_iterations_max; i++){
+        automate_cellulaire->configuration_actuelle[i] = (cel*) malloc (sizeof(cel) * dimension_max);
+    }
+}
+
+void set_dimension_max(automate automate_cellulaire, unsigned int n){
+    automate_cellulaire->dimension_max = n;
+}
+
+void set_nb_iterations_max(automate automate_cellulaire, unsigned int n){
+    automate_cellulaire->nb_iterations_max = n;
+}
 
 /**
  * \fn cel** generer_automate(automate automate_cellulaire)
