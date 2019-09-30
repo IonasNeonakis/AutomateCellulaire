@@ -484,18 +484,18 @@ void process_args(automate a,regle r,int argc, char* argv[]){
             exit(1);
         }else if (type_regle==0){ // binaire
             if (!strcmp(argv[7],"0")){ // console
-                set_affichage(a,&afficher_automate_console_binaire);   
+                type_affichage=&afficher_automate_console_binaire;   
             }else{ // pgm
-                set_affichage(a,&afficher_automate_pgm_binaire);   
+                type_affichage=&afficher_automate_pgm_binaire;   
             }
         }else if (type_regle==1){ // somme
             if (!strcmp(argv[7],"0")){ // console
-                set_affichage(a,&afficher_automate_console_somme);   
+                type_affichage=&afficher_automate_console_somme;   
             }else{ // pgm
-                set_affichage(a,&afficher_automate_pgm_somme);   
+                type_affichage=&afficher_automate_pgm_somme;   
             }
         }else{
-
+            type_affichage=get_regle_automate(a);
         }
     }
 
@@ -520,7 +520,7 @@ void process_args(automate a,regle r,int argc, char* argv[]){
         exit(1);
     }else{
         if(!est_regle_correcte(argv[4],nb_etats)){
-            printf("Erreur de l'argument configuration : Arrêt du programme ! \n");
+            printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
             exit(1);
         }else {
         config_init=argv[4];
