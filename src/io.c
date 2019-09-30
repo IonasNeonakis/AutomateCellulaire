@@ -183,7 +183,7 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
                 }else{
                     switch(conversion_char_int(valeur)){
                         case 0: {
-                            type_affichage=&afficher_automate_console;
+                            type_affichage=&afficher_automate_console_binaire;
                             break;
                         }
                         case 1: {
@@ -206,14 +206,14 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
                         case 0: {
                             set_type_regle(r, &regle_binaire);
                             set_taille_regle(r, 8);
-                            set_affichage_regle(r, &afficher_cellule_binaire);
+                            // set_affichage_regle(r, &afficher_cellule_binaire);
                             nb_etats=2;
                             type_regle=0;
                             break;
                         }case 1 :{
                             set_type_regle(r, &regle_somme);
                             set_taille_regle(r, 10);
-                            set_affichage_regle(r, &afficher_cellule_somme);
+                            // set_affichage_regle(r, &afficher_cellule_somme);
                             nb_etats=4;
                             type_regle=1;
                             break;
@@ -278,7 +278,7 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
  * \param regle r représente la regle si l'utilisateur veut utiliser une règle personnalisée
  * \return automate ainsi créé
  */
-automate lecture_runtime_automate(regle r){
+void lecture_runtime_automate(automate a, regle r){
     char* piscine_buffer = (char*) malloc (sizeof(char) * 256);
 
     printf("Bienvenue dans le générateur d'automate cellulaire !\n");
@@ -382,7 +382,12 @@ automate lecture_runtime_automate(regle r){
     piscine_buffer[strlen(piscine_buffer)] = '\0';
     unsigned int type_affichage_int = conversion_char_int(piscine_buffer);
 
-    automate a = creer_automate(dimension_max_int, nb_iteration_max_int);
+    set_dimension_max(a, dimension_max_int);
+
+    set_nb_iterations_max(a, nb_iteration_max_int);
+
+    init_configuration_actuelle(a);
+    
     set_configuration_initiale(a, configuration_initiale);
     
     char* regle_en_binaire;
@@ -391,14 +396,14 @@ automate lecture_runtime_automate(regle r){
         regle_en_binaire = conversion_decimal_binaire(conversion_char_int(_regle));
         set_regle(r, regle_en_binaire);
         set_type_regle(r, &regle_binaire);
-        set_affichage_regle(r, &afficher_cellule_binaire);
+        // set_affichage_regle(r, &afficher_cellule_binaire);
 
         free(regle_en_binaire);
         regle_en_binaire = NULL;
    }else if(type_regle_int == 1){
         set_regle(r, _regle);
         set_type_regle(r, &regle_somme);
-        set_affichage_regle(r, &afficher_cellule_somme);
+        // set_affichage_regle(r, &afficher_cellule_somme);
    }else{
        set_regle(r, _regle);
    }
@@ -406,7 +411,7 @@ automate lecture_runtime_automate(regle r){
     set_regle_automate(a, r);
     switch(type_affichage_int){
         case 0: {
-            set_affichage(a, &afficher_automate_console);
+            set_affichage(a, &afficher_automate_console_binaire);
             break;
         }
         case 1: {
@@ -431,8 +436,6 @@ automate lecture_runtime_automate(regle r){
     //nb_etats = NULL;
     free(piscine_buffer);
     piscine_buffer = NULL;
-
-    return a;
 }
 
 automate process_args(regle r,int argc, char* argv[]){
@@ -451,13 +454,13 @@ automate process_args(regle r,int argc, char* argv[]){
         if(!strcmp(argv[6],"0")){
             set_type_regle(r, &regle_binaire);
             set_taille_regle(r, 8);
-//            set_affichage_regle(r, &afficher_cellule_binaire);
+            // set_affichage_regle(r, &afficher_cellule_binaire);
             nb_etats=2;
             type_regle=0;
         }else if(!strcmp(argv[6],"1")){
             set_type_regle(r, &regle_somme);
             set_taille_regle(r, 10);
-//            set_affichage_regle(r, &afficher_cellule_somme);
+            // set_affichage_regle(r, &afficher_cellule_somme);
             nb_etats=4;
             type_regle=1;
         }else if(!strcmp(argv[6],"2")){
@@ -549,7 +552,7 @@ automate process_args(regle r,int argc, char* argv[]){
         exit(1);
     }else{
         if (!strcmp(argv[7],"0")){
-            type_affichage=&afficher_automate_console;
+            type_affichage=&afficher_automate_console_binaire;
         }else{
             type_affichage=&afficher_automate_pgm;
         }

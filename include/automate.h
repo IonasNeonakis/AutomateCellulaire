@@ -13,7 +13,7 @@ struct automate;
 
 typedef struct automate* automate;
 
-automate creer_automate(unsigned int, unsigned int);
+automate creer_automate();
 
 void supprimer_automate(automate*);
 
@@ -27,6 +27,10 @@ void set_configuration_initiale(automate, char*);
 
 void set_voisins(automate, unsigned int);
 
+void set_dimension_max(automate, unsigned int);
+
+void set_nb_iterations_max(automate, unsigned int);
+
 cel** get_configuration_actuelle(automate);
 
 unsigned int get_nb_iterations_max();
@@ -34,6 +38,8 @@ unsigned int get_nb_iterations_max();
 unsigned int get_dimension_max(automate);
 
 regle get_regle_automate(automate);
+
+void init_configuration_actuelle(automate);
 
 cel** generer_automate(automate);
 

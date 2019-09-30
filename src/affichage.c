@@ -19,15 +19,15 @@
  * \param etat est l'état de la cellule à afficher.
  */
 
-void afficher_cellule_binaire(int etat){
-    char car;
-    if(etat == 0){
-        car = ' ';
-    }else{
-        car = 'X';
-    }
-    printf("%c", car);
-}
+// void afficher_cellule_binaire(int etat){
+//     char car;
+//     if(etat == 0){
+//         car = ' ';
+//     }else{
+//         car = 'X';
+//     }
+//     printf("%c", car);
+// }
 
 
 /**
@@ -37,40 +37,25 @@ void afficher_cellule_binaire(int etat){
  * \author Ionas
  * \param etat est l'état de la cellule à afficher.
  */
-void afficher_cellule_somme(int etat){
-    char car;
-    switch (etat){
-        case 1:
-            car = '1';
-            break;
-        case 2:
-            car = '2';
-            break;
-        case 3:
-            car = '3';
-            break;
-        default:
-            car = ' ';
-            break;
-    }
-    printf("%c", car);
-}
+// void afficher_cellule_somme(int etat){
+//     char car;
+//     switch (etat){
+//         case 1:
+//             car = '1';
+//             break;
+//         case 2:
+//             car = '2';
+//             break;
+//         case 3:
+//             car = '3';
+//             break;
+//         default:
+//             car = ' ';
+//             break;
+//     }
+//     printf("%c", car);
+// }
 
-/**
- * \fn void afficher_ligne(cel* ligne,unsigned int dimensions_max, void (*affichage_cellule) (int))
- * \brief Fonction qui affiche la ligne compléte d'une cellule  
- * \author Ionas
- * \param ligne est la ligne à afficher.
- * \param dimensions_max est la dimension max soit la longueur de la ligne
- * \param affichage_cellule est la fonction d'affichage d'une cellule
- */
-
-void afficher_ligne(cel* ligne,unsigned int dimensions_max, void (*affichage_cellule) (int)){
-    for(unsigned int i = 0; i < dimensions_max; i++){
-        cel x = ligne[i];
-        afficher_cellule(x, affichage_cellule);
-    }
-}
 /**
  * \fn void afficher_automate_console(automate automate_cellulaire)
  * \brief Fonction qui affiche un automate sur la console  
@@ -78,19 +63,17 @@ void afficher_ligne(cel* ligne,unsigned int dimensions_max, void (*affichage_cel
  * \param automate_cellulaire est l'automate à afficher.
  */
 
-void afficher_automate_console(automate automate_cellulaire){
+void afficher_automate_console_binaire(automate automate_cellulaire){
     regle r = get_regle_automate(automate_cellulaire);
     char* regle = get_regle(r);
     unsigned int nb_iterations_max = get_nb_iterations_max(automate_cellulaire);
     unsigned int dimension_max = get_dimension_max(automate_cellulaire);
     cel** configuration_actuelle = get_configuration_actuelle(automate_cellulaire);
-    void (*affichage_regle)(int) = get_affichage_regle(r);
+    //void (*affichage_regle)(int) = get_affichage_regle(r);
     
     printf("Règle           : %s\n", regle);
-    if(affichage_regle == &afficher_cellule_binaire){
-        int regle_int = conversion_regle_binaire_decimal(regle);
-        printf("Règle Wolfram   : %d\n", regle_int);
-    }
+    int regle_int = conversion_regle_binaire_decimal(regle);
+    printf("Règle Wolfram   : %d\n", regle_int);
     printf("Itérations      : %u\n", nb_iterations_max);
     printf("Dimensions Max. : %u\n\n", dimension_max);
 
@@ -100,8 +83,17 @@ void afficher_automate_console(automate automate_cellulaire){
         else
             printf("|%u| ", i);
 
-        afficher_ligne(configuration_actuelle[(int)i], dimension_max, affichage_regle);
-
+        for(unsigned int j = 0; j < dimension_max; j++){
+            cel x = configuration_actuelle[i][j];
+            char car;
+            unsigned int etat = get_etat(x);
+            if(etat == 0){
+                car = ' ';
+            }else{
+                car = 'X';
+            }
+            printf("%c", car);
+        }
         printf("\n");
     }
 }
