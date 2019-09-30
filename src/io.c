@@ -471,11 +471,11 @@ void process_args(automate a,regle r,int argc, char* argv[]){
     }
 
     if(!strcmp(argv[6],"2")){
-        if(!est_un_int(argv[7]) || conversion_char_int(argv[7])>9){
+        if(!est_un_int(argv[8]) || conversion_char_int(argv[8])>9){
             printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
             exit(1);
         }else{
-            nb_etats=(unsigned int)conversion_char_int(argv[7]);
+            nb_etats=(unsigned int)conversion_char_int(argv[8]);
             type_regle=2;
             type_affichage=get_affichage(a);
 
