@@ -477,6 +477,8 @@ void process_args(automate a,regle r,int argc, char* argv[]){
         }else{
             nb_etats=(unsigned int)conversion_char_int(argv[7]);
             type_regle=2;
+            type_affichage=get_affichage(a);
+
         }
     }else{
         if(!est_un_int(argv[7]) || conversion_char_int(argv[7])>1 || conversion_char_int(argv[7])<0){
@@ -494,8 +496,7 @@ void process_args(automate a,regle r,int argc, char* argv[]){
             }else{ // pgm
                 type_affichage=&afficher_automate_pgm_somme;   
             }
-        }else{
-            type_affichage=get_regle_automate(a);
+        }else{ //affichage perso
         }
     }
 
