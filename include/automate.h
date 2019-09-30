@@ -39,6 +39,8 @@ unsigned int get_dimension_max(automate);
 
 regle get_regle_automate(automate);
 
+void (*get_affichage(automate))(automate);
+
 void init_configuration_actuelle(automate);
 
 cel** generer_automate(automate);
