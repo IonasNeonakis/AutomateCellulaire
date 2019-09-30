@@ -12,6 +12,10 @@ void afficher_ligne(cel*, unsigned int, void (*) (int));
 
 void afficher_automate_console_binaire(automate);
 
-void afficher_automate_pgm(automate);
+void afficher_automate_console_somme(automate);
+
+void afficher_automate_pgm_binaire(automate);
+
+void afficher_automate_pgm_somme(automate);
 
 #endif
