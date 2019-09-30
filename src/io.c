@@ -187,7 +187,7 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
                             break;
                         }
                         case 1: {
-                            type_affichage=&afficher_automate_pgm;
+                            //type_affichage=&afficher_automate_pgm;
                             break;
                         }
                         default: {
@@ -415,7 +415,7 @@ void lecture_runtime_automate(automate a, regle r){
             break;
         }
         case 1: {
-            set_affichage(a, &afficher_automate_pgm);
+            //set_affichage(a, &afficher_automate_pgm);
             break;
         }
     }
@@ -438,7 +438,7 @@ void lecture_runtime_automate(automate a, regle r){
     piscine_buffer = NULL;
 }
 
-automate process_args(regle r,int argc, char* argv[]){
+void process_args(automate a,regle r,int argc, char* argv[]){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     int type_regle =-1;
@@ -471,28 +471,28 @@ automate process_args(regle r,int argc, char* argv[]){
     }
 
     if(!strcmp(argv[6],"2")){
-        if(!est_un_int(argv[8]) || conversion_char_int(argv[8])>9){
+        if(!est_un_int(argv[7]) || conversion_char_int(argv[7])>9){
             printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
             exit(1);
         }else{
-            nb_etats=(unsigned int)conversion_char_int(argv[8]);
+            nb_etats=(unsigned int)conversion_char_int(argv[7]);
             type_regle=2;
         }
     }else{
-        if(!est_un_int(argv[8]) || conversion_char_int(argv[8])>1 || conversion_char_int(argv[8])<0){
+        if(!est_un_int(argv[7]) || conversion_char_int(argv[7])>1 || conversion_char_int(argv[7])<0){
             printf("Erreur de l'argument type_affichage");
             exit(1);
         }else if (type_regle==0){ // binaire
-            if (conversion_char_int(argv[8])==0){ // console
-                //set_affichage(a,&affichage_cellule_binaire_console)          
+            if (!strcmp(argv[7],"0")){ // console
+                set_affichage(a,&afficher_automate_console_binaire);   
             }else{ // pgm
-
+                set_affichage(a,&afficher_automate_pgm_binaire);   
             }
         }else if (type_regle==1){ // somme
-            if (conversion_char_int(argv[8])==0){ // console
-            
+            if (!strcmp(argv[7],"0")){ // console
+                set_affichage(a,&afficher_automate_console_somme);   
             }else{ // pgm
-
+                set_affichage(a,&afficher_automate_pgm_somme);   
             }
         }else{
 
@@ -542,24 +542,27 @@ automate process_args(regle r,int argc, char* argv[]){
             printf("Erreur de l'argument regle : Arrêt du programme ! \n");
             exit(1);
         }else{
-            regle_string = argv[5];
+            regle_string = (char*) calloc(strlen(argv[5])+1,sizeof(char) * strlen(argv[5])+1);
+            regle_string=strcpy(regle_string,argv[5]);
         }
     }
 
 
-    if(!est_un_int(argv[7]) || (strcmp(argv[7],"0") && strcmp(argv[7],"1")) ){
-        printf("Erreur de l'argument type_affichage : Arrêt du programme ! \n");
-        exit(1);
-    }else{
-        if (!strcmp(argv[7],"0")){
-            type_affichage=&afficher_automate_console_binaire;
-        }else{
-            type_affichage=&afficher_automate_pgm;
-        }
-    }
-    automate a ;
-    a = creer_automate(dimension,nb_iterations);
-    
+    // if(!est_un_int(argv[7]) || (strcmp(argv[7],"0") && strcmp(argv[7],"1")) ){
+    //     printf("Erreur de l'argument type_affichage : Arrêt du programme ! \n");
+    //     exit(1);
+    // }else{
+    //     if (!strcmp(argv[7],"0")){
+    //         type_affichage=&afficher_automate_console_binaire;
+    //     }else{
+    //         //type_affichage=&afficher_automate_pgm;
+    //     }
+    // }
+    //automate a ;
+    //a = creer_automate(dimension,nb_iterations);
+    set_dimension_max(a,dimension);
+    set_nb_iterations_max(a,nb_iterations);
+    init_configuration_actuelle(a);
     set_regle(r, regle_string);
     free(regle_string);
     set_nb_etats(r, nb_etats);
@@ -570,7 +573,7 @@ automate process_args(regle r,int argc, char* argv[]){
 
     generer_automate(a);
 
-    return a;
+    //return a;
 }
 
 /**

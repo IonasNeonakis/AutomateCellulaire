@@ -44,8 +44,8 @@ int main(int argc, char* argv[]){
         if(argc == 3 && (!strcmp(argument, "-f") || !strcmp(argument, "--file"))){
             //printf("%s",argv[2]);
             a = lire_fichier_automate(r, argv[2]); //on lit par fichier
-        }else if((argc == 9 || argc==8) && (!strcmp(argument, "-a") || !strcmp(argument, "--args"))){
-            a = process_args(r, argc, argv); //on fait une lecture par arguments
+        }else if((argc==8) && (!strcmp(argument, "-a") || !strcmp(argument, "--args"))){
+            process_args(a,r, argc, argv); //on fait une lecture par arguments
         }else if(argc == 2 && !strcmp(argv[1], "--help")){
             manuel();
             supprimer_regle(&r);

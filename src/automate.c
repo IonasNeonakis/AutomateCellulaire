@@ -92,6 +92,9 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
  */
 
 void afficher_automate(automate automate_cellulaire){
+    if(automate_cellulaire->affichage==NULL){
+        printf("alald");
+    }
     automate_cellulaire->affichage(automate_cellulaire);
 }
 

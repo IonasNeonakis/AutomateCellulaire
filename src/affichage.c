@@ -71,8 +71,6 @@ void afficher_automate_console_somme(automate automate_cellulaire){
     cel** configuration_actuelle = get_configuration_actuelle(automate_cellulaire);
     
     printf("Règle           : %s\n", regle);
-    int regle_int = conversion_regle_binaire_decimal(regle);
-    printf("Règle Wolfram   : %d\n", regle_int);
     printf("Itérations      : %u\n", nb_iterations_max);
     printf("Dimensions Max. : %u\n\n", dimension_max);
 
@@ -112,7 +110,9 @@ void afficher_automate_console_binaire(automate automate_cellulaire){
     unsigned int nb_iterations_max = get_nb_iterations_max(automate_cellulaire);
     unsigned int dimension_max = get_dimension_max(automate_cellulaire);
     cel** configuration_actuelle = get_configuration_actuelle(automate_cellulaire);
-    
+
+    int regle_int = conversion_regle_binaire_decimal(regle);
+    printf("Règle Wolfram   : %d\n", regle_int);   
     printf("Règle           : %s\n", regle);
     printf("Itérations      : %u\n", nb_iterations_max);
     printf("Dimensions Max. : %u\n\n", dimension_max);

@@ -6,7 +6,7 @@
 
 automate lire_fichier_automate(regle, char*);
 
-automate process_args(regle r,int argc, char* argv[]);
+void process_args(automate a,regle r,int argc, char* argv[]);
 
 void lecture_runtime_automate(automate a, regle);
 
