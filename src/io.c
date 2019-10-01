@@ -474,22 +474,28 @@ void process_args(automate a,regle r,int argc, char* argv[]){
 
         }
     }else{
-        if(!est_un_int(argv[7]) || conversion_char_int(argv[7])>1 || conversion_char_int(argv[7])<0){
+        if(!est_un_int(argv[7]) || conversion_char_int(argv[7])>2 || conversion_char_int(argv[7])<0){
             printf("Erreur de l'argument type_affichage");
             exit(1);
         }else if (type_regle==0){ // binaire
             if (!strcmp(argv[7],"0")){ // console
                 type_affichage=&afficher_automate_console_binaire;   
-            }else{ // pgm
+            }else if (!strcmp(argv[7],"1")){ // pgm
                 type_affichage=&afficher_automate_pgm_binaire;   
+            }else{
+                type_affichage=get_affichage(a);
             }
         }else if (type_regle==1){ // somme
             if (!strcmp(argv[7],"0")){ // console
                 type_affichage=&afficher_automate_console_somme;   
-            }else{ // pgm
+            }else if (!strcmp(argv[7],"1")){ // pgm
                 type_affichage=&afficher_automate_pgm_somme;   
+            }else{
+                type_affichage=get_affichage(a);
             }
-        }else{ //affichage perso
+        }else if (type_regle==2){ //affichage perso des relges sommes et wolfram
+            printf("erreur du type de regle \n");
+            exit(1);
         }
     }
 
