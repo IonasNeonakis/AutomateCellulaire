@@ -33,11 +33,11 @@ int main(int argc, char* argv[]){
     automate a = creer_automate();
     
     regle r = creer_regle();
-    set_type_regle(r, &regle_binaire);
-    set_taille_regle(r, 8);
+    set_type_regle(r, &regle_somme);
+    set_taille_regle(r, 10);
     // set_affichage(a, &afficher_automate_console_binaire);
     set_regle_automate(a, r);
-    set_affichage(a, &afficher_automate_console_binaire);
+    set_affichage(a, &afficher_automate_console_somme);
 
     if(argc > 1){
         char* argument = argv[1];
