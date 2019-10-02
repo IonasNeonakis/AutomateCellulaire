@@ -77,8 +77,8 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
     automate_cellulaire->configuration_actuelle = NULL;
     free(automate_cellulaire->configuration_initiale);
     automate_cellulaire->configuration_initiale=NULL;
-    //supprimer_regle(&automate_cellulaire->_regle);
-    //automate_cellulaire->_regle=NULL;
+    supprimer_regle(&automate_cellulaire->_regle);
+    automate_cellulaire->_regle=NULL;
     free(automate_cellulaire);
     automate_cellulaire = NULL;
 }

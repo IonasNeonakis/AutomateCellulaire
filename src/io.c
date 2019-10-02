@@ -297,6 +297,8 @@ automate lire_fichier_automate(automate a,regle r, char* nom_fichier){
     set_configuration_initiale(a, config_init);
     set_affichage(a,type_affichage);
 
+
+
     generer_automate(a);
 
     free(fichier_a_ouvrir);

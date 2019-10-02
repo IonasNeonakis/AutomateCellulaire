@@ -52,6 +52,7 @@ regle creer_regle(){
 
 void supprimer_regle(regle* r){
     regle regle_a_supprimer = *r;
+    //printf("%s", regle_a_supprimer->_regle);
     free(regle_a_supprimer->_regle);
     regle_a_supprimer->_regle = NULL;
     regle_a_supprimer->_type_regle = NULL;
@@ -73,7 +74,6 @@ void set_regle(regle r, char* s){
     size_t taille_s = strlen(s);
     r->_regle = (char*) malloc (sizeof(char) * taille_s + 1);
     strcpy(r->_regle, s);
-    r->_regle[taille_s] = '\0';
 }
 
 void set_type_regle(regle r, int (*type_regle) (char*, int*)){
