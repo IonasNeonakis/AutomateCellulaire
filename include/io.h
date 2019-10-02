@@ -4,9 +4,9 @@
 #include "./automate.h"
 #include "./regle.h"
 
-automate lire_fichier_automate(regle, char*);
+automate lire_fichier_automate(automate, regle, char*);
 
-void process_args(automate a,regle r,int argc, char* argv[]);
+void process_args(automate, regle, int, char*[]);
 
 void lecture_runtime_automate(automate a, regle);
 

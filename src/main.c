@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
         char* argument = argv[1];
         if(argc == 3 && (!strcmp(argument, "-f") || !strcmp(argument, "--file"))){
             //printf("%s",argv[2]);
-            a = lire_fichier_automate(r, argv[2]); //on lit par fichier
+            lire_fichier_automate(a,r, argv[2]); //on lit par fichier
         }else if((argc==8) && (!strcmp(argument, "-a") || !strcmp(argument, "--args"))){
             process_args(a,r, argc, argv); //on fait une lecture par arguments
         }else if(argc == 2 && !strcmp(argv[1], "--help")){

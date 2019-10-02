@@ -14,7 +14,7 @@
  * \return cel** le tableau à deux dimensions de générations de cellules
  */
 
-automate lire_fichier_automate(regle r, char* nom_fichier){
+automate lire_fichier_automate(automate a,regle r, char* nom_fichier){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     unsigned int nb_etats=0;
@@ -177,25 +177,53 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
                     nb_etats=(unsigned int)conversion_char_int(valeur);
                 }
             }else if(!strcmp(type, "type_affichage")){
-                if(type_affichage != NULL){
+                if(type_regle==2){
+                    printf("type_affichage ne doit pas etre défini dans le cas ou le type_regle vaut 2 : Arrêt du programme ! \n");
+                    exit(1);
+                }else if(type_affichage != NULL){
                     printf("Duplication du type : \"type_affichage\". Arrêt du programme !\n");
                     exit(1);
+                }else if(type_regle==-1){
+                    printf("type_regle doit être défini avant type_affichage : Arrêt du programme \n");
+                    exit(1);
                 }else{
-                    switch(conversion_char_int(valeur)){
-                        case 0: {
-                            type_affichage=&afficher_automate_console_binaire;
-                            break;
+                    int val = conversion_char_int(valeur);
+                    if (type_regle == 0){ // binaire
+                        if (val == 0 ){ // console 
+                            type_affichage=afficher_automate_console_binaire;
+                        }else if(val == 1){ //pgm
+                            type_affichage=afficher_automate_pgm_binaire;
+                        }else{ // perso
+                            type_affichage=get_affichage(a);
                         }
-                        case 1: {
-                            //type_affichage=&afficher_automate_pgm;
-                            break;
+                    }else if (type_regle == 1){ //somme
+                        if (val == 0 ){ // console 
+                            type_affichage=afficher_automate_console_somme;               
+                        }else if(val == 1){ //pgm
+                            type_affichage=afficher_automate_pgm_somme;
+                        }else{ // perso
+                            type_affichage=get_affichage(a);
                         }
-                        default: {
-                            printf("Erreur de l'affichage, arrêt du programme.");
-                            exit(1);
-                            break;
-                        }
+                    }else { // regle perso erreur
+                        printf("Erreur inconue : Arrêt du programme ! \n");
+                        exit(1);
                     }
+
+                    // switch(conversion_char_int(valeur)){
+                    //     case 0: {
+                    //         type_affichage=&afficher_automate_console_binaire;
+                    //         break;
+                    //     }
+                    //     case 1: {
+                    //         //type_affichage=&afficher_automate_pgm;
+                    //         break;
+                    //     }
+                    //     default: {
+                    //         printf("Erreur de l'affichage, arrêt du programme.");
+                    //         exit(1);
+                    //         break;
+                    //     }
+                    // }
                 }
             }else if(!strcmp(type,"type_regle")){
                 if(type_regle!=-1){
@@ -219,6 +247,7 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
                             break;
                         }case 2 : {
                             type_regle=2;
+                            type_affichage=get_affichage(a);
                             break;
                         }
                         default:{
@@ -248,11 +277,23 @@ automate lire_fichier_automate(regle r, char* nom_fichier){
         exit(1);
     }
 
-    automate a = creer_automate(dimension,nb_iterations);
+    // automate a = creer_automate(dimension,nb_iterations);
     
+    // set_regle(r, regle_string);
+    // set_nb_etats(r, nb_etats);
+    // set_regle_automate(a, r);
+    // set_configuration_initiale(a, config_init);
+    // set_affichage(a,type_affichage);
+
+    // generer_automate(a);
+
+    set_dimension_max(a,dimension);
+    set_nb_iterations_max(a,nb_iterations);
+    init_configuration_actuelle(a);
     set_regle(r, regle_string);
     set_nb_etats(r, nb_etats);
     set_regle_automate(a, r);
+
     set_configuration_initiale(a, config_init);
     set_affichage(a,type_affichage);
 
