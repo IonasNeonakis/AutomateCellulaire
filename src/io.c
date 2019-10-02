@@ -388,8 +388,15 @@ void lecture_runtime_automate(automate a, regle r){
 
     printf("Configuration initiale : ");
     scanf("%s", configuration_initiale);
-    while(!est_regle_correcte(configuration_initiale, nb_etats_int) || strlen(configuration_initiale) != dimension_max_int){
-        printf("\nVous devez rentrer une configuration initiale dont le nombre de cellule est égale à la dimension de l'automate !\n");
+    bool correcte = est_regle_correcte(configuration_initiale, nb_etats_int);
+    bool l_pas_bonne = strlen(configuration_initiale) != dimension_max_int;
+    while(!correcte || l_pas_bonne){
+        if(!correcte){
+            printf("Vous devez rentrer une configuration intiale dont les chiffres qui la compose se situent entre 0 et le nombre d'état de la règle !\n");
+        }
+        if(l_pas_bonne){
+            printf("\nVous devez rentrer une configuration initiale dont le nombre de cellule est égale à la dimension de l'automate !\n");
+        }
         scanf("%s", configuration_initiale);
     }
 
@@ -413,15 +420,22 @@ void lecture_runtime_automate(automate a, regle r){
     strcpy(_regle, piscine_buffer);
     _regle[taille] = '\0';
 
-    printf("Type affichage : \n");
-    printf("0 - Affichage console\n");
-    printf("1 - Génération d'une image ppm\n");
-    scanf("%s", piscine_buffer);
-    while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) != 0 && conversion_char_int(piscine_buffer) != 1)){
+    unsigned int type_affichage_int;
+
+    if(type_regle_int == 0 || type_regle_int == 1){
+        printf("Type affichage : \n");
+        printf("0 - Affichage console\n");
+        printf("1 - Génération d'une image ppm\n");
+        printf("2 - Utilisation de la fonction d'affichage personnalisée\n");
         scanf("%s", piscine_buffer);
-    }
-    piscine_buffer[strlen(piscine_buffer)] = '\0';
-    unsigned int type_affichage_int = conversion_char_int(piscine_buffer);
+        while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) < 0 && conversion_char_int(piscine_buffer) > 2)){
+            scanf("%s", piscine_buffer);
+        }
+        piscine_buffer[strlen(piscine_buffer)] = '\0';
+        type_affichage_int = conversion_char_int(piscine_buffer);
+   }else{
+       type_affichage_int = 2;
+   }
 
     set_dimension_max(a, dimension_max_int);
 
@@ -437,14 +451,12 @@ void lecture_runtime_automate(automate a, regle r){
         regle_en_binaire = conversion_decimal_binaire(conversion_char_int(_regle));
         set_regle(r, regle_en_binaire);
         set_type_regle(r, &regle_binaire);
-        // set_affichage_regle(r, &afficher_cellule_binaire);
 
         free(regle_en_binaire);
         regle_en_binaire = NULL;
    }else if(type_regle_int == 1){
         set_regle(r, _regle);
         set_type_regle(r, &regle_somme);
-        // set_affichage_regle(r, &afficher_cellule_somme);
    }else{
        set_regle(r, _regle);
    }
