@@ -10,52 +10,6 @@
 
 #include "../include/affichage.h"
 
-
-/**
- * \fn void afficher_cellule_binaire(int etat)
- * \brief Fonction qui affiche un X à la place d'un etat à 1 et un espace à la place d'un état à 0
- *        Elle est utilisée pour l'affichage de la règle binaire  
- * \author Ionas
- * \param etat est l'état de la cellule à afficher.
- */
-
-// void afficher_cellule_binaire(int etat){
-//     char car;
-//     if(etat == 0){
-//         car = ' ';
-//     }else{
-//         car = 'X';
-//     }
-//     printf("%c", car);
-// }
-
-
-/**
- * \fn void afficher_cellule_somme(int etat)
- * \brief Fonction qui affiche un le nombre de l'état et un espace si le nombre de l'état est 0. Elle est utilisée
- *        Elle est utilisée pour l'affichage de la regle Somme  
- * \author Ionas
- * \param etat est l'état de la cellule à afficher.
- */
-// void afficher_cellule_somme(int etat){
-//     char car;
-//     switch (etat){
-//         case 1:
-//             car = '1';
-//             break;
-//         case 2:
-//             car = '2';
-//             break;
-//         case 3:
-//             car = '3';
-//             break;
-//         default:
-//             car = ' ';
-//             break;
-//     }
-//     printf("%c", car);
-// }
-
 /**
  * \fn void afficher_automate_console(automate automate_cellulaire)
  * \brief Fonction qui affiche un automate sur la console  

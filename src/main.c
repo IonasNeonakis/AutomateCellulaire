@@ -35,7 +35,6 @@ int main(int argc, char* argv[]){
     regle r = creer_regle();
     set_type_regle(r, &regle_somme);
     set_taille_regle(r, 10);
-    // set_affichage(a, &afficher_automate_console_binaire);
     set_regle_automate(a, r);
     set_affichage(a, &afficher_automate_console_somme);
 
@@ -49,12 +48,10 @@ int main(int argc, char* argv[]){
         }else if(argc == 2 && !strcmp(argv[1], "--help")){
             manuel();
             supprimer_regle(&r);
-            //supprimer_automate(&a);
             exit(EXIT_SUCCESS);
         }else{
             printf("Erreur du nombre d'arguments. Arrêt du programme ! \n");
             exit(1);
-            //nombre d'arguments incorrect
         }
     }else if(argc == 1){
         lecture_runtime_automate(a, r); //on fait une lecture runtime

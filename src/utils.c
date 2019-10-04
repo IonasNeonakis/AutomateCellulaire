@@ -58,10 +58,10 @@ int conversion_regle_binaire_decimal(char* regle){
 
 char* conversion_decimal_binaire(int n){
     int taille;
-    if (n==0){
-        taille =-1;
+    if (n == 0){
+        taille = -1;
     }else{
-    taille = (int)floor(log2(n));
+        taille = (int) floor(log2(n));
     }
     char* nombre_binaire = (char*) calloc (8, sizeof(char) * 8);
     int i = 0; 
@@ -91,9 +91,9 @@ char* conversion_decimal_binaire(int n){
  */
 
 int conversion_char_int(char * s){
-    int total =0 ;
-    for (int i =0;i<(int) strlen(s);i++){
-        total=total*10+s[i]-48;
+    int total = 0 ;
+    for (int i = 0; i < (int) strlen(s); i++){
+        total=total * 10 + s[i] - 48;
     }
     return total;
 }
@@ -107,7 +107,7 @@ int conversion_char_int(char * s){
  */
 
 bool est_un_int(char *s){
-    for (int i =0;i<(int) strlen(s);i++){
+    for (int i =0; i < (int) strlen(s); i++){
         if(s[i]<48 || s[i]>57)
             return false;
     }
@@ -124,7 +124,7 @@ bool est_un_int(char *s){
  */
 
 bool est_de_longueur(char *s,int n){
-    if((int)strlen(s)!=n){
+    if((int) strlen(s) != n){
         return false;
     }
     return true;
@@ -139,8 +139,8 @@ bool est_de_longueur(char *s,int n){
  */
 
 bool est_regle_binaire(char *s){
-    for (int i =0;i<(int) strlen(s);i++){
-        if(s[i]!=48 && s[i]!=49){
+    for (int i = 0; i < (int) strlen(s); i++){
+        if(s[i] != 48 && s[i] != 49){
             return false;
         }
     }
@@ -183,5 +183,3 @@ bool est_regle_correcte(char* s, unsigned int nb_etats){
     }
     return true;
 }
-
-

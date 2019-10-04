@@ -26,10 +26,9 @@
  */
 
 struct automate {
-    unsigned int temps ; // le temps t actuelle, commence à 0
-    cel** configuration_actuelle ; //chauqe char est un etat
-    unsigned int dimension_max; // en gros la taille du tableau
-    unsigned int nb_iterations_max; //
+    cel** configuration_actuelle ;
+    unsigned int dimension_max;
+    unsigned int nb_iterations_max; 
     regle _regle;
     void (*affichage) (automate);
     char *configuration_initiale;
@@ -47,7 +46,6 @@ struct automate {
 
 automate creer_automate(){
     automate automate_cellulaire = (automate) malloc (sizeof(struct automate));
-    automate_cellulaire->temps = 0;
     automate_cellulaire->configuration_actuelle = NULL;
     automate_cellulaire->_regle = NULL;
     automate_cellulaire->nb_iterations_max = 0;
@@ -92,9 +90,6 @@ void supprimer_automate(automate* automate_cellulaire_ptr){
  */
 
 void afficher_automate(automate automate_cellulaire){
-    if(automate_cellulaire->affichage==NULL){
-        printf("alald");
-    }
     automate_cellulaire->affichage(automate_cellulaire);
 }
 

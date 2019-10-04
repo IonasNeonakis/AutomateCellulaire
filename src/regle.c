@@ -37,8 +37,8 @@ regle creer_regle(){
     r->_regle = NULL;
     r->_type_regle = NULL;
     //r->_affichage_regle = NULL;
-    r->nb_etats=0;
-    r->taille_regle=0;
+    r->nb_etats = 0;
+    r->taille_regle = 0;
 
     return r;
 }
@@ -52,13 +52,10 @@ regle creer_regle(){
 
 void supprimer_regle(regle* r){
     regle regle_a_supprimer = *r;
-    //printf("%s", regle_a_supprimer->_regle);
     free(regle_a_supprimer->_regle);
     regle_a_supprimer->_regle = NULL;
     regle_a_supprimer->_type_regle = NULL;
-    //regle_a_supprimer->_affichage_regle = NULL;
     free(regle_a_supprimer);
-
     regle_a_supprimer = NULL;
 }
 
@@ -80,16 +77,12 @@ void set_type_regle(regle r, int (*type_regle) (char*, int*)){
     r->_type_regle = type_regle;
 }
 
-// void set_affichage_regle(regle r, void (*affichage_regle) (int)){
-//     r->_affichage_regle = affichage_regle;
-// }
-
-void set_nb_etats(regle r,unsigned int nb_etats){
-    r->nb_etats=nb_etats;
+void set_nb_etats(regle r, unsigned int nb_etats){
+    r->nb_etats = nb_etats;
 }
 
-void set_taille_regle(regle r,unsigned int taille_regle){
-    r->taille_regle=taille_regle;
+void set_taille_regle(regle r, unsigned int taille_regle){
+    r->taille_regle = taille_regle;
 }
 
 char* get_regle(regle r){
@@ -99,10 +92,6 @@ char* get_regle(regle r){
 int (*get_type_regle(regle r))(char*, int*){
     return r->_type_regle;
 }
-
-// void (*get_affichage_regle(regle r))(int){
-//     return r->_affichage_regle;
-// }
 
 int get_nb_etats(regle r){
     return r->nb_etats;
@@ -136,6 +125,6 @@ int regle_ionas(char* regle, int* etats){
     int x = etats[0] + etats[1] + etats[2];
     free(etats);
     if (x<0)
-        x=0;
+        x = 0;
     return regle[x] - 48;
 }

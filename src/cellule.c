@@ -64,8 +64,8 @@ void supprimer_cellule(cel* cellule){
  */
 
 void set_voisin_droite(cel actuelle,cel droite){
-    actuelle->voisin_d=droite;
-    droite->voisin_g=actuelle;
+    actuelle->voisin_d = droite;
+    droite->voisin_g = actuelle;
 }
 
 /**
@@ -77,12 +77,12 @@ void set_voisin_droite(cel actuelle,cel droite){
  */
 
 void set_voisin_gauche(cel actuelle,cel gauche){
-    actuelle->voisin_g=gauche;
-    gauche->voisin_d=actuelle;
+    actuelle->voisin_g = gauche;
+    gauche->voisin_d = actuelle;
 }
 
 void set_etat(cel cellule,int etat){
-    cellule->etat=etat;
+    cellule->etat = etat;
 }
 
 cel get_voisin_droite(cel c){
@@ -102,7 +102,7 @@ cel get_voisin_gauche(cel c){
  */
 
 int get_etat(cel c){
-    if (c==NULL)
+    if (c == NULL)
         return 0;
     return c->etat;
 }
