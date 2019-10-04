@@ -322,7 +322,7 @@ automate lire_fichier_automate(automate a,regle r, char* nom_fichier){
  * \return automate ainsi créé
  */
 void lecture_runtime_automate(automate a, regle r){
-    char* piscine_buffer = (char*) malloc (sizeof(char) * 256);
+    char* piscine_buffer = (char*) malloc (sizeof(char) * 1024);
 
     printf("Bienvenue dans le générateur d'automate cellulaire !\n");
     printf("Afin de générer un automate, veuillez rentrer les paramètres suivants :\n");
@@ -345,7 +345,7 @@ void lecture_runtime_automate(automate a, regle r){
     piscine_buffer[taille] = '\0';
     unsigned int dimension_max_int = conversion_char_int(piscine_buffer);
 
-    char configuration_initiale[dimension_max_int];
+    char* configuration_initiale;;
     char* _regle;
     /*char* nb_etats = (char*) malloc (sizeof(char) * 15);
     char* type_affichage = (char*) malloc (sizeof(char) * 15);
@@ -389,9 +389,9 @@ void lecture_runtime_automate(automate a, regle r){
     }
 
     printf("Configuration initiale : ");
-    scanf("%s", configuration_initiale);
-    bool correcte = est_regle_correcte(configuration_initiale, nb_etats_int);
-    bool l_pas_bonne = strlen(configuration_initiale) != dimension_max_int;
+    scanf("%s", piscine_buffer);
+    bool correcte = est_regle_correcte(piscine_buffer, nb_etats_int);
+    bool l_pas_bonne = strlen(piscine_buffer) != dimension_max_int;
     while(!correcte || l_pas_bonne){
         if(!correcte){
             printf("Vous devez rentrer une configuration intiale dont les chiffres qui la compose se situent entre 0 et le nombre d'état de la règle !\n");
@@ -399,8 +399,12 @@ void lecture_runtime_automate(automate a, regle r){
         if(l_pas_bonne){
             printf("\nVous devez rentrer une configuration initiale dont le nombre de cellule est égale à la dimension de l'automate !\n");
         }
-        scanf("%s", configuration_initiale);
+        scanf("%s", piscine_buffer);
+        correcte = est_regle_correcte(piscine_buffer, nb_etats_int);
+        l_pas_bonne = strlen(piscine_buffer) != dimension_max_int;  
     }
+    configuration_initiale = (char*) malloc(sizeof(char) * dimension_max_int + 1);
+    strcpy(configuration_initiale, piscine_buffer);
 
     printf("Règle : ");
     scanf("%s", piscine_buffer);
@@ -431,7 +435,7 @@ void lecture_runtime_automate(automate a, regle r){
         printf("2 - Utilisation de la fonction d'affichage personnalisée\n");
         scanf("%s", piscine_buffer);
         while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) < 0 && conversion_char_int(piscine_buffer) > 2)){
-            scanf("%s", piscine_buffer);
+            scanf("%s",     piscine_buffer);
         }
         piscine_buffer[strlen(piscine_buffer)] = '\0';
         type_affichage_int = conversion_char_int(piscine_buffer);
@@ -439,6 +443,7 @@ void lecture_runtime_automate(automate a, regle r){
        type_affichage_int = 2;
    }
 
+    printf("%d", dimension_max_int);
     set_dimension_max(a, dimension_max_int);
 
     set_nb_iterations_max(a, nb_iteration_max_int);
@@ -482,6 +487,8 @@ void lecture_runtime_automate(automate a, regle r){
 
     free(_regle);
     _regle = NULL;
+    free(configuration_initiale);
+    configuration_initiale = NULL;
     free(piscine_buffer);
     piscine_buffer = NULL;
 }
