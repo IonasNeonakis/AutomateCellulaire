@@ -1,6 +1,3 @@
-#include "../include/automate.h"
-#include "../include/affichage.h"
-
 /**
  * \file automate.c
  * \brief Fichier se rapportant à la création d'un automate, sa gestion ainsi que son affichage
@@ -11,6 +8,8 @@
  *
  */
 
+#include "../include/automate.h"
+#include "../include/affichage.h"
 
 /**
  * \struct automate automate.h

@@ -3,7 +3,6 @@
  * \brief Ce fichier s'occupe des cellules.
  * \author Ionas Samir
  *
- *
  */
 
 #include "../include/cellule.h"

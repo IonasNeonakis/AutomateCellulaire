@@ -1,3 +1,11 @@
+
+/**
+ * \file regle.c
+ * \brief Fichier se rapportant à la gestion des différentes règles pour l'automate ainsi qu'a la gestion de celles-ci
+ * \author Ionas Samir
+ *
+ */
+
 #include <stdio.h>
 #include <string.h>
 
