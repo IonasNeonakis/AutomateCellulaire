@@ -100,6 +100,7 @@ void afficher_automate_console_binaire(automate automate_cellulaire){
  */
 
 void afficher_automate_pgm_somme(automate automate_cellulaire){
+    printf("Image créée dans le dossier \"out\"\n");
     FILE* image;
     if ((image = fopen("./out/automate.ppm", "w")) != NULL)
         {
@@ -149,6 +150,7 @@ void afficher_automate_pgm_somme(automate automate_cellulaire){
 }
 
 void afficher_automate_pgm_binaire(automate automate_cellulaire){
+    printf("Image créée dans le dossier \"out\"\n");
     FILE* image;
     if ((image = fopen("./out/automate.ppm", "w")) != NULL)
         {
@@ -183,4 +185,49 @@ void afficher_automate_pgm_binaire(automate automate_cellulaire){
         }
     else
         perror("fopen");
+}
+
+
+void afficher_automate_console_ionas(automate automate_cellulaire){
+    regle r = get_regle_automate(automate_cellulaire);
+    char* regle = get_regle(r);
+    unsigned int nb_iterations_max = get_nb_iterations_max(automate_cellulaire);
+    unsigned int dimension_max = get_dimension_max(automate_cellulaire);
+    cel** configuration_actuelle = get_configuration_actuelle(automate_cellulaire);
+    
+    printf("Règle           : %s\n", regle);
+    printf("Itérations      : %u\n", nb_iterations_max);
+    printf("Dimensions Max. : %u\n\n", dimension_max);
+
+    for(unsigned int i = 0 ; i < nb_iterations_max; i++){
+        if (i < 10)
+            printf("|%u | ", i);
+        else
+            printf("|%u| ", i);
+
+        for(unsigned int j = 0; j < dimension_max; j++){
+            cel x = configuration_actuelle[i][j];
+            unsigned int etat = get_etat(x);
+            char car;
+            switch (etat){
+                case 1:
+                    car = '1';
+                    break;
+                case 2:
+                    car = '2';
+                    break;
+                case 3:
+                    car = '3';
+                    break;
+                case 4:
+                    car = '4';
+                    break;
+                default:
+                    car = ' ';
+                    break;
+            }
+            printf("%c", car);
+        }
+        printf("\n");
+    }
 }

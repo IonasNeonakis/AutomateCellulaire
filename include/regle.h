@@ -31,4 +31,6 @@ int regle_binaire(char*, int*);
 
 int regle_somme(char*, int*);
 
+int regle_ionas(char*, int*);
+
 #endif

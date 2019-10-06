@@ -18,4 +18,6 @@ void afficher_automate_pgm_binaire(automate);
 
 void afficher_automate_pgm_somme(automate);
 
+void afficher_automate_console_ionas(automate);
+
 #endif
