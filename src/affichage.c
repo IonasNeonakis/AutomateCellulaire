@@ -100,6 +100,7 @@ void afficher_automate_console_binaire(automate automate_cellulaire){
  */
 
 void afficher_automate_pgm_somme(automate automate_cellulaire){
+    printf("Image créée dans le dossier \"out\"\n");
     FILE* image;
     if ((image = fopen("./out/automate.ppm", "w")) != NULL)
         {
@@ -149,6 +150,7 @@ void afficher_automate_pgm_somme(automate automate_cellulaire){
 }
 
 void afficher_automate_pgm_binaire(automate automate_cellulaire){
+    printf("Image créée dans le dossier \"out\"\n");
     FILE* image;
     if ((image = fopen("./out/automate.ppm", "w")) != NULL)
         {

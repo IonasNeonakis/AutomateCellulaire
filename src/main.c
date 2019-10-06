@@ -46,7 +46,7 @@ int main(int argc, char* argv[]){
     set_regle_automate(a, r);
 
     // On définit une fonction d'affichage personnalisée pour l'automate
-    set_affichage(a, &afficher_automate_console_somme); // A MODIFIER SI BESOIN POUR DEFINIR L'AFFICHAGE DE L'AUTOMATE PERSONNALISÉ
+    set_affichage(a, &afficher_automate_pgm_binaire); // A MODIFIER SI BESOIN POUR DEFINIR L'AFFICHAGE DE L'AUTOMATE PERSONNALISÉ
 
 
     if(argc > 1){

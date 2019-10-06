@@ -119,7 +119,7 @@ automate lire_fichier_automate(automate a, char* nom_fichier){
                     printf("Duplication du type : \"dimension\". Arrêt du programme !\n");
                     exit(1);
                 }else if(config_init!=NULL && !est_de_longueur(config_init, conversion_char_int(valeur))){
-                    printf("La configuration initiale doit etre de la même longuer que la dimension. Arrêt du programme !\n");
+                    printf("\"config_init\" doit etre de la même longueur que \"dimension\". Arrêt du programme !\n");
                     exit(1);
                 }else{
                     dimension=(unsigned int) conversion_char_int(valeur);
@@ -157,7 +157,7 @@ automate lire_fichier_automate(automate a, char* nom_fichier){
                     printf("Duplication du type : \"config_init\". Arrêt du programme !\n");
                     exit(1);
                 }else if(dimension != 0 && !est_de_longueur(valeur, dimension)){
-                    printf("\"dimension\" doit etre de la même longuer que la \"config_init\". Arrêt du programme !\n");
+                    printf("\"dimension\" doit etre de la même longuer que \"config_init\". Arrêt du programme !\n");
                     exit(1);
                 }else if(nb_etats == 0){
                     printf("\"nb_etats\" doit etre défini avant \"config_init\". Arrêt du programme !\n");
@@ -500,7 +500,7 @@ void process_args(automate a,int argc, char* argv[]){
 
     if(!strcmp(argv[6], "2")){
         if(!est_un_int(argv[7]) || conversion_char_int(argv[7]) > 9){
-            printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
+            printf("Erreur de l'argument \"nb_etats\" : Arrêt du programme ! \n");
             exit(1);
         }else{
             nb_etats=(unsigned int) conversion_char_int(argv[7]);
@@ -510,7 +510,7 @@ void process_args(automate a,int argc, char* argv[]){
         }
     }else{
         if(!est_un_int(argv[7]) || conversion_char_int(argv[7]) > 2 || conversion_char_int(argv[7]) < 0){
-            printf("Erreur de l'argument type_affichage");
+            printf("Erreur de l'argument \"type_affichage\"\n");
             exit(1);
         }else if (type_regle == 0){ // binaire
             if (!strcmp(argv[7], "0")){ // console
@@ -535,7 +535,7 @@ void process_args(automate a,int argc, char* argv[]){
     }
 
     if (!est_un_int(argv[2]) || conversion_char_int(argv[2]) < 1){
-        printf("Erreur de l'argument nb_iteration : Arrêt du programme ! \n");
+        printf("Erreur de l'argument \"nb_iteration\" : Arrêt du programme ! \n");
         exit(1);
     }else{
         nb_iterations = conversion_char_int(argv[2]);
@@ -543,7 +543,7 @@ void process_args(automate a,int argc, char* argv[]){
 
 
     if (!est_un_int(argv[3]) || conversion_char_int(argv[3]) < 1){
-        printf("Erreur de l'argument dimension : Arrêt du programme ! \n");
+        printf("Erreur de l'argument \"dimension\" : Arrêt du programme ! \n");
         exit(1);
     }else{
         dimension = conversion_char_int(argv[3]);
@@ -551,11 +551,11 @@ void process_args(automate a,int argc, char* argv[]){
 
 
     if(!est_de_longueur(argv[4], dimension)){
-        printf("Erreur de l'argument dimension ou configuration : Arrêt du programme ! \n");
+        printf("Erreur de l'argument \"dimension\" ou \"config_init\" : Arrêt du programme ! \n");
         exit(1);
     }else{
         if(!est_regle_correcte(argv[4], nb_etats)){
-            printf("Erreur de l'argument nb_etats : Arrêt du programme ! \n");
+            printf("Erreur de l'argument \"config_init\" ou \"nb_etats\" : Arrêt du programme ! \n");
             exit(1);
         }else {
         config_init = argv[4];
@@ -567,14 +567,14 @@ void process_args(automate a,int argc, char* argv[]){
             printf("Erreur de l'argument regle pour Wolfram, c'est un entier qui doit etre compris enre 0 et 255 \n");
             exit(1);
         }else{
-            regle_string = (char*) calloc(strlen(argv[5]) + 1,sizeof(char) * strlen(argv[5]) + 1);
+            regle_string = (char*) calloc(strlen(argv[5]) + 1, sizeof(char) * strlen(argv[5]) + 1);
             char *tab = conversion_decimal_binaire(conversion_char_int(argv[5]));
             regle_string=strcpy(regle_string, tab);
             free(tab);
         }
     }else{
         if(!est_regle_correcte(argv[5], nb_etats) || !est_de_longueur(argv[5], get_taille_regle(r))){
-            printf("Erreur de l'argument regle : Arrêt du programme ! \n");
+            printf("Erreur de l'argument \"regle\" : Arrêt du programme ! \n");
             exit(1);
         }else{
             regle_string = (char*) calloc(strlen(argv[5]) + 1, sizeof(char) * strlen(argv[5]) + 1);
