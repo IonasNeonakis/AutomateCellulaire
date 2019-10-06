@@ -179,8 +179,8 @@ automate lire_fichier_automate(automate a, char* nom_fichier){
                 }else if(nb_etats != 0){
                     printf("Duplication du type : \"nb_iteration\". Arrêt du programme !\n");
                     exit(1);
-                }else if(conversion_char_int(valeur) > 9){
-                    printf("\"nb_etats\" ne peut être supérieur à 9. Arrêt du programme ! \n");
+                }else if(conversion_char_int(valeur) > 9 || conversion_char_int(valeur)<1){
+                    printf("\"nb_etats\" ne peut être supérieur à 9 et inférieur à 1. Arrêt du programme ! \n");
                     exit(1);
                 }else{
                     nb_etats=(unsigned int) conversion_char_int(valeur);
@@ -500,7 +500,7 @@ void process_args(automate a,int argc, char* argv[]){
     }
 
     if(!strcmp(argv[6], "2")){
-        if(!est_un_int(argv[7]) || conversion_char_int(argv[7]) > 9){
+        if(!est_un_int(argv[7]) || conversion_char_int(argv[7]) > 9 || conversion_char_int(argv[7]) < 1){
             printf("Erreur de l'argument \"nb_etats\" : Arrêt du programme ! \n");
             exit(1);
         }else{
