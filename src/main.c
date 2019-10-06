@@ -37,16 +37,16 @@ int main(int argc, char* argv[]){
     regle r = creer_regle();
 
     // On définit le pointeur vers la fonction de transition pour là règle
-    set_type_regle(r, &regle_somme); // A MODIFIER SI BESOIN POUR DEFINIR LA REGLE DE TRANSITION DE L'AUTOMATE PERSONNALISÉ)
+    set_type_regle(r, &regle_ionas); // A MODIFIER SI BESOIN POUR DEFINIR LA REGLE DE TRANSITION DE L'AUTOMATE PERSONNALISÉ)
 
     // On définit la taille de la règle
-    set_taille_regle(r, 10); // A MODIFIER SI BESOIN POUR DEFINIR LA TAILLE DE LA REGLE PERSONNALISÉ
+    set_taille_regle(r, 9); // A MODIFIER SI BESOIN POUR DEFINIR LA TAILLE DE LA REGLE PERSONNALISÉ
 
     // On associe cette règle à l'automate crée plus haut
     set_regle_automate(a, r);
 
     // On définit une fonction d'affichage personnalisée pour l'automate
-    set_affichage(a, &afficher_automate_pgm_binaire); // A MODIFIER SI BESOIN POUR DEFINIR L'AFFICHAGE DE L'AUTOMATE PERSONNALISÉ
+    set_affichage(a, &afficher_automate_console_ionas); // A MODIFIER SI BESOIN POUR DEFINIR L'AFFICHAGE DE L'AUTOMATE PERSONNALISÉ
 
 
     if(argc > 1){

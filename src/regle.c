@@ -130,7 +130,7 @@ int regle_somme(char* regle, int* etats){
 }
 
 int regle_ionas(char* regle, int* etats){
-    int x = etats[0] + etats[1] + etats[2];
+    int x = etats[0] + etats[1] - etats[2];
     free(etats);
     if (x<0)
         x = 0;
