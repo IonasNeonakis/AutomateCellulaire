@@ -55,7 +55,7 @@ automate lire_fichier_automate(automate a, char* nom_fichier){
     fp = fopen(fichier_a_ouvrir, "r");
     
     if (fp == NULL){
-        fprintf(stderr, "Erreur lors de l'ouverture du fichier en lecture !");
+        fprintf(stderr, "Erreur lors de l'ouverture du fichier en lecture ! \n");
         exit(1);
     }
 
@@ -132,7 +132,7 @@ automate lire_fichier_automate(automate a, char* nom_fichier){
                     printf("La regle n'est pas de la bonne longueur. Arrêt du programme !\n");
                     exit(1);
                 }else if(nb_etats == 0){
-                    printf("nb_etat doit etre défini avant regle. Arrêt du programme !\n");
+                    printf("\"nb_etat\" doit etre défini avant \"regle\". Arrêt du programme !\n");
                     exit(1);
                 }else if(type_regle !=0 && !est_regle_correcte(valeur, nb_etats)){
                     printf("Erreur de la saisie de la regle comparé aux nombre d'états. Arrêt du programme ! \n");
@@ -157,10 +157,10 @@ automate lire_fichier_automate(automate a, char* nom_fichier){
                     printf("Duplication du type : \"config_init\". Arrêt du programme !\n");
                     exit(1);
                 }else if(dimension != 0 && !est_de_longueur(valeur, dimension)){
-                    printf("La dimension doit etre de la même longuer que la configuration initiale. Arrêt du programme !\n");
+                    printf("\"dimension\" doit etre de la même longuer que la \"config_init\". Arrêt du programme !\n");
                     exit(1);
                 }else if(nb_etats == 0){
-                    printf("nb_etats doit etre défini avant config_init. Arrêt du programme !\n");
+                    printf("\"nb_etats\" doit etre défini avant \"config_init\". Arrêt du programme !\n");
                     exit(1);
                 }else if(!est_regle_correcte(valeur, nb_etats)){
                     printf("Erreur de la saisie de la regle comparé aux nombre d'états. Arrêt du programme ! \n");
@@ -171,29 +171,29 @@ automate lire_fichier_automate(automate a, char* nom_fichier){
                 }
             }else if(!strcmp(type, "nb_etats")){
                 if(type_regle == 0 || type_regle == 1){
-                    printf("nb_etats ne doit pas être défini si type_regle vaut 0 ou 1. Arrêt du programme ! \n");
+                    printf("\"nb_etats\" ne doit pas être défini si \"type_regle\" vaut 0 ou 1. Arrêt du programme ! \n");
                     exit(1);
                 }else if(type_regle == -1){
-                    printf("Le type de regle doit être défini avant nb_etats. Arrêt du programme ! \n");
+                    printf("\"type_regle\" doit être défini avant \"nb_etats\". Arrêt du programme ! \n");
                     exit(1);
                 }else if(nb_etats != 0){
                     printf("Duplication du type : \"nb_iteration\". Arrêt du programme !\n");
                     exit(1);
                 }else if(conversion_char_int(valeur) > 9){
-                    printf("le nombre d'états ne peut être supérieur à 9. Arrêt du programme ! \n");
+                    printf("\"nb_etats\" ne peut être supérieur à 9. Arrêt du programme ! \n");
                     exit(1);
                 }else{
                     nb_etats=(unsigned int) conversion_char_int(valeur);
                 }
             }else if(!strcmp(type, "type_affichage")){
                 if(type_regle == 2){
-                    printf("type_affichage ne doit pas etre défini dans le cas ou le type_regle vaut 2 : Arrêt du programme ! \n");
+                    printf("\"type_affichage\" ne doit pas etre défini dans le cas ou le \"type_regle\" vaut 2 : Arrêt du programme ! \n");
                     exit(1);
                 }else if(type_affichage != NULL){
                     printf("Duplication du type : \"type_affichage\". Arrêt du programme !\n");
                     exit(1);
                 }else if(type_regle == -1){
-                    printf("type_regle doit être défini avant type_affichage : Arrêt du programme \n");
+                    printf("\"type_regle\" doit être défini avant \"type_affichage\" : Arrêt du programme \n");
                     exit(1);
                 }else{
                     int val = conversion_char_int(valeur);
@@ -242,7 +242,7 @@ automate lire_fichier_automate(automate a, char* nom_fichier){
                             break;
                         }
                         default:{
-                            printf("Erreur de type_regle. Arrêt du programme ! \n");
+                            printf("Erreur de \"type_regle\". Arrêt du programme ! \n");
                             exit(1);
                             break;
                         }
@@ -494,7 +494,8 @@ void process_args(automate a,int argc, char* argv[]){
             type_regle = 2;
         }
     }else{
-        
+        printf("Erreur du nombre d'argument du programme. Arrêt du programme ! \n");
+        exit(1);
     }
 
     if(!strcmp(argv[6], "2")){
@@ -563,7 +564,7 @@ void process_args(automate a,int argc, char* argv[]){
 
     if(type_regle == 0){
         if(!est_un_int(argv[5]) ||  conversion_char_int(argv[5]) < 0 || conversion_char_int(argv[5]) > 255){
-            printf("Erreur de l'argument regle pour Wolfram, c'est un entier qui doit etre compris enre 0 et 255");
+            printf("Erreur de l'argument regle pour Wolfram, c'est un entier qui doit etre compris enre 0 et 255 \n");
             exit(1);
         }else{
             regle_string = (char*) calloc(strlen(argv[5]) + 1,sizeof(char) * strlen(argv[5]) + 1);
