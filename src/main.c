@@ -58,7 +58,7 @@ int main(int argc, char* argv[]){
 
             process_args(a, argc, argv); // On effectue une lecture par argument de programme
 
-        }else if(argc == 2 && (!strcmp(argv[1], "-h" || !strcmp(argv[1], "--help")))){
+        }else if(argc == 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))){
 
             manuel(); // On affiche le manuel
             supprimer_regle(&r);
