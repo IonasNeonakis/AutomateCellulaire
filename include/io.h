@@ -4,11 +4,11 @@
 #include "./automate.h"
 #include "./regle.h"
 
-automate lire_fichier_automate(automate, regle, char*);
+automate lire_fichier_automate(automate, char*);
 
-void process_args(automate, regle, int, char*[]);
+void process_args(automate, int, char*[]);
 
-void lecture_runtime_automate(automate, regle);
+void lecture_runtime_automate(automate);
 
 void manuel();
 

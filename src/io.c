@@ -22,12 +22,13 @@
  * \char* nom_fichier représente le nom du fichier de configuration
  */
 
-automate lire_fichier_automate(automate a,regle r, char* nom_fichier){
+automate lire_fichier_automate(automate a, char* nom_fichier){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     unsigned int nb_etats=0;
     int type_regle=-1;
     char* regle_string = NULL;
+    regle r = get_regle_automate(a);
     
     char* config_init = NULL;
     void (*type_affichage)(automate) = NULL;
@@ -329,7 +330,8 @@ automate lire_fichier_automate(automate a,regle r, char* nom_fichier){
  * \param regle r représente la regle si l'utilisateur veut utiliser une règle personnalisée
  * \return automate ainsi créé
  */
-void lecture_runtime_automate(automate a, regle r){
+void lecture_runtime_automate(automate a){
+    regle r = get_regle_automate(a);
     char* piscine_buffer = (char*) malloc (sizeof(char) * 1024);
 
     printf("Bienvenue dans le générateur d'automate cellulaire !\n");
@@ -501,7 +503,7 @@ void lecture_runtime_automate(automate a, regle r){
     piscine_buffer = NULL;
 }
 
-void process_args(automate a,regle r,int argc, char* argv[]){
+void process_args(automate a,int argc, char* argv[]){
     unsigned int nb_iterations = 0;
     unsigned int dimension = 0;
     int type_regle =-1;
@@ -512,6 +514,7 @@ void process_args(automate a,regle r,int argc, char* argv[]){
     char* config_init = NULL;
     void (*type_affichage)(automate) = NULL;
 
+    regle r = get_regle_automate(a);
 
     if(argc==8){
         if(!strcmp(argv[6],"0")){

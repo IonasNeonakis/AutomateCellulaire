@@ -22,39 +22,59 @@
  * \param automate_cellulaire est l'automate à afficher.
  * 
  * En fonction des arguments passés lors de l'éxecution (-f ou --file | -a ou --args | --help) on effectue une opération particulière, telle que respectivement
- * -La lecture depuis un fichier
- * -La lecture depuis les arguments
- * -L'affichage du manuel d'utilisation
- * -Ou la lecture runtime si aucun argument n'est passé en entré
+ * - La lecture depuis un fichier
+ * - La lecture depuis les arguments
+ * - L'affichage du manuel d'utilisation
+ * - Ou la lecture runtime si aucun argument n'est passé en entré
  * On affiche ensuite l'automate puis on libère tous les espaces alloués
  */
 int main(int argc, char* argv[]){
     
+    // On crée un automate vide pour pouvoir accueillir la règle ainsi que la fonction d'affichage personnalisée
     automate a = creer_automate();
     
+    // On crée la règle personnalisée
     regle r = creer_regle();
+
+    // On définit le pointeur vers la fonction de transition pour là règle
     set_type_regle(r, &regle_somme);
+
+    // On définit la taille de la règle
     set_taille_regle(r, 10);
+
+    // On associe cette règle à l'automate crée plus haut
     set_regle_automate(a, r);
+
+    // On définit une fonction d'affichage personnalisée pour l'automate
     set_affichage(a, &afficher_automate_console_somme);
+
 
     if(argc > 1){
         char* argument = argv[1];
         if(argc == 3 && (!strcmp(argument, "-f") || !strcmp(argument, "--file"))){
-            //printf("%s",argv[2]);
-            lire_fichier_automate(a,r, argv[2]); //on lit par fichier
-        }else if((argc==8) && (!strcmp(argument, "-a") || !strcmp(argument, "--args"))){
-            process_args(a,r, argc, argv); //on fait une lecture par arguments
-        }else if(argc == 2 && !strcmp(argv[1], "--help")){
-            manuel();
+
+            lire_fichier_automate(a, argv[2]); // On effectue une lecture par fichier
+
+        }else if((argc == 8) && (!strcmp(argument, "-a") || !strcmp(argument, "--args"))){
+
+            process_args(a, argc, argv); // On effectue une lecture par argument de programme
+
+        }else if(argc == 2 && (!strcmp(argv[1], "--help") || !strcmp(argv[1], "h"))){
+
+            manuel(); // On affiche le manuel
             supprimer_regle(&r);
             exit(EXIT_SUCCESS);
+
         }else{
-            printf("Erreur du nombre d'arguments. Arrêt du programme ! \n");
-            exit(1);
+
+            printf("Erreur du nombre d'arguments. Arrêt du programme !\n");
+            exit(EXIT_SUCCESS);
+
         }
     }else if(argc == 1){
-        lecture_runtime_automate(a, r); //on fait une lecture runtime
+
+        lecture_runtime_automate(a); // On effectue une lecture runtime
+
     }
 
     afficher_automate(a);
