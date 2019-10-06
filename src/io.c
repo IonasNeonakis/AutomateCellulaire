@@ -407,7 +407,7 @@ void lecture_runtime_automate(automate a){
         printf("1 - Génération d'une image ppm\n");
         printf("2 - Utilisation de la fonction d'affichage personnalisée\n");
         scanf("%s", piscine_buffer);
-        while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) < 0 && conversion_char_int(piscine_buffer) > 2)){
+        while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) < 0 || conversion_char_int(piscine_buffer) > 2)){
             scanf("%s", piscine_buffer);
         }
         piscine_buffer[strlen(piscine_buffer)] = '\0';
@@ -442,6 +442,7 @@ void lecture_runtime_automate(automate a){
    }
 
     set_regle_automate(a, r);
+    
     if(type_regle_int == 0){
         if(type_affichage_int == 0){
             set_affichage(a, &afficher_automate_console_binaire);
