@@ -612,8 +612,11 @@ void manuel(){
     printf("EXEMPLE : ./automate -f nom_du_fichier.config\n\n");
     printf("NOTE : Le nombre d'état ne doit être précisé dans le cas unique où vous créez votre propre règle. Il n'est donc pas nécessaire de préciser ce nombre lors de l'utilisation de la règle de Wolfram ou Somme\n\n");
     printf("Il est également possible de générer un automate  en passant des arguments directement au programme, cela peut se faire en utilisant l'argument '-a' ou '--args' suivi des paramètres dont voici l'ordre :\n\n");
-    printf("NOMBRE_ITERATIONS  DIMENSION_MAX  CONFIGURATION_INITIALE  REGLE  TYPE_REGLE  TYPE_AFFICHAGE  [NB_ETATS]\n\n");
-    printf("EXEMPLE : ./automate -a 16 11 00000100000 30 0 1\n\n");
+    printf("NOMBRE_ITERATIONS  DIMENSION_MAX  CONFIGURATION_INITIALE  REGLE  TYPE_REGLE  [TYPE_AFFICHAGE|NB_ETATS]\n\n");
+    printf("EXEMPLE 1 : ./bin/automates -a 16 11 00000100000 30 0 1\n");
+    printf("NOMBRE_ITERATIONS=16  DIMENSION_MAX=11  CONFIGURATION_INITIALE=00000100000  REGLE=30  TYPE_REGLE=0(Binaire)  TYPE_AFFICHAGE=1(Image pgm)\n\n");
+    printf("EXEMPLE 2 : ./bin/automates -a 16 16 0230100104102100 234024314 2 5\n");
+    printf("NOMBRE_ITERATIONS=16  DIMENSION_MAX=16  CONFIGURATION_INITIALE=0230100104102100  REGLE=234024314  TYPE_REGLE=2(Perso)  NB_ETATS=5(0 1 2 3 4)\n\n");
     printf("- Le nombre d'itération doit etre un entier positif\n");
     printf("- La dimension max doit être un entier positif\n");
     printf("- La taille de la configuration initiale doit être égale à la dimension max, et ne doit comporter que des chiffres compris entre 0 et le nombre d'états possibles\n");
