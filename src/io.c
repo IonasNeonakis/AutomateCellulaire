@@ -306,6 +306,7 @@ void lecture_runtime_automate(automate a){
     printf("Nombre d'itérations : ");
     scanf("%s", piscine_buffer);
     while(!est_un_int(piscine_buffer) || conversion_char_int(piscine_buffer) < 1){
+        printf("Vous devez rentrer un nombre d'itérations positif !\n");
         scanf("%s", piscine_buffer);
     }
     size_t taille = strlen(piscine_buffer);
@@ -315,6 +316,7 @@ void lecture_runtime_automate(automate a){
     printf("Dimension maximale : ");
     scanf("%s", piscine_buffer);
     while(!est_un_int(piscine_buffer) || conversion_char_int(piscine_buffer) < 1){
+        printf("Vous devez rentrer une dimension max positive !\n");
         scanf("%s", piscine_buffer);
     }
     taille = strlen(piscine_buffer);
@@ -330,6 +332,7 @@ void lecture_runtime_automate(automate a){
     printf("2 - Regle personnalisée\n");
     scanf("%s", piscine_buffer);
     while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) < 0 || conversion_char_int(piscine_buffer) > 2)){
+        printf("Vous devez entrer un entier parmis les choix disponibles (0, 1 ou 2) !\n");
         scanf("%s", piscine_buffer);
     }
     taille = strlen(piscine_buffer);
@@ -341,7 +344,8 @@ void lecture_runtime_automate(automate a){
     if(type_regle_int == 2){
         printf("Nombre d'états : \n");
         scanf("%s", piscine_buffer);
-        while(!est_un_int(piscine_buffer)){
+        while(!est_un_int(piscine_buffer) || conversion_char_int(piscine_buffer) < 1){
+            printf("Vous devez entrer un nombre d'état positif !\n");
             scanf("%s", piscine_buffer);
         }
 
@@ -383,14 +387,17 @@ void lecture_runtime_automate(automate a){
     scanf("%s", piscine_buffer);
     if(type_regle_int == 0){
         while (conversion_char_int(piscine_buffer) < 0 || conversion_char_int(piscine_buffer) > 255){
+            printf("Vous devez rentrer un entier compris entre 0 et 255 !\n");
             scanf("%s", piscine_buffer);
         }
     }else if(type_regle_int == 1 ){ 
         while(!est_regle_correcte(piscine_buffer, nb_etats_int) || (int) strlen(piscine_buffer) != 10){
+            printf("Vous devez entrer une règle comportant 10 entiers compris entre 0 et 3 !\n");
             scanf("%s", piscine_buffer);
         }
     }else if(type_regle_int == 2){
         while(!est_regle_correcte(piscine_buffer, nb_etats_int) || (int) strlen(piscine_buffer) != get_taille_regle(r)){
+            printf("Vous devez entrer une règle comportant autant d'entiers que la taille de votre règle, compris entre 0 et le nombre d'états de votre règle !\n");
             scanf("%s", piscine_buffer);
         }   
     }
@@ -408,6 +415,7 @@ void lecture_runtime_automate(automate a){
         printf("2 - Utilisation de la fonction d'affichage personnalisée\n");
         scanf("%s", piscine_buffer);
         while(!est_un_int(piscine_buffer) || (conversion_char_int(piscine_buffer) < 0 || conversion_char_int(piscine_buffer) > 2)){
+            printf("Vous devez entrer un entier parmis les choix disponibles (0, 1 ou 2) !\n");
             scanf("%s", piscine_buffer);
         }
         piscine_buffer[strlen(piscine_buffer)] = '\0';
@@ -415,8 +423,7 @@ void lecture_runtime_automate(automate a){
    }else{
        type_affichage_int = 2;
    }
-
-    printf("%d", dimension_max_int);
+   
     set_dimension_max(a, dimension_max_int);
 
     set_nb_iterations_max(a, nb_iteration_max_int);
